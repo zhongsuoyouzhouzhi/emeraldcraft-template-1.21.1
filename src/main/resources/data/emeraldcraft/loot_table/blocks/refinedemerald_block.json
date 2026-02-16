@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:block",
+  "random_sequence": "emeraldcraft:blocks/refinedemerald_block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "emeraldcraft:refinedemerald_block"
+        }
+      ]
+    }
+  ]
+}

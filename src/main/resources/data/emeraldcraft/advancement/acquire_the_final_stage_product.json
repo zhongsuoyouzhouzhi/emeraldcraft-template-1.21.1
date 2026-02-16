@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "id": "emeraldcraft:refinedemerald_block_3"
+    },
+    "title": {
+      "translate": "advancements.acquire_the_final_stage_product.title"
+    },
+    "description": {
+      "translate": "advancements.acquire_the_final_stage_product.descr"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "acquire_the_final_stage_product_0": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "emeraldcraft:refinedemerald_block_3",
+            "count": {
+              "min": 1,
+              "max": 1
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 500
+  },
+  "parent": "emeraldcraft:craft_refined_emerald_sword_t_2"
+}

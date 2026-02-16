@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "aaa",
+    "a a",
+    "a a"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:refinedemerald_block_3"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:emerald_armor_t_3_leggings",
+    "count": 1
+  }
+}

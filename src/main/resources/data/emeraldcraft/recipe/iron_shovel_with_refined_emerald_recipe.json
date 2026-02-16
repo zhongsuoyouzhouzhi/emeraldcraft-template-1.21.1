@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:refined_emerald"
+    },
+    "b": {
+      "item": "minecraft:iron_axe"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:iron_axe_with_refined_emerald",
+    "count": 1
+  }
+}

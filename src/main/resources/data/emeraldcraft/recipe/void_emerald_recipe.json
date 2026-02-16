@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "emeraldcraft:refinedemerald_block"
+    }
+  ],
+  "result": {
+    "id": "emeraldcraft:refined_emerald",
+    "count": 9
+  }
+}

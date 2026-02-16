@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wooden_pickaxe",
+    "minecraft:stone_pickaxe",
+    "minecraft:iron_pickaxe",
+    "minecraft:golden_pickaxe",
+    "minecraft:diamond_pickaxe",
+    "minecraft:netherite_pickaxe",
+    "emeraldcraft:iron_pickaxe_with_refined_emerald_t2",
+    "emeraldcraft:iron_pickaxe_with_refined_emerald",
+    "emeraldcraft:emerald_pickaxe_t_3",
+    "emeraldcraft:emerald_pickaxe_t_2",
+    "emeraldcraft:emerald_pickaxe",
+    "emeraldcraft:void_emerald_pickaxe"
+  ]
+}

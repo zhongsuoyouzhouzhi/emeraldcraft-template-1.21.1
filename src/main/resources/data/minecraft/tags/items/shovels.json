@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wooden_shovel",
+    "minecraft:stone_shovel",
+    "minecraft:iron_shovel",
+    "minecraft:golden_shovel",
+    "minecraft:diamond_shovel",
+    "minecraft:netherite_shovel",
+    "emeraldcraft:iron_shovel_with_refined_emerald_t2",
+    "emeraldcraft:iron_shovel_with_refined_emerald",
+    "emeraldcraft:emerald_shovel",
+    "emeraldcraft:emerald_shovel_t_2",
+    "emeraldcraft:emerald_shovel_t_3",
+    "emeraldcraft:void_emerald_shovel"
+  ]
+}

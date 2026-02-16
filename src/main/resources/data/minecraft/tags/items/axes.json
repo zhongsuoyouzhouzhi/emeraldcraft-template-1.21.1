@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wooden_axe",
+    "minecraft:stone_axe",
+    "minecraft:iron_axe",
+    "minecraft:golden_axe",
+    "minecraft:diamond_axe",
+    "minecraft:netherite_axe",
+    "emeraldcraft:iron_axe_inlaid_with_refined_emerald_t2",
+    "emeraldcraft:iron_axe_inlaid_with_refined_emerald",
+    "emeraldcraft:emerald_axe_t_3",
+    "emeraldcraft:emerald_axe_t_2",
+    "emeraldcraft:emerald_axe",
+    "emeraldcraft:void_emerald_axe"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "a a",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:refined_emerald"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:emerald_armor_chestplate",
+    "count": 1
+  }
+}

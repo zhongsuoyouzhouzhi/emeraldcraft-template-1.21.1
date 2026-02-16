@@ -1,0 +1,130 @@
+package com.zhouzhi.emeraldcraft.init;
+
+import com.zhouzhi.emeraldcraft.item.remined_emerald.*;
+import com.zhouzhi.emeraldcraft.item.void_emerald.*;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
+import com.zhouzhi.emeraldcraft.EmeraldCraft;
+
+public class EmeraldcraftItems {
+	public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(EmeraldCraft.MOD_ID);
+	public static final DeferredItem<Item> REFINED_EMERALD;
+    public static final DeferredItem<Item> REFINED_EMERALD_T_2;
+    public static final DeferredItem<Item> REFINED_EMERALD_T_3;
+	public static final DeferredItem<Item> REFINED_EMERALD_BLOCK;
+	public static final DeferredItem<Item> REFINED_EMERALD_BLOCK_2;
+    public static final DeferredItem<Item> REFINED_EMERALD_BLOCK_3;
+	public static final DeferredItem<Item> EMERALD_SWORD;
+    public static final DeferredItem<Item> EMERALD_SWORD_T_2;
+    public static final DeferredItem<Item> EMERALD_SWORD_T_3;
+    public static final DeferredItem<Item> SKYFILLING_BLADE;
+    public static final DeferredItem<Item> IRON_SWORD_INLAID_WITH_REFINED_EMERALD;
+    public static final DeferredItem<Item> IRON_SWORD_INLAID_WITH_REFINED_EMERALD_T2;
+    public static final DeferredItem<Item> VOID_EMERALD_SWORD;
+    public static final DeferredItem<Item> EMERALD_AXE;
+	public static final DeferredItem<Item> EMERALD_AXE_T_2;
+    public static final DeferredItem<Item> EMERALD_AXE_T_3;
+    public static final DeferredItem<Item> VOID_EMERALD_AXE;
+    public static final DeferredItem<Item> IRON_AXE_INLAID_WITH_REFINED_EMERALD;
+    public static final DeferredItem<Item> IRON_AXE_INLAID_WITH_REFINED_EMERALD_T2;
+    public static final DeferredItem<Item> EMERALD_PICKAXE;
+    public static final DeferredItem<Item> EMERALD_PICKAXE_T_2;
+	public static final DeferredItem<Item> EMERALD_PICKAXE_T_3;
+    public static final DeferredItem<Item> VOID_EMERALD_PICKAXE;
+    public static final DeferredItem<Item> IRON_PICKAXE_INLAID_WITH_REFINED_EMERALD;
+    public static final DeferredItem<Item> IRON_PICKAXE_INLAID_WITH_REFINED_EMERALD_T2;
+	public static final DeferredItem<Item> EMERALD_SHOVEL;
+	public static final DeferredItem<Item> EMERALD_SHOVEL_T_2;
+	public static final DeferredItem<Item> EMERALD_SHOVEL_T_3;
+    public static final DeferredItem<Item> IRON_SHOVEL_INLAID_WITH_REFINED_EMERALD;
+    public static final DeferredItem<Item> IRON_SHOVEL_INLAID_WITH_REFINED_EMERALD_T2;
+    public static final DeferredItem<Item> VOID_EMERALD_SHOVEL;
+	public static final DeferredItem<Item> EMERALD_HOE;
+	public static final DeferredItem<Item> EMERALD_HOE_T_2;
+	public static final DeferredItem<Item> EMERALD_HOE_T_3;
+    public static final DeferredItem<Item> VOID_EMERALD_HOE;
+    public static final DeferredItem<Item> IRON_HOE_INLAID_WITH_REFINED_EMERALD;
+    public static final DeferredItem<Item> IRON_HOE_INLAID_WITH_REFINED_EMERALD_T2;
+	public static final DeferredItem<Item> EMERALD_ARMOR_HELMET;
+	public static final DeferredItem<Item> EMERALD_ARMOR_CHESTPLATE;
+	public static final DeferredItem<Item> EMERALD_ARMOR_LEGGINGS;
+	public static final DeferredItem<Item> EMERALD_ARMOR_BOOTS;
+	public static final DeferredItem<Item> EMERALD_ARMOR_T_2_HELMET;
+	public static final DeferredItem<Item> EMERALD_ARMOR_T_2_CHESTPLATE;
+	public static final DeferredItem<Item> EMERALD_ARMOR_T_2_LEGGINGS;
+	public static final DeferredItem<Item> EMERALD_ARMOR_T_2_BOOTS;
+	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_HELMET;
+	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_CHESTPLATE;
+	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_LEGGINGS;
+	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_BOOTS;
+	public static final DeferredItem<Item> REFINED_EMERALD_PLUS;
+    public static final DeferredItem<Item> VOID_EMERALD;
+	static {
+		REFINED_EMERALD = REGISTRY.register("refined_emerald", RefinedEmeraldItem::new);
+		REFINED_EMERALD_BLOCK = block(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK, new Item.Properties().rarity(Rarity.RARE));
+		EMERALD_PICKAXE = REGISTRY.register("emerald_pickaxe", EmeraldPickaxeItem::new);
+		REFINED_EMERALD_BLOCK_2 = block(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_2, new Item.Properties().rarity(Rarity.RARE));
+		REFINED_EMERALD_T_2 = REGISTRY.register("refined_emerald_t_2", RefinedEmeraldT2Item::new);
+		EMERALD_PICKAXE_T_2 = REGISTRY.register("emerald_pickaxe_t_2", EmeraldPickaxeT2Item::new);
+		EMERALD_SWORD = REGISTRY.register("emerald_sword", EmeraldSwordItem::new);
+		EMERALD_AXE = REGISTRY.register("emerald_axe", EmeraldAxeItem::new);
+		EMERALD_SWORD_T_2 = REGISTRY.register("emerald_sword_t_2", EmeraldSwordT2Item::new);
+		EMERALD_AXE_T_2 = REGISTRY.register("emerald_axe_t_2", EmeraldAxeT2Item::new);
+		REFINED_EMERALD_T_3 = REGISTRY.register("refined_emerald_t_3", RefinedEmeraldT3Item::new);
+		REFINED_EMERALD_BLOCK_3 = block(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3, new Item.Properties().rarity(Rarity.EPIC).fireResistant());
+		EMERALD_SWORD_T_3 = REGISTRY.register("emerald_sword_t_3", EmeraldSwordT3Item::new);
+		EMERALD_AXE_T_3 = REGISTRY.register("emerald_axe_t_3", EmeraldAxeT3Item::new);
+		EMERALD_PICKAXE_T_3 = REGISTRY.register("emerald_pickaxe_t_3", EmeraldPickaxeT3Item::new);
+		EMERALD_SHOVEL = REGISTRY.register("emerald_shovel", EmeraldShovelItem::new);
+		EMERALD_SHOVEL_T_2 = REGISTRY.register("emerald_shovel_t_2", EmeraldShovelT2Item::new);
+		EMERALD_SHOVEL_T_3 = REGISTRY.register("emerald_shovel_t_3", EmeraldShovelT3Item::new);
+		EMERALD_HOE = REGISTRY.register("emerald_hoe", EmeraldHoeItem::new);
+		EMERALD_HOE_T_2 = REGISTRY.register("emerald_hoe_t_2", EmeraldHoeT2Item::new);
+		EMERALD_HOE_T_3 = REGISTRY.register("emerald_hoe_t_3", EmeraldHoeT3Item::new);
+		EMERALD_ARMOR_HELMET = REGISTRY.register("emerald_armor_helmet", EmeraldArmorItem.Helmet::new);
+		EMERALD_ARMOR_CHESTPLATE = REGISTRY.register("emerald_armor_chestplate", EmeraldArmorItem.Chestplate::new);
+		EMERALD_ARMOR_LEGGINGS = REGISTRY.register("emerald_armor_leggings", EmeraldArmorItem.Leggings::new);
+		EMERALD_ARMOR_BOOTS = REGISTRY.register("emerald_armor_boots", EmeraldArmorItem.Boots::new);
+		EMERALD_ARMOR_T_2_HELMET = REGISTRY.register("emerald_armor_t_2_helmet", EmeraldArmorT2Item.Helmet::new);
+		EMERALD_ARMOR_T_2_CHESTPLATE = REGISTRY.register("emerald_armor_t_2_chestplate", EmeraldArmorT2Item.Chestplate::new);
+		EMERALD_ARMOR_T_2_LEGGINGS = REGISTRY.register("emerald_armor_t_2_leggings", EmeraldArmorT2Item.Leggings::new);
+		EMERALD_ARMOR_T_2_BOOTS = REGISTRY.register("emerald_armor_t_2_boots", EmeraldArmorT2Item.Boots::new);
+		EMERALD_ARMOR_T_3_HELMET = REGISTRY.register("emerald_armor_t_3_helmet", EmeraldArmorT3Item.Helmet::new);
+		EMERALD_ARMOR_T_3_CHESTPLATE = REGISTRY.register("emerald_armor_t_3_chestplate", EmeraldArmorT3Item.Chestplate::new);
+		EMERALD_ARMOR_T_3_LEGGINGS = REGISTRY.register("emerald_armor_t_3_leggings", EmeraldArmorT3Item.Leggings::new);
+		EMERALD_ARMOR_T_3_BOOTS = REGISTRY.register("emerald_armor_t_3_boots", EmeraldArmorT3Item.Boots::new);
+		REFINED_EMERALD_PLUS = REGISTRY.register("refined_emerald_plus", RefinedEmeraldPlusItem::new);
+		SKYFILLING_BLADE = REGISTRY.register("skyfilling_blade", SkyFillingBladeItem::new);
+        IRON_SWORD_INLAID_WITH_REFINED_EMERALD = REGISTRY.register("iron_sword_with_refined_emerald", IronSwordInlaidWithRefinedEmeraldItem::new);
+        IRON_SWORD_INLAID_WITH_REFINED_EMERALD_T2 = REGISTRY.register("iron_sword_with_refined_emerald_t2", IronSwordInlaidWithRefinedEmeraldT2Item::new);
+        IRON_AXE_INLAID_WITH_REFINED_EMERALD = REGISTRY.register("iron_axe_with_refined_emerald", IronAxeInlaidWithRefinedEmeraldItem::new);
+        IRON_AXE_INLAID_WITH_REFINED_EMERALD_T2 = REGISTRY.register("iron_axe_with_refined_emerald_t2", IronAxeInlaidWithRefinedEmeraldItemT2::new);
+        IRON_PICKAXE_INLAID_WITH_REFINED_EMERALD = REGISTRY.register("iron_pickaxe_with_refined_emerald", IronPickaxeInlaidWithRefinedEmeraldItem::new);
+        IRON_PICKAXE_INLAID_WITH_REFINED_EMERALD_T2 = REGISTRY.register("iron_pickaxe_with_refined_emerald_t2", IronPickaxeInlaidWithRefinedEmeraldItemT2::new);
+        IRON_SHOVEL_INLAID_WITH_REFINED_EMERALD = REGISTRY.register("iron_shovel_with_refined_emerald", IronShovelInlaidWithRefinedEmeraldItem::new);
+        IRON_SHOVEL_INLAID_WITH_REFINED_EMERALD_T2 = REGISTRY.register("iron_shovel_with_refined_emerald_t2", IronShovelInlaidWithRefinedEmeraldItemT2::new);
+        IRON_HOE_INLAID_WITH_REFINED_EMERALD = REGISTRY.register("iron_hoe_with_refined_emerald", IronHoeInlaidWithRefinedEmeraldItem::new);
+        IRON_HOE_INLAID_WITH_REFINED_EMERALD_T2 = REGISTRY.register("iron_hoe_with_refined_emerald_t2", IronHoeInlaidWithRefinedEmeraldItemT2::new);
+        VOID_EMERALD = REGISTRY.register("void_emerald", VoidEmeraldItem::new);
+        VOID_EMERALD_SWORD = REGISTRY.register("void_emerald_sword", VoidEmeraldSwordItem::new);
+        VOID_EMERALD_AXE = REGISTRY.register("void_emerald_axe", VoidEmeraldAxeItem::new);
+        VOID_EMERALD_PICKAXE = REGISTRY.register("void_emerald_pickaxe", VoidEmeraldPickaxeItem::new);
+        VOID_EMERALD_SHOVEL = REGISTRY.register("void_emerald_shovel", VoidEmeraldShovelItem::new);
+        VOID_EMERALD_HOE = REGISTRY.register("void_emerald_hoe", VoidEmeraldHoeItem::new);
+	}
+
+	// Start of user code block custom items
+	// End of user code block custom items
+	private static DeferredItem<Item> block(DeferredHolder<Block, Block> block) {
+		return block(block, new Item.Properties());
+	}
+
+	private static DeferredItem<Item> block(DeferredHolder<Block, Block> block, Item.Properties properties) {
+		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), properties));
+	}
+}

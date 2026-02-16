@@ -1,0 +1,25 @@
+package com.zhouzhi.emeraldcraft.init;
+
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredBlock;
+
+import net.minecraft.world.level.block.Block;
+
+import com.zhouzhi.emeraldcraft.block.RefinedemeraldBlockBlock;
+import com.zhouzhi.emeraldcraft.block.RefinedemeraldBlock3Block;
+import com.zhouzhi.emeraldcraft.block.RefinedemeraldBlock2Block;
+import com.zhouzhi.emeraldcraft.EmeraldCraft;
+
+public class EmeraldcraftBlocks {
+	public static final DeferredRegister.Blocks REGISTRY = DeferredRegister.createBlocks(EmeraldCraft.MOD_ID);
+	public static final DeferredBlock<Block> REFINEDEMERALD_BLOCK;
+	public static final DeferredBlock<Block> REFINEDEMERALD_BLOCK_2;
+	public static final DeferredBlock<Block> REFINEDEMERALD_BLOCK_3;
+	static {
+		REFINEDEMERALD_BLOCK = REGISTRY.register("refinedemerald_block", RefinedemeraldBlockBlock::new);
+		REFINEDEMERALD_BLOCK_2 = REGISTRY.register("refinedemerald_block_2", RefinedemeraldBlock2Block::new);
+		REFINEDEMERALD_BLOCK_3 = REGISTRY.register("refinedemerald_block_3", RefinedemeraldBlock3Block::new);
+	}
+	// Start of user code block custom blocks
+	// End of user code block custom blocks
+}

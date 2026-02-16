@@ -1,0 +1,111 @@
+package com.zhouzhi.emeraldcraft.procedures;
+
+import com.zhouzhi.emeraldcraft.EmeraldCraft;
+import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.procedures.compress.*;
+import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+
+
+public class SpecialSkillPressed {
+	public static void execute(Entity entity) {
+		if (entity instanceof LivingEntity livingEntity) {
+			ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.MAINHAND);
+			if (itemstack.is(EmeraldcraftItems.EMERALD_SWORD_T_3.get())){
+                if (entity instanceof Player _player) {
+                    if (!_player.getCooldowns().isOnCooldown(itemstack.getItem())) {
+                        _player.getCooldowns().addCooldown(itemstack.getItem(), 40);
+                        Level world = entity.level();
+                        double x = entity.getX();
+                        double y = entity.getY();
+                        double z = entity.getZ();
+                        double radius = 22.5;
+                        float damage = 20.0f;
+                        SLTZ.execute(world, entity, x, y, z, radius, damage);
+                    }
+                }
+			} else if (itemstack.is(EmeraldcraftItems.REFINED_EMERALD_PLUS)) {
+                if (entity instanceof Player _player && !(SimpleUse.getEntityGameType(_player) == GameType.CREATIVE)){
+                    itemstack.setCount(itemstack.getCount() - 1);
+                }
+                Level level = entity.level();
+                livingEntity.moveTo(entity.getX(),entity.getY()+4,entity.getZ());
+                if (entity instanceof Player _player) {
+                    EmeraldCraft.queueServerWork(20, () ->
+                        SLTZ.execute(level, _player, _player.getX(), _player.getY(), _player.getZ(), 64, 64));
+                    level.playSound(_player, _player.getX(), _player.getY(), _player.getZ(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 2.0f, 1.0f);
+                }
+            } else if (itemstack.is(EmeraldcraftItems.EMERALD_PICKAXE_T_3)) {
+                Level world = livingEntity.level();
+                if (world instanceof ServerLevel _level) {
+                    itemstack.hurtAndBreak(1, _level, null, _stkprov -> {
+                    });
+                }
+                if (entity instanceof Player _player)
+                    _player.getCooldowns().addCooldown(itemstack.getItem(), 100);
+                MobEffectInstance[] effects = new MobEffectInstance[]{
+                        new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 90, 5, false, false)
+                };
+                double x = entity.getX();
+                double y = entity.getY();
+                double z = entity.getZ();
+                MobEffectALL.execute(world, x, y, z, effects, 12 ,5 ,12);
+            } else if (itemstack.is(EmeraldcraftItems.SKYFILLING_BLADE)) {
+                Level world = livingEntity.level();
+                if (world instanceof ServerLevel _level) {
+                    itemstack.hurtAndBreak(1, _level, null, _stkprov -> {
+                    });
+                }
+                if (entity instanceof Player _player) {
+                    int tag = TagChange.getOrCreateComponent(itemstack,"special_skill_type",0);
+                    tag++;
+                    switch (tag){
+                        case 1:
+                            if (world instanceof ServerLevel _level) {
+                                itemstack.hurtAndBreak(9, _level, null, _stkprov -> {
+                                });
+                            }
+                            MTR.execute(entity, 64.0f, 200.0f, 320);
+                            _player.getCooldowns().addCooldown(itemstack.getItem(), 200);
+                            break;
+                        case 2:
+                            Use.SkyFillingBladeSpecialSkill2(_player,100.0f,32);
+                            _player.getCooldowns().addCooldown(itemstack.getItem(), 250);
+                            break;
+                        default:
+                            _player.getCooldowns().addCooldown(itemstack.getItem(), 100);
+                            tag = 0;
+                    }
+                    TagChange.saveComponent(itemstack,"special_skill_type",tag);
+                }
+            } else if (itemstack.is(EmeraldcraftItems.VOID_EMERALD_SWORD)) {
+                if (livingEntity.level() instanceof ServerLevel serverLevel) {
+                    for (Entity _entity : serverLevel.getAllEntities()) {
+                        String[] b = {};
+                        for (String a : _entity.getTags().toArray(b)) {
+                            if (a.equals("void")) {
+                                _entity.removeTag("void");
+                            }
+                        }
+                    }
+                }
+            } else if (itemstack.is(EmeraldcraftItems.VOID_EMERALD_AXE) || itemstack.is(EmeraldcraftItems.VOID_EMERALD_PICKAXE) || itemstack.is(EmeraldcraftItems.VOID_EMERALD_SHOVEL) || itemstack.is(EmeraldcraftItems.VOID_EMERALD_HOE)) {
+                boolean tag = TagChange.getOrCreateComponent(itemstack,"Scope",false);
+                TagChange.saveComponent(itemstack,"Scope",!tag);
+                if (entity instanceof Player _player)
+                    _player.getCooldowns().addCooldown(itemstack.getItem(), 10);
+            }
+        }
+    }
+}

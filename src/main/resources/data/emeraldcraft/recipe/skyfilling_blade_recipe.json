@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "aba",
+    "cbc",
+    "ded"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:refined_emerald"
+    },
+    "b": {
+      "item": "emeraldcraft:refined_emerald_plus"
+    },
+    "c": {
+      "item": "emeraldcraft:refined_emerald_t_2"
+    },
+    "d": {
+      "item": "emeraldcraft:refined_emerald_t_3"
+    },
+    "e": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:skyfilling_blade",
+    "count": 1
+  }
+}

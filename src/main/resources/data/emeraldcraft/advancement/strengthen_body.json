@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "id": "emeraldcraft:refined_emerald_plus"
+    },
+    "title": {
+      "translate": "advancements.strengthen_body.title"
+    },
+    "description": {
+      "translate": "advancements.strengthen_body.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "strengthen_body_0": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "emeraldcraft:creaft_refined_emerald_plus"
+}

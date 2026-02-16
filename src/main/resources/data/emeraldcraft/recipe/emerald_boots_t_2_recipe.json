@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "a a",
+    "a a"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:refined_emerald_t_2"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:emerald_armor_t_2_boots",
+    "count": 1
+  }
+}

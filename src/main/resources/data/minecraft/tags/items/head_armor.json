@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wooden_helmet",
+    "minecraft:stone_helmet",
+    "minecraft:iron_helmet",
+    "minecraft:golden_helmet",
+    "minecraft:diamond_helmet",
+    "minecraft:netherite_helmet",
+    "emeraldcraft:emerald_armor_t_2_helmet",
+    "emeraldcraft:emerald_armor_t_3_helmet",
+    "emeraldcraft:emerald_armor_helmet"
+  ]
+}

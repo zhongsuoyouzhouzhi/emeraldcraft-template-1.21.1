@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:refinedemerald_block_3"
+    },
+    "b": {
+      "item": "emeraldcraft:refined_emerald_t_3"
+    },
+    "c": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:refined_emerald_plus",
+    "count": 1
+  }
+}
