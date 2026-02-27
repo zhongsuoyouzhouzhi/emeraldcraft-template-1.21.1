@@ -11,7 +11,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.core.BlockPos;
 
-import com.zhouzhi.emeraldcraft.procedures.others.RefinedemeraldBlock3IsDestroyedByBoom;
+import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldBlock3IsDestroyedByBoom;
 
 public class RefinedemeraldBlock3Block extends Block {
 	public RefinedemeraldBlock3Block() {
@@ -27,6 +27,6 @@ public class RefinedemeraldBlock3Block extends Block {
 	@Override
 	public void wasExploded(Level world, BlockPos pos, Explosion e) {
 		super.wasExploded(world, pos, e);
-		RefinedemeraldBlock3IsDestroyedByBoom.execute(world, pos.getX(), pos.getY(), pos.getZ());
+		RefinedEmeraldBlock3IsDestroyedByBoom.execute(world, pos.getX(), pos.getY(), pos.getZ());
 	}
 }

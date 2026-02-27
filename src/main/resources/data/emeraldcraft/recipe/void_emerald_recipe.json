@@ -1,14 +1,25 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_shaped",
   "group": "emeraldcraft",
   "category": "misc",
-  "ingredients": [
-    {
-      "item": "emeraldcraft:refinedemerald_block"
-    }
+  "pattern": [
+    "aba",
+    " c ",
+    "aba"
   ],
+  "key": {
+    "a": {
+      "item": "minecraft:obsidian"
+    },
+    "b": {
+      "item": "emeraldcraft:refined_emerald_t_2"
+    },
+    "c": {
+      "item": "minecraft:nether_star"
+    }
+  },
   "result": {
-    "id": "emeraldcraft:refined_emerald",
-    "count": 9
+    "id": "emeraldcraft:void_emerald",
+    "count": 2
   }
 }

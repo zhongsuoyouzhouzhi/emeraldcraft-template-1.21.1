@@ -1,4 +1,74 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-public class VoidEmeraldItem {
+import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
+import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
+import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class VoidEmeraldItem extends Item {
+    public VoidEmeraldItem() {
+        super(new Item.Properties().rarity(Rarity.RARE));
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        super.useOn(context);
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        int x = pos.getX();
+        int y = pos.getY();
+        int z = pos.getZ();
+        BlockState state = world.getBlockState(pos);
+        int a = 3;
+        if (state.getBlock() == EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.value()) {
+            a += 3;
+            world.destroyBlock(pos, false);
+            world.explode(context.getPlayer(), x, y, z, 32, Level.ExplosionInteraction.BLOCK);
+        }
+        SimpleUse.OperateBlock(x, y, z, a, (blockPos, bx, by, bz) -> {
+            if (world.getBlockState(blockPos).getBlock() == Blocks.AIR) return;
+            if (!world.isClientSide() && world instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(
+                        ParticleTypes.END_ROD,
+                        bx, by, bz,
+                        64,
+                        0.5, 0.5, 0.5,
+                        0
+                );
+            }
+            if (Math.random() >= 0.75) {
+                Block.dropResources(world.getBlockState(blockPos), world, blockPos, null);
+            }
+            world.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+        });
+        if (SimpleUse.getEntityGameType(context.getPlayer()) == GameType.SURVIVAL) {
+            context.getItemInHand().shrink(1);
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
+        Tool tool = stack.get(DataComponents.TOOL);
+        return tool != null ? tool.getMiningSpeed(state) : 1.2F;
+    }
 }

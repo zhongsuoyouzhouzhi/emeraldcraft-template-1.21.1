@@ -1,7 +1,8 @@
-package com.zhouzhi.emeraldcraft.item;
+package com.zhouzhi.emeraldcraft.item.void_emerald;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -10,10 +11,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class VoidEmeraldSwordItem extends SwordItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -49,7 +49,12 @@ public class VoidEmeraldSwordItem extends SwordItem {
 	};
 
 	public VoidEmeraldSwordItem() {
-		super(TOOL_TIER, new Item.Properties().attributes(SwordItem.createAttributes(TOOL_TIER, 4f, -2.0f)).fireResistant());
+		super(TOOL_TIER,
+				new Item.Properties()
+						.attributes(SwordItem.createAttributes(TOOL_TIER, 4f, -2.0f))
+						.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+						.fireResistant()
+			);
 	}
 
 	@Override
@@ -65,16 +70,4 @@ public class VoidEmeraldSwordItem extends SwordItem {
         Use.VoidEmeraldSwordRight_clickOnAir(ar.getObject(),entity,world);
 		return ar;
 	}
-    /*拿着
-    @Override
-    public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-        super.inventoryTick(itemstack, world, entity, slot, selected);
-        if (selected)
-            Use.RefinedEmeraldT3ToolIsBeingDamagedPerTick(world, entity, itemstack);
-    }
-    */
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
-		return false;
-	}}
+}

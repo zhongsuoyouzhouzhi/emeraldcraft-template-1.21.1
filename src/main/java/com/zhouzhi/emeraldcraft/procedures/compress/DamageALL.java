@@ -34,7 +34,7 @@ public class DamageALL {
 
     public static void execute(Level world, Entity source, float damageAmount, int XRadius, int YRadius, int ZRadius, boolean damageSource) {
         if (world instanceof ServerLevel) {
-            Use.OperateEntity(world, source, XRadius, YRadius, ZRadius, (entity)->{
+            SimpleUse.OperateEntity(world, source, XRadius, YRadius, ZRadius, (entity)->{
                 if (!damageSource && entity == source) {
                     return;
                 }

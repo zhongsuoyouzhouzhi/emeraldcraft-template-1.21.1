@@ -2,12 +2,16 @@ package com.zhouzhi.emeraldcraft.procedures.compress;
 
 import com.zhouzhi.emeraldcraft.procedures.net.function.Function_BlockOperation;
 import com.zhouzhi.emeraldcraft.procedures.net.function.Function_BlockPosOperation;
+import com.zhouzhi.emeraldcraft.procedures.net.function.Function_EntityOperation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -17,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -26,9 +31,9 @@ import java.util.function.Predicate;
 
 
 public class SimpleUse {
-    public static int getEffectLevel(Entity entity) {
+    public static int getEffectLevel(Entity entity, Holder<MobEffect> effect) {
         if (entity instanceof LivingEntity livingEntity) {
-            MobEffectInstance effectInstance = livingEntity.getEffect(MobEffects.MOVEMENT_SPEED);
+            MobEffectInstance effectInstance = livingEntity.getEffect(effect);
             if (effectInstance != null) {
                 return effectInstance.getAmplifier();// 0 = 等级1，1 = 等级2
             }
@@ -89,9 +94,9 @@ public class SimpleUse {
                         BlockPos pos = BlockPos.containing(blockX, blockY, blockZ);
                         Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
                         world.destroyBlock(pos, drop);
+                    }
                         count++;
                     }
-                }
             }
         }
         return count;
@@ -186,43 +191,52 @@ public class SimpleUse {
         return count;
     }
 
-
-    public static boolean hasEnchantment(ItemStack stack, Enchantment enchantment) {
-        if (stack.isEmpty() || enchantment == null) {
-            return false;
-        }
-        ItemEnchantments enchantments = stack.get(DataComponents.ENCHANTMENTS);
-        if (enchantments == null) {
-            return false;
-        }
-
-        var enchantmentMap = enchantments.entrySet();
-        for (var entry : enchantmentMap) {
-            Enchantment currentEnchantment = entry.getKey().value();
-            if (currentEnchantment.equals(enchantment)) {
-                return true;
+    public static int OperateBlock(int x, int y, int z, int radius, Function_BlockPosOperation Operate) {
+        int count = 0;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    int blockX = x + dx;
+                    int blockY = y + dy;
+                    int blockZ = z + dz;
+                    Operate.run(BlockPos.containing(blockX, blockY, blockZ), blockX, blockY, blockZ);
+                    count++;
+                }
             }
         }
-
-        return false;
+        return count;
     }
 
-    public static int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
-        if (stack.isEmpty() || enchantment == null) {
-            return 0;
-        }
-        ItemEnchantments enchantments = stack.get(DataComponents.ENCHANTMENTS);
-        if (enchantments == null) {
-            return 0;
-        }
-        for (var entry : enchantments.entrySet()) {
-            Enchantment currentEnchantment = entry.getKey().value();
-            if (currentEnchantment.equals(enchantment)) {
-                return entry.getIntValue();
+    public static void OperateEntity(Level world, Entity source, int XRadius, int YRadius, int ZRadius, Function_EntityOperation Operate) {
+        if (world instanceof ServerLevel serverLevel) {
+            int minX = (int) (source.getX() - XRadius);
+            int minY = (int) (source.getY() - YRadius);
+            int minZ = (int) (source.getZ() - ZRadius);
+            int maxX = (int) (source.getX() + XRadius);
+            int maxY = (int) (source.getY() + YRadius);
+            int maxZ = (int) (source.getZ() + ZRadius);
+
+            BlockPos minPos = new BlockPos(minX, minY, minZ);
+            BlockPos maxPos = new BlockPos(maxX, maxY, maxZ);
+
+            Iterable<Entity> entities = serverLevel.getEntities().getAll();
+
+            for (Entity entity : entities) {
+                if (isEntityInRange(entity, minPos, maxPos)) {
+                    Operate.run(entity);
+                }
             }
         }
+    }
 
-        return 0;
+    private static boolean isEntityInRange(Entity entity, BlockPos minPos, BlockPos maxPos) {
+        double entityX = entity.getX();
+        double entityY = entity.getY();
+        double entityZ = entity.getZ();
+
+        return entityX >= minPos.getX() && entityX <= maxPos.getX() &&
+                entityY >= minPos.getY() && entityY <= maxPos.getY() &&
+                entityZ >= minPos.getZ() && entityZ <= maxPos.getZ();
     }
 
 }

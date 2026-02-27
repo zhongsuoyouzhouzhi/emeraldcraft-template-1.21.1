@@ -3,8 +3,10 @@ package com.zhouzhi.emeraldcraft.procedures.net;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
+import com.zhouzhi.emeraldcraft.procedures.net.function.Function_BlockPosOperation;
 import com.zhouzhi.emeraldcraft.procedures.net.function.Function_EntityOperation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -17,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 
 public class Use {
@@ -191,10 +194,19 @@ public class Use {
                         entity.setInvisible(true);
                         entity.setInvulnerable(false);
                         entity.setSilent(true);
+                        if (!world.isClientSide())
+                            serverLevel.sendParticles(
+                                    ParticleTypes.END_ROD,
+                                    entity.getX(), entity.getY(), entity.getZ(),
+                                    64,
+                                    0.5, 0.5, 0.5,
+                                    0
+                            );
+
                         if (entity instanceof LivingEntity livingEntity) {
-                            livingEntity.hurt(source.damageSources().playerAttack(source),livingEntity.getMaxHealth());
+                            livingEntity.hurt(source.damageSources().playerAttack(source), livingEntity.getMaxHealth());
                             livingEntity.die(source.damageSources().playerAttack(source));
-                       }
+                        }
                         else entity.kill();
                         entity.removeTag("void");
                         entity.moveTo(entity.getX(), -200, entity.getZ());
@@ -208,37 +220,5 @@ public class Use {
             }
             source.getCooldowns().addCooldown(stack.getItem(), 200);
         }
-    }
-
-    public static void OperateEntity(Level world, Entity source, int XRadius, int YRadius, int ZRadius, Function_EntityOperation Operate) {
-        if (world instanceof ServerLevel serverLevel) {
-            int minX = (int) (source.getX() - XRadius);
-            int minY = (int) (source.getY() - YRadius);
-            int minZ = (int) (source.getZ() - ZRadius);
-            int maxX = (int) (source.getX() + XRadius);
-            int maxY = (int) (source.getY() + YRadius);
-            int maxZ = (int) (source.getZ() + ZRadius);
-
-            BlockPos minPos = new BlockPos(minX, minY, minZ);
-            BlockPos maxPos = new BlockPos(maxX, maxY, maxZ);
-
-            Iterable<Entity> entities = serverLevel.getEntities().getAll();
-
-            for (Entity entity : entities) {
-                if (isEntityInRange(entity, minPos, maxPos)) {
-                    Operate.run(entity);
-                }
-            }
-        }
-    }
-
-    private static boolean isEntityInRange(Entity entity, BlockPos minPos, BlockPos maxPos) {
-        double entityX = entity.getX();
-        double entityY = entity.getY();
-        double entityZ = entity.getZ();
-
-        return entityX >= minPos.getX() && entityX <= maxPos.getX() &&
-                entityY >= minPos.getY() && entityY <= maxPos.getY() &&
-                entityZ >= minPos.getZ() && entityZ <= maxPos.getZ();
     }
 }

@@ -32,7 +32,7 @@ public class RefinedEmeraldT3Right_clickOnBlock {
 			if (world instanceof Level _level && !_level.isClientSide())
 				_level.explode(null, x, y, z, 384, Level.ExplosionInteraction.BLOCK);
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(Component.literal("You are prohibited from doing that."), false);
+				send(1, _player);
 		} else if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_2.get()) {
 			itemstack.shrink(1);
 			if (entity instanceof Player _player)
@@ -43,7 +43,7 @@ public class RefinedEmeraldT3Right_clickOnBlock {
 			if (world instanceof Level _level && !_level.isClientSide())
 				_level.explode(null, x, y, z, 192, Level.ExplosionInteraction.BLOCK);
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(Component.literal("You are not allowed to do that."), false);
+				send(2, _player);
 		} else if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINEDEMERALD_BLOCK.get()) {
 			itemstack.shrink(1);
 			if (entity instanceof Player _player)
@@ -54,7 +54,7 @@ public class RefinedEmeraldT3Right_clickOnBlock {
 			if (world instanceof Level _level && !_level.isClientSide())
 				_level.explode(null, x, y, z, 96, Level.ExplosionInteraction.BLOCK);
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(Component.literal("Maybe we can do something else?"), false);
+				send(3, _player);
 		} else if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == Blocks.EMERALD_BLOCK) {
 			itemstack.shrink(1);
 			if (entity instanceof Player _player)
@@ -65,7 +65,7 @@ public class RefinedEmeraldT3Right_clickOnBlock {
 			if (world instanceof Level _level && !_level.isClientSide())
 				_level.explode(null, x, y, z, 32, Level.ExplosionInteraction.BLOCK);
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(Component.literal("Perhaps you\u2019d better focus on meaningful tasks instead of trivial things like this."), false);
+				send(4, _player);
 		} else if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == Blocks.BEDROCK) {
 			itemstack.shrink(1);
 			if (entity instanceof Player _player)
@@ -75,10 +75,13 @@ public class RefinedEmeraldT3Right_clickOnBlock {
 			world.setBlock(BlockPos.containing(x, y, z), Blocks.AIR.defaultBlockState(), 3);
 			if (world instanceof Level _level && !_level.isClientSide())
 				_level.explode(null, x, y, z, 768, Level.ExplosionInteraction.BLOCK);
-			if (entity instanceof Player _player && !_player.level().isClientSide())
+			if (entity instanceof Player _player && !_player.level().isClientSide()) {
+				Component name1 = Component.translatable("message.emeraldcraft.warning_5_1");
+				Component name2 = Component.translatable("message.emeraldcraft.warning_5_2");
 				_player.displayClientMessage(Component.literal(
-						(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get()).getDisplayName().getString() + " and " + new ItemStack(Blocks.BEDROCK).getDisplayName().getString() + " bombarded each other, causing a violent explosion.")),
+								(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get()).getDisplayName().getString() + name1.getString() + new ItemStack(Blocks.BEDROCK).getDisplayName().getString() + name2.getString())),
 						false);
+			}
 			world.setBlock(BlockPos.containing(x, y, z), Blocks.BEDROCK.defaultBlockState(), 3);
 			if (!(entity instanceof ServerPlayer _plr58 && _plr58.level() instanceof ServerLevel && _plr58.getAdvancements().getOrStartProgress(_plr58.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:ultimate_boom"))).isDone())) {
 				if (entity instanceof ServerPlayer _player) {
@@ -93,5 +96,10 @@ public class RefinedEmeraldT3Right_clickOnBlock {
 				}
 			}
 		}
+	}
+
+	private static void send(int n ,Player _player) {
+		Component name = Component.translatable("message.emeraldcraft.warning_" + n);
+		_player.displayClientMessage(name, false);
 	}
 }

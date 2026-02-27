@@ -1,33 +1,49 @@
-package com.zhouzhi.emeraldcraft.item;
+package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
+import com.mojang.datafixers.util.Pair;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
-import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.*;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.common.ItemAbilities;
 
-public class EmeraldHoeT3Item extends HoeItem {
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
+import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.OperateBlockPos;
+
+public class VoidEmeraldHoeItem extends HoeItem {
 	private static final Tier TOOL_TIER = new Tier() {
 		@Override
 		public int getUses() {
-			return 8600;
+			return 8900;
 		}
 
 		@Override
 		public float getSpeed() {
-			return 100f;
+			return 240f;
 		}
 
 		@Override
 		public float getAttackDamageBonus() {
-			return 0;
+			return 1;
 		}
 
 		@Override
@@ -37,29 +53,45 @@ public class EmeraldHoeT3Item extends HoeItem {
 
 		@Override
 		public int getEnchantmentValue() {
-			return 50;
+			return 60;
 		}
 
 		@Override
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get()));
+            return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
 		}
 	};
 
-	public EmeraldHoeT3Item() {
-		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 3f, -3f)).fireResistant());
+	public VoidEmeraldHoeItem() {
+		super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 1.5f, -2.5f)).fireResistant());
 	}
 
     @Override
-    public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-        super.inventoryTick(itemstack, world, entity, slot, selected);
-        if (selected)
-            Use.RefinedEmeraldT3ToolIsBeingDamagedPerTick(world, entity, itemstack);
+    public InteractionResult useOn(UseOnContext context) {
+        if (TagChange.getOrCreateComponent(context.getItemInHand(),"Scope", false)){
+            BlockPos blockPos = context.getClickedPos();
+            Level level = context.getLevel();
+            OperateBlockPos(
+                    context.getLevel(),
+                    blockPos.getX(),
+                    blockPos.getY(),
+                    blockPos.getZ(),
+                    2,
+                    0,
+                    2 ,
+                    (blockpos) -> true,
+                    (block,x,y,z) -> {
+                        if (level.getBlockState(blockPos).getBlock() != Blocks.GRASS_BLOCK && level.getBlockState(blockPos).getBlock() != Blocks.DIRT) return;
+                        if (x == blockPos.getX() && y == blockPos.getY() && z == blockPos.getZ()) return;
+                        if (block == Blocks.FARMLAND) return;
+                        if (block == Blocks.GRASS_BLOCK || block == Blocks.DIRT) {
+                            BlockPos pos = BlockPos.containing(x, y, z);
+                            BlockState newState = Blocks.FARMLAND.defaultBlockState().setValue(FarmBlock.MOISTURE, 5);;
+                            level.setBlockAndUpdate(pos, newState);
+                            level.getChunk(pos).setBlockState(pos, newState, true);
+                        }
+                    });
+        }
+        return super.useOn (context);
     }
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
-		return true;
-	}
 }

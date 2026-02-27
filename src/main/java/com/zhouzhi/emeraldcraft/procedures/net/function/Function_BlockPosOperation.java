@@ -1,8 +1,8 @@
 package com.zhouzhi.emeraldcraft.procedures.net.function;
 
-import net.minecraft.world.level.block.Block;
+import net.minecraft.core.BlockPos;
 
 @FunctionalInterface
-public interface Function_BlockOperation {
-    void run(Block block, int x, int y, int z);
+public interface Function_BlockPosOperation {
+    void run(BlockPos blockpos, int x, int y, int z);
 }

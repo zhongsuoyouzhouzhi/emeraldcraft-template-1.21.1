@@ -1,5 +1,14 @@
 package com.zhouzhi.emeraldcraft;
 
+import com.zhouzhi.emeraldcraft.init.EmeraldcraftEnchantments;
+import com.zhouzhi.emeraldcraft.procedures.enchantment.EnchantmentEffect;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -20,12 +29,9 @@ import net.minecraft.network.FriendlyByteBuf;
 
 import com.zhouzhi.emeraldcraft.init.*;
 
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.Map;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Collection;
-import java.util.ArrayList;
 
 @Mod("emeraldcraft")
 public class EmeraldCraft {
@@ -33,10 +39,10 @@ public class EmeraldCraft {
     public static final String MOD_ID = "emeraldcraft";
 
     public EmeraldCraft(IEventBus modEventBus) {
-        // Start of user code block mod constructor
-        // End of user code block mod constructor
         NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(new EnchantmentEffect());
         modEventBus.addListener(this::registerNetworking);
+        modEventBus.addListener(this::onGatherData);
         EmeraldcraftBlocks.REGISTRY.register(modEventBus);
         EmeraldcraftItems.REGISTRY.register(modEventBus);
         EmeraldcraftEntities.REGISTRY.register(modEventBus);
@@ -44,12 +50,9 @@ public class EmeraldCraft {
         EmeraldcraftPotions.REGISTRY.register(modEventBus);
         EmeraldcraftMobEffects.REGISTRY.register(modEventBus);
         EmeraldcraftAttributes.REGISTRY.register(modEventBus);
-        // Start of user code block mod init
-        // End of user code block mod init
+
     }
 
-    // Start of user code block mod methods
-    // End of user code block mod methods
     private static boolean networkingRegistered = false;
     private static final Map<CustomPacketPayload.Type<?>, NetworkMessage<?>> MESSAGES = new HashMap<>();
 
@@ -86,5 +89,24 @@ public class EmeraldCraft {
         });
         actions.forEach(e -> e.getA().run());
         workQueue.removeAll(actions);
+    }
+
+    public void onGatherData(GatherDataEvent event) {
+        DataGenerator generator = event.getGenerator();
+        PackOutput output = generator.getPackOutput();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+
+        RegistrySetBuilder registryBuilder = new RegistrySetBuilder()
+                .add(Registries.ENCHANTMENT, EmeraldcraftEnchantments::bootstrap);
+
+        generator.addProvider(
+                event.includeServer(),
+                new DatapackBuiltinEntriesProvider(
+                        output,
+                        lookupProvider,
+                        registryBuilder,
+                        Set.of(MOD_ID)
+                )
+        );
     }
 }

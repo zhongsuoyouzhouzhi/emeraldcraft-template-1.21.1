@@ -1,15 +1,6 @@
 {
-  "type": "minecraft:smithing_transform",
-  "template": {
-    "item": "minecraft:void_emerald"
-  },
-  "base": {
-    "item": "minecraft:diamond_sword"
-  },
-  "addition": {
-    "item": "minecraft:ender_pearl"
-  },
-  "result": {
-    "id": "emeraldcraft:void_emerald_sword"
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "emeraldcraft:item/void_emerald_sword"
   }
 }

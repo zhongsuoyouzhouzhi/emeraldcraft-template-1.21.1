@@ -1,9 +1,8 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
-import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
@@ -17,8 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class VoidEmeraldPickaxeItem extends PickaxeItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -59,24 +56,29 @@ public class VoidEmeraldPickaxeItem extends PickaxeItem {
 
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miningEntity) {
-        Tool tool = (Tool) stack.get(DataComponents.TOOL);
+        Tool tool = stack.get(DataComponents.TOOL);
         if (tool == null) {
             return false;
         } else {
             if (!level.isClientSide && state.getDestroySpeed(level, pos) != 0.0F && tool.damagePerBlock() > 0) {
                 stack.hurtAndBreak(tool.damagePerBlock(), miningEntity, EquipmentSlot.MAINHAND);
-                if (SimpleUse.isStone(state.getBlock()) || state.getBlock() == Blocks.EMERALD_ORE || state.getBlock() == Blocks.DEEPSLATE_EMERALD_ORE) {
-                    //SimpleUse.destroyStone(level,pos.getX(),pos.getY(),pos.getZ(),2,false);
-                    SimpleUse.OperateBlock(level,pos.getX(),pos.getY(),pos.getZ(),2,(block) -> {
-                        return SimpleUse.isStone(block) || block == Blocks.EMERALD_ORE || block == Blocks.DEEPSLATE_EMERALD_ORE;
-                    },(block,x,y,z) -> {
-                        BlockPos _pos = BlockPos.containing(x, y, z);
-                        Block.dropResources(level.getBlockState(_pos), level, BlockPos.containing(x, y, z), null);
-                        level.destroyBlock(pos, false);
+                if ((SimpleUse.isStone(state.getBlock()) || state.getBlock() == Blocks.EMERALD_ORE || state.getBlock() == Blocks.DEEPSLATE_EMERALD_ORE) && !TagChange.getOrCreateComponent(stack,"Scope",false)) {
+                    SimpleUse.OperateBlock(
+                            level,
+                            pos.getX(),
+                            pos.getY(),
+                            pos.getZ(),
+                            2,
+                            (block) -> SimpleUse.isStone(block) || block == Blocks.EMERALD_ORE || block == Blocks.DEEPSLATE_EMERALD_ORE,
+                            (block,x,y,z) -> {
+                                BlockPos _pos = BlockPos.containing(x, y, z);
+                                Block.dropResources(level.getBlockState(_pos), level, BlockPos.containing(x, y, z), null);
+                                level.destroyBlock(_pos, false);
                     });
                 }
             }
             return true;
         }
     }
+
 }

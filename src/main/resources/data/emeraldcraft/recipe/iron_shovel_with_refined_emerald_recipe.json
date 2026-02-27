@@ -11,11 +11,11 @@
       "item": "emeraldcraft:refined_emerald"
     },
     "b": {
-      "item": "minecraft:iron_axe"
+      "item": "minecraft:iron_shovel"
     }
   },
   "result": {
-    "id": "emeraldcraft:iron_axe_with_refined_emerald",
+    "id": "emeraldcraft:iron_shovel_with_refined_emerald",
     "count": 1
   }
 }

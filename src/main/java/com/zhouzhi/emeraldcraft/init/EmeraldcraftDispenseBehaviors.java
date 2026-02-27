@@ -15,14 +15,14 @@ import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldT3DLCDispenserLa
 public class EmeraldcraftDispenseBehaviors {
 	@SubscribeEvent
 	public static void init(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
+		event.enqueueWork(() ->
 			DispenserBlock.registerBehavior(EmeraldcraftItems.REFINED_EMERALD_T_3.get(), new DefaultDispenseItemBehavior() {
 				public ItemStack execute(BlockSource blockSource, ItemStack itemstack) {
 					RefinedEmeraldT3DLCDispenserLaunch.execute(blockSource.level(), blockSource.pos().getX(), blockSource.pos().getY(), blockSource.pos().getZ(), blockSource.state().getValue(DispenserBlock.FACING));
 					itemstack.shrink(1);
 					return itemstack;
 				}
-			});
-		});
+			})
+		);
 	}
 }

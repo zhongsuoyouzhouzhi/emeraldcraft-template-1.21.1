@@ -1,4 +1,4 @@
-package com.zhouzhi.emeraldcraft.item;
+package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import net.minecraft.tags.BlockTags;
