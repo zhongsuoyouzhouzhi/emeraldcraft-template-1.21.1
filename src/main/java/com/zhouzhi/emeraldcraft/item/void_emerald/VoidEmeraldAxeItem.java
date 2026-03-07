@@ -60,13 +60,6 @@ public class VoidEmeraldAxeItem extends AxeItem {
 				.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
 				.fireResistant());
 	}
-/*
-	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
-		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-		return ar;
-	}
-*/
 
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miningEntity) {

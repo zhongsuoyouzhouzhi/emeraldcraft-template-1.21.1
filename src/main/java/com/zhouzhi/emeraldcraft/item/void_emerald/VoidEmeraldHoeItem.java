@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -63,7 +65,9 @@ public class VoidEmeraldHoeItem extends HoeItem {
 	};
 
 	public VoidEmeraldHoeItem() {
-		super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 1.5f, -2.5f)).fireResistant());
+		super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 1.5f, -2.5f))
+				.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+				.fireResistant());
 	}
 
     @Override

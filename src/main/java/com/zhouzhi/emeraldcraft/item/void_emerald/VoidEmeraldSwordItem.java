@@ -2,6 +2,7 @@ package com.zhouzhi.emeraldcraft.item.void_emerald;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -14,6 +15,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class VoidEmeraldSwordItem extends SwordItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -33,6 +36,7 @@ public class VoidEmeraldSwordItem extends SwordItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -43,10 +47,12 @@ public class VoidEmeraldSwordItem extends SwordItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
 			return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
 		}
 	};
+
 
 	public VoidEmeraldSwordItem() {
 		super(TOOL_TIER,
@@ -58,14 +64,15 @@ public class VoidEmeraldSwordItem extends SwordItem {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-        Use.VoidEmeraldSwordHitLivingThings(itemstack, entity, sourceentity);
+	public boolean hurtEnemy(ItemStack itemstack,LivingEntity entity,LivingEntity sourceEntity) {
+		boolean retval = super.hurtEnemy(itemstack, entity, sourceEntity);
+        Use.VoidEmeraldSwordHitLivingThings(itemstack, entity, sourceEntity);
 		return retval;
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
+	@MethodsReturnNonnullByDefault
+	public InteractionResultHolder<ItemStack> use(Level world,Player entity,InteractionHand hand) {
 		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
         Use.VoidEmeraldSwordRight_clickOnAir(ar.getObject(),entity,world);
 		return ar;

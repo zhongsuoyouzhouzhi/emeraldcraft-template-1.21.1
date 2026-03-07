@@ -5,6 +5,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -13,6 +14,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class EmeraldcraftEnchantments {
     public static final ResourceKey<Enchantment> VOID_EMERALD_ATTACH =
@@ -25,6 +28,12 @@ public class EmeraldcraftEnchantments {
             ResourceKey.create(
                     Registries.ENCHANTMENT,
                     ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "lighting")
+            );
+
+    public static final ResourceKey<Enchantment> REBOUND =
+            ResourceKey.create(
+                    Registries.ENCHANTMENT,
+                    ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "rebound")
             );
 
     public static void bootstrap(BootstrapContext<Enchantment> context) {
@@ -67,8 +76,26 @@ public class EmeraldcraftEnchantments {
                 effects
         );
 
+        Enchantment.EnchantmentDefinition rebound_definition = Enchantment.definition(
+                itemGetter.getOrThrow(Tags.Items.TOOLS_SHIELD),
+                itemGetter.getOrThrow(Tags.Items.TOOLS_SHIELD),
+                15,
+                6,
+                Enchantment.constantCost(5),
+                Enchantment.constantCost(30),
+                4,
+                EquipmentSlotGroup.HAND
+        );
+        Enchantment rebound_enchantment = new Enchantment(
+                Component.translatable("enchantment." + EmeraldCraft.MOD_ID + ".rebound"),
+                rebound_definition,
+                exclusiveSet,
+                effects
+        );
+
         context.register(VOID_EMERALD_ATTACH, void_emerald_attach_enchantment);
         context.register(LIGHTING, lighting_enchantment);
+        context.register(REBOUND, rebound_enchantment);
     }
 
 }

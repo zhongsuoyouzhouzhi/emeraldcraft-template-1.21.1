@@ -5,11 +5,13 @@ import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -53,7 +55,10 @@ public class VoidEmeraldShovelItem extends ShovelItem {
 	};
 
 	public VoidEmeraldShovelItem() {
-		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 7.2f, -2f)));
+		super(TOOL_TIER, new Item.Properties()
+				.attributes(DiggerItem.createAttributes(TOOL_TIER, 7.2f, -2f))
+				.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+				.fireResistant());
 	}
 
     @Override

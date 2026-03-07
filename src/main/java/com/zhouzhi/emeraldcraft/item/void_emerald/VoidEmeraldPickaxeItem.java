@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -51,7 +52,10 @@ public class VoidEmeraldPickaxeItem extends PickaxeItem {
 	};
 
 	public VoidEmeraldPickaxeItem() {
-		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 6f, -2.4f)).fireResistant());
+		super(TOOL_TIER, new Item.Properties()
+				.attributes(DiggerItem.createAttributes(TOOL_TIER, 6f, -2.4f))
+				.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+				.fireResistant());
 	}
 
     @Override

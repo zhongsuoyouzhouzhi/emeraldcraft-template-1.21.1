@@ -14,10 +14,10 @@ import com.zhouzhi.emeraldcraft.init.EmeraldcraftPotions;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 
 @EventBusSubscriber
-public class EmeraldAttachPotionRecipeBrewingRecipe implements IBrewingRecipe {
+public class EmeraldAttachPotionBrewingRecipe implements IBrewingRecipe {
 	@SubscribeEvent
 	public static void init(RegisterBrewingRecipesEvent event) {
-		event.getBuilder().addRecipe(new EmeraldAttachPotionRecipeBrewingRecipe());
+		event.getBuilder().addRecipe(new EmeraldAttachPotionBrewingRecipe());
 	}
 
 	@Override

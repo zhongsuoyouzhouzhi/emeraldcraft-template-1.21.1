@@ -41,8 +41,11 @@ public abstract class EmeraldArmorT3Item extends ArmorItem {
 				map.put(ArmorItem.Type.CHESTPLATE, 60);
 				map.put(ArmorItem.Type.HELMET, 25);
 				map.put(ArmorItem.Type.BODY, 60);
-			}), 30, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EMPTY), () -> Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get())),
-					List.of(new ArmorMaterial.Layer(ResourceLocation.parse("emeraldcraft:emerald"))), 6f, 0.5f);
+			}), 30, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EMPTY),
+					() -> Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get())),
+					List.of(new ArmorMaterial.Layer(ResourceLocation.parse("emeraldcraft:refined_emerald_t3"))),
+					6f,
+					0.5f);
 			registerHelper.register(ResourceLocation.parse("emeraldcraft:emerald_armor_t_3"), armorMaterial);
 			ARMOR_MATERIAL = BuiltInRegistries.ARMOR_MATERIAL.wrapAsHolder(armorMaterial);
 		});
