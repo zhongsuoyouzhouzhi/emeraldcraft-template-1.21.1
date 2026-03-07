@@ -20,7 +20,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 
@@ -39,13 +41,9 @@ public class SimpleUse {
         if (entity instanceof ServerPlayer serverPlayer) {
             return serverPlayer.gameMode.getGameModeForPlayer();
         } else if (entity instanceof Player player && player.level().isClientSide()) {
-            try {
-                PlayerInfo playerInfo = Minecraft.getInstance().getConnection().getPlayerInfo(player.getGameProfile().getId());
-                if (playerInfo != null)
-                    return playerInfo.getGameMode();
-            } catch (NullPointerException e) {
-                throw new RuntimeException(e);
-            }
+            PlayerInfo playerInfo = Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(player.getGameProfile().getId());
+            if (playerInfo != null)
+                return playerInfo.getGameMode();
         }
         return null;
     }
@@ -231,6 +229,29 @@ public class SimpleUse {
         return entityX >= minPos.getX() && entityX <= maxPos.getX() &&
                 entityY >= minPos.getY() && entityY <= maxPos.getY() &&
                 entityZ >= minPos.getZ() && entityZ <= maxPos.getZ();
+    }
+
+    public static Vec3 getPointAtDistance(
+            double x1, double y1, double z1,
+            double x2, double y2, double z2,
+            double distance) {
+
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+        double dz = z2 - z1;
+        double totalDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (totalDistance == 0) {
+            return new Vec3(x1, y1, z1);
+        }
+
+        double ratio = distance / totalDistance;
+
+        double targetX = x1 + dx * ratio;
+        double targetY = y1 + dy * ratio;
+        double targetZ = z1 + dz * ratio;
+
+        return new Vec3(targetX, targetY, targetZ);
     }
 
 }

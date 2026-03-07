@@ -6,10 +6,6 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -19,10 +15,10 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 
 public class EnchantmentEffect {
     @SubscribeEvent
@@ -57,7 +53,7 @@ public class EnchantmentEffect {
                     newDamage += bonusDamage;
                     event.setNewDamage(newDamage);
                     if (level instanceof ServerLevel serverLevel) {
-                        Vec3 vec3 = getPointAtDistance(
+                        Vec3 vec3 = SimpleUse.getPointAtDistance(
                                 target.getX(),target.getY() + 0.25,target.getZ(),
                                 attacker.getX(),attacker.getY(),attacker.getZ(),
                                 0.2
@@ -91,28 +87,6 @@ public class EnchantmentEffect {
                 }
             }
         }
-    }
-    public static Vec3 getPointAtDistance(
-            double x1, double y1, double z1,
-            double x2, double y2, double z2,
-            double distance) {
-
-        double dx = x2 - x1;
-        double dy = y2 - y1;
-        double dz = z2 - z1;
-        double totalDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-        if (totalDistance == 0) {
-            return new Vec3(x1, y1, z1);
-        }
-
-        double ratio = distance / totalDistance;
-
-        double targetX = x1 + dx * ratio;
-        double targetY = y1 + dy * ratio;
-        double targetZ = z1 + dz * ratio;
-
-        return new Vec3(targetX, targetY, targetZ);
     }
 
     @SubscribeEvent
