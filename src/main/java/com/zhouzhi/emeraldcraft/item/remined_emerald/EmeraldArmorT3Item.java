@@ -25,6 +25,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public abstract class EmeraldArmorT3Item extends ArmorItem {
 				map.put(ArmorItem.Type.HELMET, 25);
 				map.put(ArmorItem.Type.BODY, 60);
 			}), 30, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EMPTY),
-					() -> Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get())),
+					() -> Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get())),
 					List.of(new ArmorMaterial.Layer(ResourceLocation.parse("emeraldcraft:refined_emerald_t3"))),
 					6f,
 					0.5f);
@@ -62,17 +63,17 @@ public abstract class EmeraldArmorT3Item extends ArmorItem {
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public boolean isFoil(ItemStack itemstack) {
+		public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 			return true;
 		}
 
 		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
+		public boolean makesPiglinsNeutral(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity) {
 			return true;
 		}
 
 		@Override
-		public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+		public void inventoryTick(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault Level world, @ParametersAreNonnullByDefault Entity entity, int slot, boolean selected) {
 			super.inventoryTick(itemstack, world, entity, slot, selected);
 			if (entity instanceof Player player && Iterables.contains(player.getArmorSlots(), itemstack)) {
 				EmeraldArmorT3PerTick.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, itemstack);
@@ -87,17 +88,17 @@ public abstract class EmeraldArmorT3Item extends ArmorItem {
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public boolean isFoil(ItemStack itemstack) {
+		public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 			return true;
 		}
 
 		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
+		public boolean makesPiglinsNeutral(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity) {
 			return true;
 		}
 
 		@Override
-		public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+		public void inventoryTick(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault Level world, @ParametersAreNonnullByDefault Entity entity, int slot, boolean selected) {
 			super.inventoryTick(itemstack, world, entity, slot, selected);
 			if (entity instanceof Player player && Iterables.contains(player.getArmorSlots(), itemstack)) {
 				EmeraldArmorT3PerTick.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, itemstack);
@@ -112,17 +113,17 @@ public abstract class EmeraldArmorT3Item extends ArmorItem {
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public boolean isFoil(ItemStack itemstack) {
+		public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 			return true;
 		}
 
 		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
+		public boolean makesPiglinsNeutral(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity) {
 			return true;
 		}
 
 		@Override
-		public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+		public void inventoryTick(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault Level world, @ParametersAreNonnullByDefault Entity entity, int slot, boolean selected) {
 			super.inventoryTick(itemstack, world, entity, slot, selected);
 			if (entity instanceof Player player && Iterables.contains(player.getArmorSlots(), itemstack)) {
 				EmeraldArmorT3PerTick.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, itemstack);
@@ -137,17 +138,17 @@ public abstract class EmeraldArmorT3Item extends ArmorItem {
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public boolean isFoil(ItemStack itemstack) {
+		public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 			return true;
 		}
 
 		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
+		public boolean makesPiglinsNeutral(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity) {
 			return true;
 		}
 
 		@Override
-		public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+		public void inventoryTick(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault Level world, @ParametersAreNonnullByDefault Entity entity, int slot, boolean selected) {
 			super.inventoryTick(itemstack, world, entity, slot, selected);
 			if (entity instanceof Player player && Iterables.contains(player.getArmorSlots(), itemstack)) {
 				EmeraldArmorT3PerTick.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, itemstack);

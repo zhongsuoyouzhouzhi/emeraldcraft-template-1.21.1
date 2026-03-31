@@ -4,6 +4,7 @@ import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.others.EmeraldPickaxeT3Right_clickOnAir;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -16,6 +17,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class EmeraldPickaxeT3Item extends PickaxeItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -35,6 +38,7 @@ public class EmeraldPickaxeT3Item extends PickaxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -45,8 +49,9 @@ public class EmeraldPickaxeT3Item extends PickaxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get()));
+			return Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get()));
 		}
 	};
 
@@ -55,14 +60,15 @@ public class EmeraldPickaxeT3Item extends PickaxeItem {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
+	@MethodsReturnNonnullByDefault
+	public InteractionResultHolder<ItemStack> use(@ParametersAreNonnullByDefault Level world,@ParametersAreNonnullByDefault Player entity,@ParametersAreNonnullByDefault InteractionHand hand) {
 		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
 		EmeraldPickaxeT3Right_clickOnAir.execute(world, entity, ar.getObject());
 		return ar;
 	}
 
     @Override
-    public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+    public void inventoryTick(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault Level world,@ParametersAreNonnullByDefault Entity entity, int slot, boolean selected) {
         super.inventoryTick(itemstack, world, entity, slot, selected);
         if (selected)
             Use.RefinedEmeraldT3ToolIsBeingDamagedPerTick(world, entity, itemstack);
@@ -70,7 +76,7 @@ public class EmeraldPickaxeT3Item extends PickaxeItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
+	public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 		return true;
 	}
 }

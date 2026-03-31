@@ -64,15 +64,15 @@ public class VoidEmeraldSwordItem extends SwordItem {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemstack,LivingEntity entity,LivingEntity sourceEntity) {
-		boolean retval = super.hurtEnemy(itemstack, entity, sourceEntity);
+	public boolean hurtEnemy(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity,@ParametersAreNonnullByDefault LivingEntity sourceEntity) {
+		boolean r = super.hurtEnemy(itemstack, entity, sourceEntity);
         Use.VoidEmeraldSwordHitLivingThings(itemstack, entity, sourceEntity);
-		return retval;
+		return r;
 	}
 
 	@Override
 	@MethodsReturnNonnullByDefault
-	public InteractionResultHolder<ItemStack> use(Level world,Player entity,InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(@ParametersAreNonnullByDefault Level world,@ParametersAreNonnullByDefault Player entity,@ParametersAreNonnullByDefault InteractionHand hand) {
 		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
         Use.VoidEmeraldSwordRight_clickOnAir(ar.getObject(),entity,world);
 		return ar;

@@ -18,11 +18,13 @@ import net.minecraft.advancements.AdvancementHolder;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
 
+import java.util.Objects;
+
 public class RefinedEmeraldT3Right_clickOnBlock {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
-		if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.get()) {
+		if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3.get()) {
 			itemstack.shrink(1);
 			if (entity instanceof Player _player)
 				_player.getCooldowns().addCooldown(itemstack.getItem(), 150);
@@ -33,7 +35,7 @@ public class RefinedEmeraldT3Right_clickOnBlock {
 				_level.explode(null, x, y, z, 384, Level.ExplosionInteraction.BLOCK);
 			if (entity instanceof Player _player && !_player.level().isClientSide())
 				send(1, _player);
-		} else if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_2.get()) {
+		} else if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_2.get()) {
 			itemstack.shrink(1);
 			if (entity instanceof Player _player)
 				_player.getCooldowns().addCooldown(itemstack.getItem(), 150);
@@ -44,7 +46,7 @@ public class RefinedEmeraldT3Right_clickOnBlock {
 				_level.explode(null, x, y, z, 192, Level.ExplosionInteraction.BLOCK);
 			if (entity instanceof Player _player && !_player.level().isClientSide())
 				send(2, _player);
-		} else if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINEDEMERALD_BLOCK.get()) {
+		} else if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINED_EMERALD_BLOCK.get()) {
 			itemstack.shrink(1);
 			if (entity instanceof Player _player)
 				_player.getCooldowns().addCooldown(itemstack.getItem(), 150);
@@ -83,7 +85,7 @@ public class RefinedEmeraldT3Right_clickOnBlock {
 						false);
 			}
 			world.setBlock(BlockPos.containing(x, y, z), Blocks.BEDROCK.defaultBlockState(), 3);
-			if (!(entity instanceof ServerPlayer _plr58 && _plr58.level() instanceof ServerLevel && _plr58.getAdvancements().getOrStartProgress(_plr58.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:ultimate_boom"))).isDone())) {
+			if (!(entity instanceof ServerPlayer _plr58 && _plr58.level() instanceof ServerLevel && _plr58.getAdvancements().getOrStartProgress(Objects.requireNonNull(_plr58.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:ultimate_boom")))).isDone())) {
 				if (entity instanceof ServerPlayer _player) {
 					AdvancementHolder _adv = _player.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:ultimate_boom"));
 					if (_adv != null) {

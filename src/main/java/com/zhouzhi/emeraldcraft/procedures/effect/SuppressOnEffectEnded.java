@@ -2,6 +2,7 @@ package com.zhouzhi.emeraldcraft.procedures.effect;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
+import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 
@@ -11,7 +12,21 @@ public class SuppressOnEffectEnded {
             return;
         if (!entity.level().isClientSide()){
             DamageSource magicDamage = entity.level().damageSources().magic();
-            entity.hurt(magicDamage, 0.5f * ((SimpleUse.getEffectLevel(entity, EmeraldcraftMobEffects.SUPPRESS)+8)^3));
+            int num = TagChange.getOrCreateComponent(entity, "suppress", 0);
+            if (num >= 3) {
+                float damage = 0.72f * ((SimpleUse.getEffectLevel(entity, EmeraldcraftMobEffects.SUPPRESS)+7.5f)*12);
+                num = TagChange.getOrCreateComponent(entity, "suppress_end", 0);
+                TagChange.saveComponent(entity, "suppress_end", num);
+                if (num >= 6) {
+                    entity.hurt(magicDamage, damage * 1.5f);
+                    TagChange.saveComponent(entity, "suppress_end", 0);
+                } else {
+                    entity.hurt(magicDamage, damage);
+                    TagChange.saveComponent(entity, "suppress_end", ++num);
+                }
+            } else {
+                entity.hurt(magicDamage, 0.5f * ((SimpleUse.getEffectLevel(entity, EmeraldcraftMobEffects.SUPPRESS)+8)*9));
+            }
         }
     }
 }

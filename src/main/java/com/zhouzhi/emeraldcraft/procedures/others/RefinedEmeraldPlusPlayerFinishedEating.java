@@ -14,15 +14,17 @@ import net.minecraft.world.item.ItemStack;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftAttributes;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
 
+import java.util.Objects;
+
 public class RefinedEmeraldPlusPlayerFinishedEating {
 	public static void execute(Entity entity) {
 		if (entity == null)
 			return;
 		if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide() && _entity.getAttributes().hasAttribute(EmeraldcraftAttributes.EVOLVED))
 {
-			double effectlevel = _entity.getAttribute(EmeraldcraftAttributes.EVOLVED).getValue();
+			double effectlevel = Objects.requireNonNull(_entity.getAttribute(EmeraldcraftAttributes.EVOLVED)).getValue();
 			if (effectlevel  < 5){
-				_entity.getAttribute(EmeraldcraftAttributes.EVOLVED).setBaseValue(effectlevel + 1);
+				Objects.requireNonNull(_entity.getAttribute(EmeraldcraftAttributes.EVOLVED)).setBaseValue(effectlevel + 1);
 			}
 			else if (entity instanceof ServerPlayer _player) {
 				AdvancementHolder _adv = _player.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:strengthen_body"));
@@ -46,14 +48,13 @@ public class RefinedEmeraldPlusPlayerFinishedEating {
 				new MobEffectInstance(MobEffects.REGENERATION, (int)(effectlevel * 10800), 5, false, false),
 				new MobEffectInstance(MobEffects.LUCK, (int)(effectlevel * 7200), 5, false, false),
 				new MobEffectInstance(MobEffects.NIGHT_VISION, (int)(effectlevel * 14400), 0, false, false)};
-			for(int o = 0; o < b.length; o++){
-				_entity.addEffect(b[o]);
-			}
+    for (MobEffectInstance mobEffectInstance : b) {
+        _entity.addEffect(mobEffectInstance);
+    }
 		}
 		if (entity instanceof Player player) {
             ItemStack[] inventory = player.getInventory().items.toArray(new ItemStack[0]);
-            for (int i = 0; i < inventory.length; i++) {
-                ItemStack item = inventory[i];
+            for (ItemStack item : inventory) {
                 if (item != null && item.isDamageableItem()) {
                     item.setDamageValue(0);
                 }

@@ -3,9 +3,11 @@ package com.zhouzhi.emeraldcraft.item.void_emerald;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
-import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -20,6 +22,8 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class VoidEmeraldAxeItem extends AxeItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -39,6 +43,7 @@ public class VoidEmeraldAxeItem extends AxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -49,6 +54,7 @@ public class VoidEmeraldAxeItem extends AxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
             return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
 		}
@@ -62,15 +68,18 @@ public class VoidEmeraldAxeItem extends AxeItem {
 	}
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miningEntity) {
-        Tool tool = (Tool) stack.get(DataComponents.TOOL);
+    public boolean mineBlock(ItemStack stack, @ParametersAreNonnullByDefault Level level,@ParametersAreNonnullByDefault BlockState state,@ParametersAreNonnullByDefault BlockPos pos,@ParametersAreNonnullByDefault LivingEntity miningEntity) {
+        Tool tool = stack.get(DataComponents.TOOL);
         if (tool == null) {
             return false;
         } else {
             if (!level.isClientSide && state.getDestroySpeed(level, pos) != 0.0F && tool.damagePerBlock() > 0) {
                 stack.hurtAndBreak(tool.damagePerBlock(), miningEntity, EquipmentSlot.MAINHAND);
                 if (SimpleUse.isLog(state.getBlock()) && !TagChange.getOrCreateComponent(stack,"Scope",false)) {
-                    SimpleUse.destroyLog(level,pos.getX(),pos.getY(),pos.getZ(),1,false);
+                    int logs = SimpleUse.destroyLog(level,pos.getX(),pos.getY(),pos.getZ(),1,false);
+					if (miningEntity instanceof ServerPlayer player){
+						player.sendSystemMessage(Component.literal(logs+" Logs"));
+					}
                 }
             }
             return true;

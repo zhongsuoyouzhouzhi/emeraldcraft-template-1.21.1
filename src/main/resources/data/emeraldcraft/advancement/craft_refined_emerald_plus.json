@@ -4,10 +4,10 @@
       "id": "emeraldcraft:refined_emerald_plus"
     },
     "title": {
-      "translate": "advancements.creaft_refined_emerald_plus.title"
+      "translate": "advancements.craft_refined_emerald_plus.title"
     },
     "description": {
-      "translate": "advancements.creaft_refined_emerald_plus.descr"
+      "translate": "advancements.craft_refined_emerald_plus.descr"
     },
     "frame": "task",
     "show_toast": true,

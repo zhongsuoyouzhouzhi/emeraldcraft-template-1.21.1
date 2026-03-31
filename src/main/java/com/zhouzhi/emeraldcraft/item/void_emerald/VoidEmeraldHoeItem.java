@@ -1,16 +1,13 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-import com.mojang.datafixers.util.Pair;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
@@ -23,11 +20,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.ItemAbilities;
-
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.OperateBlockPos;
 
@@ -49,6 +41,7 @@ public class VoidEmeraldHoeItem extends HoeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -59,6 +52,7 @@ public class VoidEmeraldHoeItem extends HoeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
             return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
 		}
@@ -71,6 +65,7 @@ public class VoidEmeraldHoeItem extends HoeItem {
 	}
 
     @Override
+	@MethodsReturnNonnullByDefault
     public InteractionResult useOn(UseOnContext context) {
         if (TagChange.getOrCreateComponent(context.getItemInHand(),"Scope", false)){
             BlockPos blockPos = context.getClickedPos();
@@ -90,7 +85,7 @@ public class VoidEmeraldHoeItem extends HoeItem {
                         if (block == Blocks.FARMLAND) return;
                         if (block == Blocks.GRASS_BLOCK || block == Blocks.DIRT) {
                             BlockPos pos = BlockPos.containing(x, y, z);
-                            BlockState newState = Blocks.FARMLAND.defaultBlockState().setValue(FarmBlock.MOISTURE, 5);;
+                            BlockState newState = Blocks.FARMLAND.defaultBlockState().setValue(FarmBlock.MOISTURE, 5);
                             level.setBlockAndUpdate(pos, newState);
                             level.getChunk(pos).setBlockState(pos, newState, true);
                         }

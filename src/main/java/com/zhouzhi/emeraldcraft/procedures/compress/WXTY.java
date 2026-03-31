@@ -7,9 +7,6 @@ import net.minecraft.server.level.ServerLevel;
 
 public class WXTY {
     /**
-     * @param world
-     * @param sourceEntity
-     * @param d
      */
     public static void execute(Level world, Entity sourceEntity, double d) {
         if (world instanceof ServerLevel serverLevel && sourceEntity != null) {

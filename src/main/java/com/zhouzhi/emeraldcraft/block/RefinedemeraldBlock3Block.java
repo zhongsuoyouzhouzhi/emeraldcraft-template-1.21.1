@@ -12,6 +12,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.core.BlockPos;
 
 import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldBlock3IsDestroyedByBoom;
+import org.jetbrains.annotations.NotNull;
 
 public class RefinedemeraldBlock3Block extends Block {
 	public RefinedemeraldBlock3Block() {
@@ -20,12 +21,12 @@ public class RefinedemeraldBlock3Block extends Block {
 	}
 
 	@Override
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+	public int getLightBlock(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos) {
 		return 15;
 	}
 
 	@Override
-	public void wasExploded(Level world, BlockPos pos, Explosion e) {
+	public void wasExploded(@NotNull Level world, @NotNull BlockPos pos, @NotNull Explosion e) {
 		super.wasExploded(world, pos, e);
 		RefinedEmeraldBlock3IsDestroyedByBoom.execute(world, pos.getX(), pos.getY(), pos.getZ());
 	}

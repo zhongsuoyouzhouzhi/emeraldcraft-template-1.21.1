@@ -3,6 +3,7 @@ package com.zhouzhi.emeraldcraft.item.remined_emerald;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.others.SkyFillingBladeHitLivingThings;
 import com.zhouzhi.emeraldcraft.procedures.others.SkyFillingBladeRight_clickOnAir;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -18,6 +19,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class SkyFillingBladeItem extends SwordItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -37,6 +40,7 @@ public class SkyFillingBladeItem extends SwordItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -47,6 +51,7 @@ public class SkyFillingBladeItem extends SwordItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
 			return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_PLUS.get()));
 		}
@@ -57,14 +62,15 @@ public class SkyFillingBladeItem extends SwordItem {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
+	public boolean hurtEnemy(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity, @ParametersAreNonnullByDefault LivingEntity sourceEntity) {
+		boolean r = super.hurtEnemy(itemstack, entity, sourceEntity);
 		SkyFillingBladeHitLivingThings.execute(entity.level(), entity, itemstack);
-		return retval;
+		return r;
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
+	@MethodsReturnNonnullByDefault
+	public InteractionResultHolder<ItemStack> use(@ParametersAreNonnullByDefault Level world, @ParametersAreNonnullByDefault Player entity, @ParametersAreNonnullByDefault InteractionHand hand) {
 		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
 		SkyFillingBladeRight_clickOnAir.execute(world, entity, ar.getObject());
 		return ar;
@@ -72,7 +78,7 @@ public class SkyFillingBladeItem extends SwordItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
+	public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 		return true;
 	}
 }

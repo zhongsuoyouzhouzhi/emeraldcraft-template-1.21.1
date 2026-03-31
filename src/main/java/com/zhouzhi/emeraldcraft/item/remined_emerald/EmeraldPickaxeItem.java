@@ -1,6 +1,7 @@
 package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
@@ -8,6 +9,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class EmeraldPickaxeItem extends PickaxeItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -27,6 +30,7 @@ public class EmeraldPickaxeItem extends PickaxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -37,6 +41,7 @@ public class EmeraldPickaxeItem extends PickaxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
 			return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD.get()));
 		}
@@ -48,7 +53,7 @@ public class EmeraldPickaxeItem extends PickaxeItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
+	public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 		return true;
 	}
 }

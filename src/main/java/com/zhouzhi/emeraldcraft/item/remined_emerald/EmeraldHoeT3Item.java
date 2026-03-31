@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 public class EmeraldHoeT3Item extends HoeItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -31,7 +32,7 @@ public class EmeraldHoeT3Item extends HoeItem {
 		}
 
 		@Override
-		public TagKey<Block> getIncorrectBlocksForDrops() {
+		public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
 
@@ -41,8 +42,8 @@ public class EmeraldHoeT3Item extends HoeItem {
 		}
 
 		@Override
-		public Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get()));
+		public @NotNull Ingredient getRepairIngredient() {
+			return Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get()));
 		}
 	};
 
@@ -51,7 +52,7 @@ public class EmeraldHoeT3Item extends HoeItem {
 	}
 
     @Override
-    public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+    public void inventoryTick(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull Entity entity, int slot, boolean selected) {
         super.inventoryTick(itemstack, world, entity, slot, selected);
         if (selected)
             Use.RefinedEmeraldT3ToolIsBeingDamagedPerTick(world, entity, itemstack);
@@ -59,7 +60,7 @@ public class EmeraldHoeT3Item extends HoeItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
+	public boolean isFoil(@NotNull ItemStack itemstack) {
 		return true;
 	}
 }

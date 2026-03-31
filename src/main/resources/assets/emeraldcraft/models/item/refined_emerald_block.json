@@ -1,5 +1,5 @@
 {
-  "parent": "emeraldcraft:block/refinedemerald_block_3",
+  "parent": "emeraldcraft:block/refined_emerald_block",
   "display": {
     "thirdperson": {
       "rotation": [

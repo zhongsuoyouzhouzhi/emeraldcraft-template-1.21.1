@@ -1,9 +1,8 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
-import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
-import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
@@ -15,8 +14,8 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.destroyDirt;
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.isDirt;
@@ -39,6 +38,7 @@ public class VoidEmeraldShovelItem extends ShovelItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -49,6 +49,7 @@ public class VoidEmeraldShovelItem extends ShovelItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
 			return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
 		}
@@ -62,7 +63,7 @@ public class VoidEmeraldShovelItem extends ShovelItem {
 	}
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miningEntity) {
+    public boolean mineBlock(@ParametersAreNonnullByDefault ItemStack stack,@ParametersAreNonnullByDefault Level level, BlockState state,@ParametersAreNonnullByDefault BlockPos pos,@ParametersAreNonnullByDefault LivingEntity miningEntity) {
         if (isDirt(state.getBlock()) && !TagChange.getOrCreateComponent(stack,"Scope",false))
             destroyDirt(level,pos.getX(),pos.getY(),pos.getZ(),1,false);
         return super.mineBlock(stack, level, state, pos, miningEntity);

@@ -2,6 +2,7 @@ package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldT2ToolIsBeingDamagedPerTick;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
@@ -11,6 +12,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class EmeraldPickaxeT2Item extends PickaxeItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -30,6 +33,7 @@ public class EmeraldPickaxeT2Item extends PickaxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -40,6 +44,7 @@ public class EmeraldPickaxeT2Item extends PickaxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
 			return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_2.get()));
 		}
@@ -50,7 +55,7 @@ public class EmeraldPickaxeT2Item extends PickaxeItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+	public void inventoryTick(@ParametersAreNonnullByDefault ItemStack itemstack,@ParametersAreNonnullByDefault Level world,@ParametersAreNonnullByDefault Entity entity, int slot, boolean selected) {
 		super.inventoryTick(itemstack, world, entity, slot, selected);
 		if (selected)
 			RefinedEmeraldT2ToolIsBeingDamagedPerTick.execute(world, entity, itemstack);
@@ -58,7 +63,7 @@ public class EmeraldPickaxeT2Item extends PickaxeItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
+	public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 		return true;
 	}
 }

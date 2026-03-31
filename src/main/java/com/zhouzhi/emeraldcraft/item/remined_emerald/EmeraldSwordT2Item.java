@@ -4,6 +4,7 @@ import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldT2ToolIsBeingDamagedPerTick;
 import com.zhouzhi.emeraldcraft.procedures.others.EmeraldSwordT2ItemHasBeenSynthesis_or_Smelted;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +19,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class EmeraldSwordT2Item extends SwordItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -37,6 +40,7 @@ public class EmeraldSwordT2Item extends SwordItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -47,6 +51,7 @@ public class EmeraldSwordT2Item extends SwordItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
 			return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_2.get()));
 		}
@@ -57,20 +62,20 @@ public class EmeraldSwordT2Item extends SwordItem {
 	}
 
     @Override
-    public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-        boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
+    public boolean hurtEnemy(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity, @ParametersAreNonnullByDefault LivingEntity sourceEntity) {
+        boolean r = super.hurtEnemy(itemstack, entity, sourceEntity);
         Use.EmeraldSwordT2HitLivingThings(entity);
-        return retval;
+        return r;
     }
 
 	@Override
-	public void onCraftedBy(ItemStack itemstack, Level world, Player entity) {
+	public void onCraftedBy(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault Level world, @ParametersAreNonnullByDefault Player entity) {
 		super.onCraftedBy(itemstack, world, entity);
 		EmeraldSwordT2ItemHasBeenSynthesis_or_Smelted.execute(entity);
 	}
 
 	@Override
-	public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+	public void inventoryTick(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault Level world, @ParametersAreNonnullByDefault Entity entity, int slot, boolean selected) {
 		super.inventoryTick(itemstack, world, entity, slot, selected);
 		if (selected)
 			RefinedEmeraldT2ToolIsBeingDamagedPerTick.execute(world, entity, itemstack);
@@ -78,7 +83,7 @@ public class EmeraldSwordT2Item extends SwordItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
+	public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 		return true;
 	}
 }

@@ -1,6 +1,5 @@
 package com.zhouzhi.emeraldcraft.procedures.others;
 
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.Items;
@@ -15,43 +14,34 @@ import net.minecraft.core.registries.Registries;
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
 
 public class EmeraldSwordT3HitLivingThings {
-	public static void execute(LevelAccessor world, Entity sourceentity) {
+	public static void execute(Entity sourceentity) {
 		if (sourceentity == null)
 			return;
 		EmeraldCraft.queueServerWork(10, () -> {
 			{
-				Entity _shootFrom = sourceentity;
-				Level projectileLevel = _shootFrom.level();
+                Level projectileLevel = sourceentity.level();
 				if (!projectileLevel.isClientSide()) {
-					Projectile _entityToSpawn = initArrowProjectile(new Arrow(projectileLevel, 0, 0, 0, new Arrow(EntityType.ARROW, projectileLevel).getPickupItemStackOrigin(), createArrowWeaponItemStack(projectileLevel, (int) 0.5, (byte) 127)),
-							sourceentity, 10, false, false, false, AbstractArrow.Pickup.CREATIVE_ONLY);
-					_entityToSpawn.setPos(_shootFrom.getX(), _shootFrom.getEyeY() - 0.1, _shootFrom.getZ());
-					_entityToSpawn.shoot(_shootFrom.getLookAngle().x, _shootFrom.getLookAngle().y, _shootFrom.getLookAngle().z, 2, 0);
+					Projectile _entityToSpawn = initArrowProjectile(new Arrow(projectileLevel, 0, 0, 0, new Arrow(EntityType.ARROW, projectileLevel).getPickupItemStackOrigin(), createArrowWeaponItemStack(projectileLevel)),
+							sourceentity);
+					_entityToSpawn.setPos(sourceentity.getX(), sourceentity.getEyeY() - 0.1, sourceentity.getZ());
+					_entityToSpawn.shoot(sourceentity.getLookAngle().x, sourceentity.getLookAngle().y, sourceentity.getLookAngle().z, 2, 0);
 					projectileLevel.addFreshEntity(_entityToSpawn);
 				}
 			}
 		});
 	}
 
-	private static AbstractArrow initArrowProjectile(AbstractArrow entityToSpawn, Entity shooter, float damage, boolean silent, boolean fire, boolean particles, AbstractArrow.Pickup pickup) {
+	private static AbstractArrow initArrowProjectile(AbstractArrow entityToSpawn, Entity shooter) {
 		entityToSpawn.setOwner(shooter);
-		entityToSpawn.setBaseDamage(damage);
-		if (silent)
-			entityToSpawn.setSilent(true);
-		if (fire)
-			entityToSpawn.igniteForSeconds(100);
-		if (particles)
-			entityToSpawn.setCritArrow(true);
-		entityToSpawn.pickup = pickup;
+		entityToSpawn.setBaseDamage((float) 10);
+		entityToSpawn.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 		return entityToSpawn;
 	}
 
-	private static ItemStack createArrowWeaponItemStack(Level level, int knockback, byte piercing) {
+	private static ItemStack createArrowWeaponItemStack(Level level) {
 		ItemStack weapon = new ItemStack(Items.ARROW);
-		if (knockback > 0)
-			weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.KNOCKBACK), knockback);
-		if (piercing > 0)
-			weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.PIERCING), piercing);
+        weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.KNOCKBACK), 1);
+        weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.PIERCING), (byte) 127);
 		return weapon;
 	}
 }

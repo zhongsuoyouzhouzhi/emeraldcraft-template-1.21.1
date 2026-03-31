@@ -70,17 +70,16 @@ public class MTR {
         serverLevel.getServer().tell(new TickTask(
             serverLevel.getServer().getTickCount() + delayTicks,
             () -> {
-                ServerLevel currentLevel = (ServerLevel) source.level();
-                Entity currentSource = currentLevel.getEntity(sourceUUID);
+                Entity currentSource = serverLevel.getEntity(sourceUUID);
                 
                 // 创建伤害来源（使用魔法类型）
-                DamageSource damageSource = currentLevel.damageSources().source(
+                DamageSource damageSource = serverLevel.damageSources().source(
                     DamageTypes.MAGIC,
-                    currentSource != null ? currentSource : null
+                    currentSource
                 );
                 
                 for (UUID entityId : affectedEntities) {
-                    Entity entity = currentLevel.getEntity(entityId);
+                    Entity entity = serverLevel.getEntity(entityId);
                     if (entity instanceof LivingEntity livingEntity && livingEntity.isAlive()) {
                         livingEntity.hurt(damageSource, damage);
                     }

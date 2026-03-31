@@ -1,11 +1,10 @@
 package com.zhouzhi.emeraldcraft.procedures.compress;
 
-import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 
 public class DamageALL {
 
@@ -24,8 +23,7 @@ public class DamageALL {
             Iterable<Entity> entities = serverLevel.getEntities().getAll();
 
             for (Entity entity : entities) {
-                if (isEntityInRange(entity, minPos, maxPos) && entity instanceof LivingEntity) {
-                    LivingEntity livingEntity = (LivingEntity) entity;
+                if (isEntityInRange(entity, minPos, maxPos) && entity instanceof LivingEntity livingEntity) {
                     livingEntity.hurt(livingEntity.damageSources().generic(), damageAmount);
                 }
             }
@@ -38,8 +36,7 @@ public class DamageALL {
                 if (!damageSource && entity == source) {
                     return;
                 }
-                if (entity instanceof LivingEntity) {
-                    LivingEntity livingEntity = (LivingEntity) entity;
+                if (entity instanceof LivingEntity livingEntity) {
                     livingEntity.hurt(livingEntity.damageSources().generic(), damageAmount);
                 }
             });

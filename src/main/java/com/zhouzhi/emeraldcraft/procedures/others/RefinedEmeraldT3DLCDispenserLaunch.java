@@ -23,8 +23,8 @@ public class RefinedEmeraldT3DLCDispenserLaunch {
 			return;
 		Entity a = null;
 		if (world instanceof ServerLevel projectileLevel) {
-			Projectile _entityToSpawn = initArrowProjectile(new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), 0, 0, 0, projectileLevel, createArrowWeaponItemStack(projectileLevel, 1, (byte) 127)), null, 0, true, false,
-					false, AbstractArrow.Pickup.DISALLOWED);
+			Projectile _entityToSpawn = initArrowProjectile(new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), 0, 0, 0, projectileLevel, createArrowWeaponItemStack(projectileLevel))
+			);
 			a = _entityToSpawn;
 			_entityToSpawn.setPos((x + direction.getStepX()), (y + direction.getStepY()), (z + direction.getStepZ()));
 			_entityToSpawn.shoot((direction.getStepX()), (direction.getStepY()), (direction.getStepZ()), (float) 1.5, 0);
@@ -34,25 +34,18 @@ public class RefinedEmeraldT3DLCDispenserLaunch {
 			_livingEntity8.getAttribute(EmeraldcraftAttributes.LAUNCHED).setBaseValue(1);
 	}
 
-	private static AbstractArrow initArrowProjectile(AbstractArrow entityToSpawn, Entity shooter, float damage, boolean silent, boolean fire, boolean particles, AbstractArrow.Pickup pickup) {
-		entityToSpawn.setOwner(shooter);
-		entityToSpawn.setBaseDamage(damage);
-		if (silent)
-			entityToSpawn.setSilent(true);
-		if (fire)
-			entityToSpawn.igniteForSeconds(100);
-		if (particles)
-			entityToSpawn.setCritArrow(true);
-		entityToSpawn.pickup = pickup;
+	private static AbstractArrow initArrowProjectile(AbstractArrow entityToSpawn) {
+		entityToSpawn.setOwner(null);
+		entityToSpawn.setBaseDamage((float) 0);
+        entityToSpawn.setSilent(true);
+        entityToSpawn.pickup = AbstractArrow.Pickup.DISALLOWED;
 		return entityToSpawn;
 	}
 
-	private static ItemStack createArrowWeaponItemStack(Level level, int knockback, byte piercing) {
+	private static ItemStack createArrowWeaponItemStack(Level level) {
 		ItemStack weapon = new ItemStack(Items.ARROW);
-		if (knockback > 0)
-			weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.KNOCKBACK), knockback);
-		if (piercing > 0)
-			weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.PIERCING), piercing);
+        weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.KNOCKBACK), 1);
+        weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.PIERCING), (byte) 127);
 		return weapon;
 	}
 }

@@ -23,9 +23,9 @@ public class MobEffectALL {
             for (Entity entity : serverLevel.getEntities().getAll()) {
                 if (isEntityInRange(entity, minPos, maxPos) && entity instanceof LivingEntity livingEntity) {
                     if (!livingEntity.level().isClientSide()) {
-                        for (int i = 0; i < effectInstances.length; i++) {
-                            if (effectInstances[i] != null) {
-                                livingEntity.addEffect(effectInstances[i]);
+                        for (MobEffectInstance effectInstance : effectInstances) {
+                            if (effectInstance != null) {
+                                livingEntity.addEffect(effectInstance);
                             }
                         }
                     }
@@ -49,9 +49,9 @@ public class MobEffectALL {
             for (Entity entity : serverLevel.getEntities().getAll()) {
                 if (isEntityInRange(entity, minPos, maxPos) && entity instanceof LivingEntity livingEntity && entity !=sourceEntity) {
                     if (!livingEntity.level().isClientSide()) {
-                        for (int i = 0; i < effectInstances.length; i++) {
-                            if (effectInstances[i] != null) {
-                                livingEntity.addEffect(effectInstances[i]);
+                        for (MobEffectInstance effectInstance : effectInstances) {
+                            if (effectInstance != null) {
+                                livingEntity.addEffect(effectInstance);
                             }
                         }
                     }
@@ -68,5 +68,17 @@ public class MobEffectALL {
         return entityX >= minPos.getX() && entityX <= maxPos.getX() &&
                entityY >= minPos.getY() && entityY <= maxPos.getY() &&
                entityZ >= minPos.getZ() && entityZ <= maxPos.getZ();
+    }
+
+    public static void execute(Level world, MobEffectInstance[] effectInstances, LivingEntity Target) {
+        if (world instanceof ServerLevel) {
+            if (!Target.level().isClientSide()) {
+                for (MobEffectInstance effectInstance : effectInstances) {
+                    if (effectInstance != null) {
+                        Target.addEffect(effectInstance);
+                    }
+                }
+            }
+        }
     }
 }

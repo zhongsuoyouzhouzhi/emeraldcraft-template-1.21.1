@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftPotions;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber
 public class EmeraldAttachPotionBrewingRecipe implements IBrewingRecipe {
@@ -21,17 +22,17 @@ public class EmeraldAttachPotionBrewingRecipe implements IBrewingRecipe {
 	}
 
 	@Override
-	public boolean isInput(ItemStack input) {
+	public boolean isInput(@NotNull ItemStack input) {
 		return Ingredient.of(new ItemStack(Items.POTION)).test(input);
 	}
 
 	@Override
-	public boolean isIngredient(ItemStack ingredient) {
+	public boolean isIngredient(@NotNull ItemStack ingredient) {
 		return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD.get())).test(ingredient);
 	}
 
 	@Override
-	public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
+	public @NotNull ItemStack getOutput(@NotNull ItemStack input, @NotNull ItemStack ingredient) {
 		if (isInput(input) && isIngredient(ingredient)) {
 			return PotionContents.createItemStack(Items.POTION, EmeraldcraftPotions.EMERALD_ATTACH_POTION);
 		}

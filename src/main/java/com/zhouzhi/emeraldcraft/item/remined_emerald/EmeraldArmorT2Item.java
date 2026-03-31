@@ -21,6 +21,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -59,12 +60,12 @@ public abstract class EmeraldArmorT2Item extends ArmorItem {
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public boolean isFoil(ItemStack itemstack) {
+		public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 			return true;
 		}
 
 		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
+		public boolean makesPiglinsNeutral(@ParametersAreNonnullByDefault ItemStack itemstack,@ParametersAreNonnullByDefault LivingEntity entity) {
 			return true;
 		}
 	}
@@ -77,12 +78,12 @@ public abstract class EmeraldArmorT2Item extends ArmorItem {
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public boolean isFoil(ItemStack itemstack) {
+		public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 			return true;
 		}
 
 		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
+		public boolean makesPiglinsNeutral(@ParametersAreNonnullByDefault ItemStack itemstack,@ParametersAreNonnullByDefault LivingEntity entity) {
 			return true;
 		}
 	}
@@ -95,12 +96,12 @@ public abstract class EmeraldArmorT2Item extends ArmorItem {
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public boolean isFoil(ItemStack itemstack) {
+		public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 			return true;
 		}
 
 		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
+		public boolean makesPiglinsNeutral(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity) {
 			return true;
 		}
 	}
@@ -113,12 +114,12 @@ public abstract class EmeraldArmorT2Item extends ArmorItem {
 
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public boolean isFoil(ItemStack itemstack) {
+		public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 			return true;
 		}
 
 		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
+		public boolean makesPiglinsNeutral(@ParametersAreNonnullByDefault ItemStack itemstack,@ParametersAreNonnullByDefault LivingEntity entity) {
 			return true;
 		}
 	}

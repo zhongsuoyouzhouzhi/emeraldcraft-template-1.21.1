@@ -22,6 +22,7 @@ import net.minecraft.core.registries.Registries;
 import com.zhouzhi.emeraldcraft.procedures.others.EmeraldProjectileHitEntity;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftEntities;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -52,17 +53,17 @@ public class EmeraldProjectileEntity extends AbstractArrow implements ItemSuppli
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public ItemStack getItem() {
+	public @NotNull ItemStack getItem() {
 		return PROJECTILE_ITEM;
 	}
 
 	@Override
-	protected ItemStack getDefaultPickupItem() {
+	protected @NotNull ItemStack getDefaultPickupItem() {
 		return new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get());
 	}
 
 	@Override
-	protected void doPostHurtEffects(LivingEntity entity) {
+	protected void doPostHurtEffects(@NotNull LivingEntity entity) {
 		super.doPostHurtEffects(entity);
 		entity.setArrowCount(entity.getArrowCount() - 1);
 	}
@@ -72,7 +73,7 @@ public class EmeraldProjectileEntity extends AbstractArrow implements ItemSuppli
 	}
 
 	@Override
-	protected void doKnockback(LivingEntity livingEntity, DamageSource damageSource) {
+	protected void doKnockback(@NotNull LivingEntity livingEntity, @NotNull DamageSource damageSource) {
 		if (knockback > 0.0) {
 			double d1 = Math.max(0.0, 1.0 - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
 			Vec3 vec3 = this.getDeltaMovement().multiply(1.0, 0.0, 1.0).normalize().scale(knockback * 0.6 * d1);
@@ -85,13 +86,13 @@ public class EmeraldProjectileEntity extends AbstractArrow implements ItemSuppli
 	}
 
 	@Override
-	public void onHitEntity(EntityHitResult entityHitResult) {
+	public void onHitEntity(@NotNull EntityHitResult entityHitResult) {
 		super.onHitEntity(entityHitResult);
 		EmeraldProjectileHitEntity.execute(this.level(), this.getX(), this.getY(), this.getZ(), entityHitResult.getEntity(), this, this.getOwner());
 	}
 
 	@Override
-	public void onHitBlock(BlockHitResult blockHitResult) {
+	public void onHitBlock(@NotNull BlockHitResult blockHitResult) {
 		super.onHitBlock(blockHitResult);
 	}
 
@@ -116,27 +117,27 @@ public class EmeraldProjectileEntity extends AbstractArrow implements ItemSuppli
 	}
 
 	public static EmeraldProjectileEntity shoot(Level world, LivingEntity entity, RandomSource random, float power, double damage, int knockback) {
-		EmeraldProjectileEntity entityarrow = new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), entity, world, null);
-		entityarrow.shoot(entity.getViewVector(1).x, entity.getViewVector(1).y, entity.getViewVector(1).z, power * 2, 0);
-		entityarrow.setSilent(true);
-		entityarrow.setCritArrow(false);
-		entityarrow.setBaseDamage(damage);
-		entityarrow.setKnockback(knockback);
-		world.addFreshEntity(entityarrow);
-		return entityarrow;
+		EmeraldProjectileEntity entityArrow = new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), entity, world, null);
+		entityArrow.shoot(entity.getViewVector(1).x, entity.getViewVector(1).y, entity.getViewVector(1).z, power * 2, 0);
+		entityArrow.setSilent(true);
+		entityArrow.setCritArrow(false);
+		entityArrow.setBaseDamage(damage);
+		entityArrow.setKnockback(knockback);
+		world.addFreshEntity(entityArrow);
+		return entityArrow;
 	}
 
 	public static EmeraldProjectileEntity shoot(LivingEntity entity, LivingEntity target) {
-		EmeraldProjectileEntity entityarrow = new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), entity, entity.level(), null);
+		EmeraldProjectileEntity entityArrow = new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), entity, entity.level(), null);
 		double dx = target.getX() - entity.getX();
 		double dy = target.getY() + target.getEyeHeight() - 1.1;
 		double dz = target.getZ() - entity.getZ();
-		entityarrow.shoot(dx, dy - entityarrow.getY() + Math.hypot(dx, dz) * 0.2F, dz, 1.5f * 2, 12.0F);
-		entityarrow.setSilent(true);
-		entityarrow.setBaseDamage(10);
-		entityarrow.setKnockback(1);
-		entityarrow.setCritArrow(false);
-		entity.level().addFreshEntity(entityarrow);
-		return entityarrow;
+		entityArrow.shoot(dx, dy - entityArrow.getY() + Math.hypot(dx, dz) * 0.2F, dz, 1.5f * 2, 12.0F);
+		entityArrow.setSilent(true);
+		entityArrow.setBaseDamage(10);
+		entityArrow.setKnockback(1);
+		entityArrow.setCritArrow(false);
+		entity.level().addFreshEntity(entityArrow);
+		return entityArrow;
 	}
 }

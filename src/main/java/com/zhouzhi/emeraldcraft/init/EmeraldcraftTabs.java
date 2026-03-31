@@ -20,7 +20,7 @@ public class EmeraldcraftTabs {
 	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EMERALD_CRAFT = REGISTRY.register("emerald_craft",
 			() -> CreativeModeTab.builder().title(Component.translatable("item_group.emeraldcraft.emerald_craft")).icon(() -> new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get())).displayItems((parameters, tabData) -> {
 				tabData.accept(EmeraldcraftItems.REFINED_EMERALD.get());
-				tabData.accept(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK.get().asItem());
+				tabData.accept(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK.get().asItem());
 				tabData.accept(EmeraldcraftItems.EMERALD_SWORD.get());
 				tabData.accept(EmeraldcraftItems.EMERALD_AXE.get());
 				tabData.accept(EmeraldcraftItems.EMERALD_PICKAXE.get());
@@ -31,7 +31,7 @@ public class EmeraldcraftTabs {
 				tabData.accept(EmeraldcraftItems.EMERALD_ARMOR_LEGGINGS.get());
 				tabData.accept(EmeraldcraftItems.EMERALD_ARMOR_BOOTS.get());
                 tabData.accept(EmeraldcraftItems.REFINED_EMERALD_T_2.get());
-                tabData.accept(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_2.get().asItem());
+                tabData.accept(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_2.get().asItem());
                 tabData.accept(EmeraldcraftItems.EMERALD_SWORD_T_2.get());
                 tabData.accept(EmeraldcraftItems.EMERALD_AXE_T_2.get());
                 tabData.accept(EmeraldcraftItems.EMERALD_PICKAXE_T_2.get());
@@ -42,7 +42,7 @@ public class EmeraldcraftTabs {
                 tabData.accept(EmeraldcraftItems.EMERALD_ARMOR_T_2_LEGGINGS.get());
                 tabData.accept(EmeraldcraftItems.EMERALD_ARMOR_T_2_BOOTS.get());
                 tabData.accept(EmeraldcraftItems.REFINED_EMERALD_T_3.get());
-                tabData.accept(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.get().asItem());
+                tabData.accept(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3.get().asItem());
                 tabData.accept(EmeraldcraftItems.EMERALD_SWORD_T_3.get());
                 tabData.accept(EmeraldcraftItems.EMERALD_AXE_T_3.get());
                 tabData.accept(EmeraldcraftItems.EMERALD_PICKAXE_T_3.get());

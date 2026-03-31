@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "id": "emeraldcraft:refinedemerald_block"
+      "id": "emeraldcraft:refined_emerald_block"
     },
     "title": {
       "translate": "advancements.craft_refined_emerald.title"
@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "items": "emeraldcraft:refinedemerald_block",
+            "items": "emeraldcraft:refined_emerald_block",
             "count": {
               "min": 1,
               "max": 1

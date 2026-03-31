@@ -2,7 +2,7 @@ package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,6 +14,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class EmeraldSwordItem extends SwordItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -33,6 +35,7 @@ public class EmeraldSwordItem extends SwordItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -43,6 +46,7 @@ public class EmeraldSwordItem extends SwordItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
 			return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD.get()));
 		}
@@ -52,19 +56,18 @@ public class EmeraldSwordItem extends SwordItem {
         super(TOOL_TIER, new Item.Properties()
                 .attributes(SwordItem.createAttributes(TOOL_TIER, 7f, -2.4f))
         );
-                //.component(DataComponents.ENCHANTABLE, TOOL_TIER.getEnchantmentValue())); // 设置附魔能力
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-        boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
+    public boolean hurtEnemy(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity, @ParametersAreNonnullByDefault LivingEntity sourceEntity) {
+        boolean r = super.hurtEnemy(itemstack, entity, sourceEntity);
         Use.EmeraldSwordHitLivingThings(entity);
-        return retval;
+        return r;
     }
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
+	public boolean isFoil(@ParametersAreNonnullByDefault ItemStack itemstack) {
 		return true;
 	}
 }

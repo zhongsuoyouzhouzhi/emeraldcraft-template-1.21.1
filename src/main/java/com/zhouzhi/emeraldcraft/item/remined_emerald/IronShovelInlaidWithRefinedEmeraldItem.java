@@ -8,6 +8,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 public class IronShovelInlaidWithRefinedEmeraldItem extends ShovelItem {
 
@@ -28,7 +29,7 @@ public class IronShovelInlaidWithRefinedEmeraldItem extends ShovelItem {
         }
 
         @Override
-        public TagKey<Block> getIncorrectBlocksForDrops() {
+        public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
             return BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
         }
 
@@ -38,7 +39,7 @@ public class IronShovelInlaidWithRefinedEmeraldItem extends ShovelItem {
         }
 
         @Override
-        public Ingredient getRepairIngredient() {
+        public @NotNull Ingredient getRepairIngredient() {
             return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD.get()));
         }
     };
@@ -49,7 +50,7 @@ public class IronShovelInlaidWithRefinedEmeraldItem extends ShovelItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean isFoil(ItemStack itemstack) {
+    public boolean isFoil(@NotNull ItemStack itemstack) {
         return false;
     }
 }

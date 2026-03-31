@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.zhouzhi.emeraldcraft.procedures.effect.EmeraldAttachOnEffectStarted;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
+import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber
 public class EmeraldAttachMobEffect extends MobEffect {
@@ -27,7 +28,7 @@ public class EmeraldAttachMobEffect extends MobEffect {
 	}
 
 	@Override
-	public void onEffectStarted(LivingEntity entity, int amplifier) {
+	public void onEffectStarted(@NotNull LivingEntity entity, int amplifier) {
 		EmeraldAttachOnEffectStarted.execute(entity);
 	}
 
@@ -35,7 +36,7 @@ public class EmeraldAttachMobEffect extends MobEffect {
 	public static void registerMobEffectExtensions(RegisterClientExtensionsEvent event) {
 		event.registerMobEffect(new IClientMobEffectExtensions() {
 			@Override
-			public boolean isVisibleInGui(MobEffectInstance effect) {
+			public boolean isVisibleInGui(@NotNull MobEffectInstance effect) {
 				return false;
 			}
 		}, EmeraldcraftMobEffects.EMERALD_ATTACH.get());

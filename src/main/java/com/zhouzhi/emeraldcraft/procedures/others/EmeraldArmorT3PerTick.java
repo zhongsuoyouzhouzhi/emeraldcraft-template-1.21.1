@@ -30,8 +30,9 @@ public class EmeraldArmorT3PerTick {
 				itemstack.hurtAndBreak(2, _level, null, _stkprov -> {
 				});
 			}
-			if (entity instanceof Player _player)
-				_player.getFoodData().setFoodLevel((entity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0) + 1);
+			if (entity instanceof Player _player) {
+                _player.getFoodData().setFoodLevel(_player.getFoodData().getFoodLevel() + 1);
+            }
 			if (entity instanceof Player _player)
 				_player.getCooldowns().addCooldown(itemstack.getItem(), 30);
 		}
@@ -40,8 +41,9 @@ public class EmeraldArmorT3PerTick {
 				itemstack.hurtAndBreak(1, _level, null, _stkprov -> {
 				});
 			}
-			if (entity instanceof Player _player)
-				_player.getFoodData().setSaturation((float) ((entity instanceof Player _plr ? _plr.getFoodData().getSaturationLevel() : 0) + 1));
+			if (entity instanceof Player _player) {
+                _player.getFoodData().setSaturation(_player.getFoodData().getSaturationLevel() + 1);
+            }
 			if (entity instanceof Player _player)
 				_player.getCooldowns().addCooldown(itemstack.getItem(), 30);
 		}

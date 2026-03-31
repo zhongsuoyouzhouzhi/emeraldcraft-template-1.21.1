@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 public class IronSwordInlaidWithRefinedEmeraldT2Item extends SwordItem {
     private static final Tier TOOL_TIER = new Tier() {
@@ -33,7 +34,7 @@ public class IronSwordInlaidWithRefinedEmeraldT2Item extends SwordItem {
         }
 
         @Override
-        public TagKey<Block> getIncorrectBlocksForDrops() {
+        public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
             return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
         }
 
@@ -43,7 +44,7 @@ public class IronSwordInlaidWithRefinedEmeraldT2Item extends SwordItem {
         }
 
         @Override
-        public Ingredient getRepairIngredient() {
+        public @NotNull Ingredient getRepairIngredient() {
             return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_2.get()));
         }
     };
@@ -53,14 +54,14 @@ public class IronSwordInlaidWithRefinedEmeraldT2Item extends SwordItem {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-        boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-        Use.ironSwordT2HitLivingThings(entity,sourceentity);
-        return retval;
+    public boolean hurtEnemy(@NotNull ItemStack itemstack, @NotNull LivingEntity entity, @NotNull LivingEntity sourceEntity) {
+        boolean a = super.hurtEnemy(itemstack, entity, sourceEntity);
+        Use.IronSwordT2HitLivingThings(entity,sourceEntity);
+        return a;
     }
 
     @Override
-    public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+    public void inventoryTick(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull Entity entity, int slot, boolean selected) {
         super.inventoryTick(itemstack, world, entity, slot, selected);
         if (selected)
             Use.IronToolBeingDamagedPerTick(world,entity, itemstack);
@@ -68,7 +69,7 @@ public class IronSwordInlaidWithRefinedEmeraldT2Item extends SwordItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean isFoil(ItemStack itemstack) {
+    public boolean isFoil(@NotNull ItemStack itemstack) {
         return false;
     }
 }

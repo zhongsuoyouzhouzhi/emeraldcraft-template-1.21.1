@@ -66,9 +66,9 @@ public class EmeraldcraftItems {
     public static final DeferredItem<Item> VOID_EMERALD;
 	static {
 		REFINED_EMERALD = REGISTRY.register("refined_emerald", RefinedEmeraldItem::new);
-		REFINED_EMERALD_BLOCK = block(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK, new Item.Properties().rarity(Rarity.RARE));
+		REFINED_EMERALD_BLOCK = block(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK, new Item.Properties().rarity(Rarity.RARE));
 		EMERALD_PICKAXE = REGISTRY.register("emerald_pickaxe", EmeraldPickaxeItem::new);
-		REFINED_EMERALD_BLOCK_2 = block(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_2, new Item.Properties().rarity(Rarity.RARE));
+		REFINED_EMERALD_BLOCK_2 = block(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_2, new Item.Properties().rarity(Rarity.RARE));
 		REFINED_EMERALD_T_2 = REGISTRY.register("refined_emerald_t_2", RefinedEmeraldT2Item::new);
 		EMERALD_PICKAXE_T_2 = REGISTRY.register("emerald_pickaxe_t_2", EmeraldPickaxeT2Item::new);
 		EMERALD_SWORD = REGISTRY.register("emerald_sword", EmeraldSwordItem::new);
@@ -76,7 +76,7 @@ public class EmeraldcraftItems {
 		EMERALD_SWORD_T_2 = REGISTRY.register("emerald_sword_t_2", EmeraldSwordT2Item::new);
 		EMERALD_AXE_T_2 = REGISTRY.register("emerald_axe_t_2", EmeraldAxeT2Item::new);
 		REFINED_EMERALD_T_3 = REGISTRY.register("refined_emerald_t_3", RefinedEmeraldT3Item::new);
-		REFINED_EMERALD_BLOCK_3 = block(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3, new Item.Properties().rarity(Rarity.EPIC).fireResistant());
+		REFINED_EMERALD_BLOCK_3 = block(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3, new Item.Properties().rarity(Rarity.EPIC).fireResistant());
 		EMERALD_SWORD_T_3 = REGISTRY.register("emerald_sword_t_3", EmeraldSwordT3Item::new);
 		EMERALD_AXE_T_3 = REGISTRY.register("emerald_axe_t_3", EmeraldAxeT3Item::new);
 		EMERALD_PICKAXE_T_3 = REGISTRY.register("emerald_pickaxe_t_3", EmeraldPickaxeT3Item::new);

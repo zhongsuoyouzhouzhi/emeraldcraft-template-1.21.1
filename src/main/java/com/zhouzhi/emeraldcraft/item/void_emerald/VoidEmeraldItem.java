@@ -2,7 +2,7 @@ package com.zhouzhi.emeraldcraft.item.void_emerald;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
-import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
@@ -19,10 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class VoidEmeraldItem extends Item {
     public VoidEmeraldItem() {
@@ -30,7 +27,8 @@ public class VoidEmeraldItem extends Item {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    @MethodsReturnNonnullByDefault
+    public InteractionResult useOn(@ParametersAreNonnullByDefault UseOnContext context) {
         super.useOn(context);
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
@@ -39,7 +37,7 @@ public class VoidEmeraldItem extends Item {
         int z = pos.getZ();
         BlockState state = world.getBlockState(pos);
         int a = 3;
-        if (state.getBlock() == EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_3.value()) {
+        if (state.getBlock() == EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3.value()) {
             a += 3;
             world.destroyBlock(pos, false);
             world.explode(context.getPlayer(), x, y, z, 32, Level.ExplosionInteraction.BLOCK);
@@ -67,7 +65,7 @@ public class VoidEmeraldItem extends Item {
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, BlockState state) {
+    public float getDestroySpeed(ItemStack stack, @ParametersAreNonnullByDefault BlockState state) {
         Tool tool = stack.get(DataComponents.TOOL);
         return tool != null ? tool.getMiningSpeed(state) : 1.2F;
     }

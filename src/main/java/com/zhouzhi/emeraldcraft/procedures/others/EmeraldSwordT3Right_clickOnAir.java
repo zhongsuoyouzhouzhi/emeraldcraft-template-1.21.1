@@ -24,13 +24,12 @@ public class EmeraldSwordT3Right_clickOnAir {
 			});
 		}
 		{
-			Entity _shootFrom = entity;
-			Level projectileLevel = _shootFrom.level();
+            Level projectileLevel = entity.level();
 			if (!projectileLevel.isClientSide()) {
-				Projectile _entityToSpawn = initArrowProjectile(new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), 0, 0, 0, projectileLevel, createArrowWeaponItemStack(projectileLevel, 1, (byte) 127)), entity, 0, true,
-						false, false, AbstractArrow.Pickup.DISALLOWED);
-				_entityToSpawn.setPos(_shootFrom.getX(), _shootFrom.getEyeY() - 0.1, _shootFrom.getZ());
-				_entityToSpawn.shoot(_shootFrom.getLookAngle().x, _shootFrom.getLookAngle().y, _shootFrom.getLookAngle().z, (float) 1.5, 0);
+				Projectile _entityToSpawn = initArrowProjectile(new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), 0, 0, 0, projectileLevel, createArrowWeaponItemStack(projectileLevel)), entity
+				);
+				_entityToSpawn.setPos(entity.getX(), entity.getEyeY() - 0.1, entity.getZ());
+				_entityToSpawn.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, (float) 1.5, 0);
 				projectileLevel.addFreshEntity(_entityToSpawn);
 			}
 		}
@@ -38,25 +37,18 @@ public class EmeraldSwordT3Right_clickOnAir {
 			_player.getCooldowns().addCooldown(itemstack.getItem(), 60);
 	}
 
-	private static AbstractArrow initArrowProjectile(AbstractArrow entityToSpawn, Entity shooter, float damage, boolean silent, boolean fire, boolean particles, AbstractArrow.Pickup pickup) {
+	private static AbstractArrow initArrowProjectile(AbstractArrow entityToSpawn, Entity shooter) {
 		entityToSpawn.setOwner(shooter);
-		entityToSpawn.setBaseDamage(damage);
-		if (silent)
-			entityToSpawn.setSilent(true);
-		if (fire)
-			entityToSpawn.igniteForSeconds(100);
-		if (particles)
-			entityToSpawn.setCritArrow(true);
-		entityToSpawn.pickup = pickup;
+		entityToSpawn.setBaseDamage((float) 0);
+        entityToSpawn.setSilent(true);
+        entityToSpawn.pickup = AbstractArrow.Pickup.DISALLOWED;
 		return entityToSpawn;
 	}
 
-	private static ItemStack createArrowWeaponItemStack(Level level, int knockback, byte piercing) {
+	private static ItemStack createArrowWeaponItemStack(Level level) {
 		ItemStack weapon = new ItemStack(Items.ARROW);
-		if (knockback > 0)
-			weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.KNOCKBACK), knockback);
-		if (piercing > 0)
-			weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.PIERCING), piercing);
+        weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.KNOCKBACK), 1);
+        weapon.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.PIERCING), (byte) 127);
 		return weapon;
 	}
 }

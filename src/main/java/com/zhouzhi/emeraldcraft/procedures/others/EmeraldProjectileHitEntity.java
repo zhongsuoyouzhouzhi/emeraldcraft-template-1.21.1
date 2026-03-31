@@ -19,20 +19,24 @@ import net.minecraft.core.BlockPos;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftAttributes;
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
 
+import java.util.Objects;
+
 public class EmeraldProjectileHitEntity {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, Entity immediatesourceentity, Entity sourceentity) {
 		if (entity == null || immediatesourceentity == null)
 			return;
-		if ((immediatesourceentity instanceof LivingEntity _livingEntity6 && _livingEntity6.getAttributes().hasAttribute(EmeraldcraftAttributes.LAUNCHED) ? _livingEntity6.getAttribute(EmeraldcraftAttributes.LAUNCHED).getValue() : 0) == 1)
+		if ((immediatesourceentity instanceof LivingEntity _livingEntity6 && _livingEntity6.getAttributes().hasAttribute(EmeraldcraftAttributes.LAUNCHED) ? Objects.requireNonNull(_livingEntity6.getAttribute(EmeraldcraftAttributes.LAUNCHED)).getValue() : 0) == 1)
 			if (sourceentity == null)
 				return;
 		entity.hurt(new DamageSource(world.holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), 120);
 		if (world instanceof ServerLevel _level) {
 			LightningBolt entityToSpawn = EntityType.LIGHTNING_BOLT.create(_level);
-			entityToSpawn.moveTo(Vec3.atBottomCenterOf(BlockPos.containing(x, y, z)));
-			entityToSpawn.setVisualOnly(true);
-			_level.addFreshEntity(entityToSpawn);
-		}
+            if (entityToSpawn != null) {
+                entityToSpawn.moveTo(Vec3.atBottomCenterOf(BlockPos.containing(entity.getX(), entity.getY(), entity.getZ())));
+                entityToSpawn.setVisualOnly(true);
+                _level.addFreshEntity(entityToSpawn);
+            }
+        }
 		if (entity instanceof Mob _entity)
 			_entity.setTarget(null);
 		entity.igniteForSeconds(20);
@@ -40,33 +44,33 @@ public class EmeraldProjectileHitEntity {
 			_player.getAbilities().invulnerable = true;
 			_player.onUpdateAbilities();
 		}
-		if (!((immediatesourceentity instanceof LivingEntity _livingEntity6 && _livingEntity6.getAttributes().hasAttribute(EmeraldcraftAttributes.LAUNCHED) ? _livingEntity6.getAttribute(EmeraldcraftAttributes.LAUNCHED).getValue() : 0) == 1)) {
-			if (sourceentity instanceof Player _player)
-				_player.getFoodData().setSaturation((float) ((entity instanceof Player _plr ? _plr.getFoodData().getSaturationLevel() : 0) + (sourceentity instanceof Player _plr ? _plr.getFoodData().getSaturationLevel() : 0)));
+		if (!((immediatesourceentity instanceof LivingEntity _livingEntity6 && _livingEntity6.getAttributes().hasAttribute(EmeraldcraftAttributes.LAUNCHED) ? Objects.requireNonNull(_livingEntity6.getAttribute(EmeraldcraftAttributes.LAUNCHED)).getValue() : 0) == 1)) {
+			if (sourceentity instanceof Player _player) {
+                _player.getFoodData().setSaturation((entity instanceof Player _plr ? _plr.getFoodData().getSaturationLevel() : 0) + _player.getFoodData().getSaturationLevel());
+            }
 			if (entity instanceof Player _player)
 				_player.getFoodData().setSaturation(0);
-			if (sourceentity instanceof Player _player)
-				_player.getFoodData().setFoodLevel((entity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0) + (sourceentity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0));
-			if (entity instanceof Player _player)
-				_player.causeFoodExhaustion(entity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0);
+			if (sourceentity instanceof Player _player) {
+                _player.getFoodData().setFoodLevel((entity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0) + _player.getFoodData().getFoodLevel());
+            }
+			if (entity instanceof Player _player) {
+                _player.causeFoodExhaustion(_player.getFoodData().getFoodLevel());
+            }
 		}
 		for (int index0 = 0; index0 < 32; index0++) {
 			{
-				Entity _ent = entity;
-				_ent.setYRot((float) 22.5);
-				_ent.setXRot(0);
-				_ent.setYBodyRot(_ent.getYRot());
-				_ent.setYHeadRot(_ent.getYRot());
-				_ent.yRotO = _ent.getYRot();
-				_ent.xRotO = _ent.getXRot();
-				if (_ent instanceof LivingEntity _entity) {
+                entity.setYRot((float) 22.5);
+				entity.setXRot(0);
+				entity.setYBodyRot(entity.getYRot());
+				entity.setYHeadRot(entity.getYRot());
+				entity.yRotO = entity.getYRot();
+				entity.xRotO = entity.getXRot();
+				if (entity instanceof LivingEntity _entity) {
 					_entity.yBodyRotO = _entity.getYRot();
 					_entity.yHeadRotO = _entity.getYRot();
 				}
 			}
-			EmeraldCraft.queueServerWork(5, () -> {
-				entity.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0.25, 0.05, 0.25));
-			});
+			EmeraldCraft.queueServerWork(5, () -> entity.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0.25, 0.05, 0.25)));
 		}
 	}
 }

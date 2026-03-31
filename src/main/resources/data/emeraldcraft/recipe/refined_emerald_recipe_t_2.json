@@ -4,11 +4,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "emeraldcraft:refinedemerald_block_3"
+      "item": "emeraldcraft:refined_emerald_block_2"
     }
   ],
   "result": {
-    "id": "emeraldcraft:refined_emerald_t_3",
+    "id": "emeraldcraft:refined_emerald_t_2",
     "count": 9
   }
 }

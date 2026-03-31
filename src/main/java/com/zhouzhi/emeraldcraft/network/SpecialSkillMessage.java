@@ -17,6 +17,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.core.SectionPos;
 
 import com.zhouzhi.emeraldcraft.procedures.SpecialSkillPressed;
+import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber
 public record SpecialSkillMessage(int eventType, int pressedms) implements CustomPacketPayload {
@@ -27,15 +28,13 @@ public record SpecialSkillMessage(int eventType, int pressedms) implements Custo
 	}, (RegistryFriendlyByteBuf buffer) -> new SpecialSkillMessage(buffer.readInt(), buffer.readInt()));
 
 	@Override
-	public Type<SpecialSkillMessage> type() {
+	public @NotNull Type<SpecialSkillMessage> type() {
 		return TYPE;
 	}
 
 	public static void handleData(final SpecialSkillMessage message, final IPayloadContext context) {
 		if (context.flow() == PacketFlow.SERVERBOUND) {
-			context.enqueueWork(() -> {
-				pressAction(context.player(), message.eventType, message.pressedms);
-			}).exceptionally(e -> {
+			context.enqueueWork(() -> pressAction(context.player(), message.eventType, message.pressedms)).exceptionally(e -> {
 				context.connection().disconnect(Component.literal(e.getMessage()));
 				return null;
 			});

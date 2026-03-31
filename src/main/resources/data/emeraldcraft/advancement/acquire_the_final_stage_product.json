@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "id": "emeraldcraft:refinedemerald_block_3"
+      "id": "emeraldcraft:refined_emerald_block_3"
     },
     "title": {
       "translate": "advancements.acquire_the_final_stage_product.title"
@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "items": "emeraldcraft:refinedemerald_block_3",
+            "items": "emeraldcraft:refined_emerald_block_3",
             "count": {
               "min": 1,
               "max": 1

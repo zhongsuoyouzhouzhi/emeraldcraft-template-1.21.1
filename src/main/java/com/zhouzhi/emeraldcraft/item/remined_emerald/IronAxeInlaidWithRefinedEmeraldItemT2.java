@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 public class IronAxeInlaidWithRefinedEmeraldItemT2 extends AxeItem {
 
@@ -34,7 +35,7 @@ public class IronAxeInlaidWithRefinedEmeraldItemT2 extends AxeItem {
         }
 
         @Override
-        public TagKey<Block> getIncorrectBlocksForDrops() {
+        public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
             return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
         }
 
@@ -44,7 +45,7 @@ public class IronAxeInlaidWithRefinedEmeraldItemT2 extends AxeItem {
         }
 
         @Override
-        public Ingredient getRepairIngredient() {
+        public @NotNull Ingredient getRepairIngredient() {
             return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_2.get()));
         }
     };
@@ -54,7 +55,7 @@ public class IronAxeInlaidWithRefinedEmeraldItemT2 extends AxeItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+    public void inventoryTick(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull Entity entity, int slot, boolean selected) {
         super.inventoryTick(itemstack, world, entity, slot, selected);
         if (selected)
             Use.IronToolBeingDamagedPerTick(world,entity, itemstack);
@@ -62,7 +63,7 @@ public class IronAxeInlaidWithRefinedEmeraldItemT2 extends AxeItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean isFoil(ItemStack itemstack) {
+    public boolean isFoil(@NotNull ItemStack itemstack) {
         return false;
     }
 }

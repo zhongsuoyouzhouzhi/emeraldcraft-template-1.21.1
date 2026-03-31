@@ -1,7 +1,5 @@
 package com.zhouzhi.emeraldcraft.block;
 
-import org.checkerframework.checker.units.qual.s;
-
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -12,6 +10,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.core.BlockPos;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class RefinedemeraldBlockBlock extends Block {
 	public static final IntegerProperty EMERALDED = IntegerProperty.create("emeralded", 1, 5);
@@ -23,18 +24,18 @@ public class RefinedemeraldBlockBlock extends Block {
 	}
 
 	@Override
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+	public int getLightBlock(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos) {
 		return 15;
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 		builder.add(EMERALDED);
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return super.getStateForPlacement(context).setValue(EMERALDED, 1);
+	public BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
+		return Objects.requireNonNull(super.getStateForPlacement(context)).setValue(EMERALDED, 1);
 	}
 }

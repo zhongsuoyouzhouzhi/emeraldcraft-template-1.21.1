@@ -14,6 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber
 public class SuppressMobEffect extends MobEffect {
@@ -25,7 +26,7 @@ public class SuppressMobEffect extends MobEffect {
     }
 
     @Override
-    public void onEffectStarted(LivingEntity entity, int amplifier) {
+    public void onEffectStarted(@NotNull LivingEntity entity, int amplifier) {
         SuppressOnEffectStarted.execute(entity);
     }
 
@@ -33,7 +34,7 @@ public class SuppressMobEffect extends MobEffect {
     public static void registerMobEffectExtensions(RegisterClientExtensionsEvent event) {
         event.registerMobEffect(new IClientMobEffectExtensions() {
             @Override
-            public boolean isVisibleInGui(MobEffectInstance effect) {
+            public boolean isVisibleInGui(@NotNull MobEffectInstance effect) {
                 return false;
             }
         }, EmeraldcraftMobEffects.SUPPRESS.get());

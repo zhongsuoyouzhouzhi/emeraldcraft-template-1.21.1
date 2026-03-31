@@ -24,8 +24,10 @@ public class EmeraldcraftKeyMappings {
 			super.setDown(isDown);
 			if (isDownOld != isDown && isDown) {
 				PacketDistributor.sendToServer(new SpecialSkillMessage(0, 0));
-				SpecialSkillMessage.pressAction(Minecraft.getInstance().player, 0, 0);
-			}
+                if (Minecraft.getInstance().player != null) {
+                    SpecialSkillMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+                }
+            }
 			isDownOld = isDown;
 		}
 	};

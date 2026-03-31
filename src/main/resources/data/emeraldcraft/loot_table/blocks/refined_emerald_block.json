@@ -1,6 +1,6 @@
 {
   "type": "minecraft:block",
-  "random_sequence": "emeraldcraft:blocks/refinedemerald_block_3",
+  "random_sequence": "emeraldcraft:blocks/refined_emerald_block",
   "pools": [
     {
       "rolls": 1.0,
@@ -12,7 +12,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "emeraldcraft:refinedemerald_block_3"
+          "name": "emeraldcraft:refined_emerald_block"
         }
       ]
     }

@@ -8,13 +8,6 @@ import net.minecraft.server.level.ServerLevel;
 
 public class SLTZ {
     /**
-     * @param world
-     * @param sourceEntity
-     * @param x
-     * @param y
-     * @param z
-     * @param R
-     * @param Damage
      */
     public static void execute(Level world, Entity sourceEntity, double x, double y, double z, double R, float Damage) {
         if (world instanceof ServerLevel serverLevel) {

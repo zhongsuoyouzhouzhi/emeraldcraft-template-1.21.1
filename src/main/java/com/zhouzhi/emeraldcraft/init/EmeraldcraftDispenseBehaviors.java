@@ -10,6 +10,7 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.BlockSource;
 
 import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldT3DLCDispenserLaunch;
+import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber
 public class EmeraldcraftDispenseBehaviors {
@@ -17,7 +18,7 @@ public class EmeraldcraftDispenseBehaviors {
 	public static void init(FMLCommonSetupEvent event) {
 		event.enqueueWork(() ->
 			DispenserBlock.registerBehavior(EmeraldcraftItems.REFINED_EMERALD_T_3.get(), new DefaultDispenseItemBehavior() {
-				public ItemStack execute(BlockSource blockSource, ItemStack itemstack) {
+				public @NotNull ItemStack execute(@NotNull BlockSource blockSource, @NotNull ItemStack itemstack) {
 					RefinedEmeraldT3DLCDispenserLaunch.execute(blockSource.level(), blockSource.pos().getX(), blockSource.pos().getY(), blockSource.pos().getZ(), blockSource.state().getValue(DispenserBlock.FACING));
 					itemstack.shrink(1);
 					return itemstack;

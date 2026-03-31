@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -253,5 +254,38 @@ public class SimpleUse {
 
         return new Vec3(targetX, targetY, targetZ);
     }
+    public static void sendOpen(Player player,boolean isOpen) {
+        if (isOpen)
+            Message.send(player, Component.translatable("message.emeraldcraft.skill").append(Component.translatable("message.emeraldcraft.true")),true);
+        else
+            Message.send(player, Component.translatable("message.emeraldcraft.skill").append(Component.translatable("message.emeraldcraft.false")),true);
+    }
 
+    public static class Message {
+        public static void send(Player player, String message, boolean isTranslate) {
+            if (isTranslate)
+                player.displayClientMessage(Component.translatable(message),true);
+            else
+                player.displayClientMessage(Component.literal(message),true);
+        }
+
+        public static void send(Player player, String message, boolean isTranslate, boolean actionBar) {
+            if (isTranslate)
+                player.displayClientMessage(Component.translatable(message),actionBar);
+            else
+                player.displayClientMessage(Component.literal(message),actionBar);
+        }
+        public static void send(Player player, Component message, boolean isTranslate) {
+            if (isTranslate)
+                player.displayClientMessage(message,true);
+            else
+                player.displayClientMessage(message,true);
+        }
+        public static void send(Player player, Component message, boolean isTranslate, boolean actionBar) {
+            if (isTranslate)
+                player.displayClientMessage(message,actionBar);
+            else
+                player.displayClientMessage(message,actionBar);
+        }
+    }
 }

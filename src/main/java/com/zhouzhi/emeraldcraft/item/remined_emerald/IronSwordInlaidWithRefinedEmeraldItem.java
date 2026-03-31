@@ -13,6 +13,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 public class IronSwordInlaidWithRefinedEmeraldItem extends SwordItem {
     private static final Tier TOOL_TIER = new Tier() {
@@ -32,7 +33,7 @@ public class IronSwordInlaidWithRefinedEmeraldItem extends SwordItem {
         }
 
         @Override
-        public TagKey<Block> getIncorrectBlocksForDrops() {
+        public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
             return BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
         }
 
@@ -42,7 +43,7 @@ public class IronSwordInlaidWithRefinedEmeraldItem extends SwordItem {
         }
 
         @Override
-        public Ingredient getRepairIngredient() {
+        public @NotNull Ingredient getRepairIngredient() {
             return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD.get()));
         }
     };
@@ -52,15 +53,15 @@ public class IronSwordInlaidWithRefinedEmeraldItem extends SwordItem {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-        boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-        Use.ironSwordHitLivingThings(entity,sourceentity);
-        return retval;
+    public boolean hurtEnemy(@NotNull ItemStack itemstack, @NotNull LivingEntity entity, @NotNull LivingEntity sourceEntity) {
+        boolean a = super.hurtEnemy(itemstack, entity, sourceEntity);
+        Use.IronSwordHitLivingThings(entity,sourceEntity);
+        return a;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean isFoil(ItemStack itemstack) {
+    public boolean isFoil(@NotNull ItemStack itemstack) {
         return false;
     }
 }

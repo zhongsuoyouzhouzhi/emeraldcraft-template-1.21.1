@@ -11,22 +11,24 @@ import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
 
 public class RefinedEmeraldRight_clickOnBlock {
 	public static void execute(LevelAccessor world, double x, double y, double z, ItemStack itemstack) {
-		if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINEDEMERALD_BLOCK.get()) {
+		if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == EmeraldcraftBlocks.REFINED_EMERALD_BLOCK.get()) {
 			{
 				BlockPos _bp = BlockPos.containing(x, y, z);
-				BlockState _bs = EmeraldcraftBlocks.REFINEDEMERALD_BLOCK_2.get().defaultBlockState();
+				BlockState _bs = EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_2.get().defaultBlockState();
 				BlockState _bso = world.getBlockState(_bp);
 				for (Property<?> _propertyOld : _bso.getProperties()) {
 					Property _propertyNew = _bs.getBlock().getStateDefinition().getProperty(_propertyOld.getName());
-					if (_propertyNew != null && _bs.getValue(_propertyNew) != null)
-						try {
-							_bs = _bs.setValue(_propertyNew, _bso.getValue(_propertyOld));
-						} catch (Exception e) {
-						}
+					if (_propertyNew != null) {
+                        _bs.getValue(_propertyNew);
+                        try {
+                            _bs = _bs.setValue(_propertyNew, _bso.getValue(_propertyOld));
+                        } catch (Exception ignored) {
+                        }
+                    }
 				}
 				world.setBlock(_bp, _bs, 3);
 			}
-			world.levelEvent(2001, BlockPos.containing(x, y, z), Block.getId(EmeraldcraftBlocks.REFINEDEMERALD_BLOCK.get().defaultBlockState()));
+			world.levelEvent(2001, BlockPos.containing(x, y, z), Block.getId(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK.get().defaultBlockState()));
 			itemstack.shrink(1);
 		}
 	}

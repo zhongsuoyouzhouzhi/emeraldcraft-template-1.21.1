@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
+import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber
 public class EmeraldBonusMobEffect extends MobEffect {
@@ -29,7 +30,7 @@ public class EmeraldBonusMobEffect extends MobEffect {
 	public static void registerMobEffectExtensions(RegisterClientExtensionsEvent event) {
 		event.registerMobEffect(new IClientMobEffectExtensions() {
 			@Override
-			public boolean isVisibleInGui(MobEffectInstance effect) {
+			public boolean isVisibleInGui(@NotNull MobEffectInstance effect) {
 				return false;
 			}
 		}, EmeraldcraftMobEffects.EMERALD_BONUS.get());

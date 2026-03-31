@@ -19,9 +19,9 @@ import com.zhouzhi.emeraldcraft.EmeraldCraft;
 @EventBusSubscriber
 public class EmeraldcraftMobEffects {
 	public static final DeferredRegister<MobEffect> REGISTRY = DeferredRegister.create(Registries.MOB_EFFECT, EmeraldCraft.MOD_ID);
-	public static final DeferredHolder<MobEffect, MobEffect> EMERALD_ATTACH = REGISTRY.register("emerald_attach", () -> new EmeraldAttachMobEffect());
-	public static final DeferredHolder<MobEffect, MobEffect> EMERALD_BONUS = REGISTRY.register("emerald_bonus", () -> new EmeraldBonusMobEffect());
-    public static final DeferredHolder<MobEffect, MobEffect> SUPPRESS = REGISTRY.register("suppress", () -> new SuppressMobEffect());
+	public static final DeferredHolder<MobEffect, MobEffect> EMERALD_ATTACH = REGISTRY.register("emerald_attach", EmeraldAttachMobEffect::new);
+	public static final DeferredHolder<MobEffect, MobEffect> EMERALD_BONUS = REGISTRY.register("emerald_bonus", EmeraldBonusMobEffect::new);
+    public static final DeferredHolder<MobEffect, MobEffect> SUPPRESS = REGISTRY.register("suppress", SuppressMobEffect::new);
 
 	@SubscribeEvent
 	public static void onEffectRemoved(MobEffectEvent.Remove event) {

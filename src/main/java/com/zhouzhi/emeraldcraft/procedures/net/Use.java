@@ -3,9 +3,6 @@ package com.zhouzhi.emeraldcraft.procedures.net;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
-import com.zhouzhi.emeraldcraft.procedures.net.function.Function_BlockPosOperation;
-import com.zhouzhi.emeraldcraft.procedures.net.function.Function_EntityOperation;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 
 public class Use {
@@ -35,7 +31,7 @@ public class Use {
         entity.addEffect(new MobEffectInstance(EmeraldcraftMobEffects.SUPPRESS, 60, 3, false, true));
     }
 
-    public static void ironSwordHitLivingThings(LivingEntity entity,LivingEntity source){
+    public static void IronSwordHitLivingThings(LivingEntity entity, LivingEntity source){
         entity.addEffect(new MobEffectInstance(EmeraldcraftMobEffects.SUPPRESS, 20, 0, false, true));
         if (source.getHealth() < source.getMaxHealth()){
             source.setHealth(source.getHealth()+1f);
@@ -44,7 +40,7 @@ public class Use {
         }
     }
 
-    public static void ironSwordT2HitLivingThings(LivingEntity entity,LivingEntity source){
+    public static void IronSwordT2HitLivingThings(LivingEntity entity, LivingEntity source){
         entity.addEffect(new MobEffectInstance(EmeraldcraftMobEffects.SUPPRESS, 40, 1, false, true));
         if (source.getHealth() < source.getMaxHealth()){
             source.setHealth(source.getHealth()+1f);
@@ -179,46 +175,48 @@ public class Use {
         }
     }
 
-    public static void VoidEmeraldSwordRight_clickOnAir(ItemStack stack,Player source,Level world){
-        if (world instanceof ServerLevel serverLevel) {
-            every_entity:for (Entity entity : serverLevel.getAllEntities()) {
-                String[] b = {};
-                for (String a : entity.getTags().toArray(b)) {
-                    if (a.equals("void")) {
-                        if (entity.getType().equals(EntityType.ENDER_DRAGON)) {
-                            if (entity instanceof LivingEntity livingEntity)
-                                livingEntity.hurt(source.damageSources().playerAttack(source), livingEntity.getMaxHealth());
-                            entity.removeTag("void");
-                            continue every_entity;
-                        }
-                        entity.setInvisible(true);
-                        entity.setInvulnerable(false);
-                        entity.setSilent(true);
-                        if (!world.isClientSide())
-                            serverLevel.sendParticles(
-                                    ParticleTypes.END_ROD,
-                                    entity.getX(), entity.getY(), entity.getZ(),
-                                    64,
-                                    0.5, 0.5, 0.5,
-                                    0
-                            );
+    public static void VoidEmeraldSwordRight_clickOnAir(ItemStack stack,Player source,Level world) {
+        if (TagChange.getOrCreateComponent(stack,"Void_Open",true)) {
+            if (world instanceof ServerLevel serverLevel) {
+                every_entity:
+                for (Entity entity : serverLevel.getAllEntities()) {
+                    String[] b = {};
+                    for (String a : entity.getTags().toArray(b)) {
+                        if (a.equals("void")) {
+                            if (entity.getType().equals(EntityType.ENDER_DRAGON)) {
+                                if (entity instanceof LivingEntity livingEntity)
+                                    livingEntity.hurt(source.damageSources().playerAttack(source), livingEntity.getMaxHealth());
+                                entity.removeTag("void");
+                                continue every_entity;
+                            }
+                            entity.setInvisible(true);
+                            entity.setInvulnerable(false);
+                            entity.setSilent(true);
+                            if (!world.isClientSide())
+                                serverLevel.sendParticles(
+                                        ParticleTypes.END_ROD,
+                                        entity.getX(), entity.getY(), entity.getZ(),
+                                        64,
+                                        0.5, 0.5, 0.5,
+                                        0
+                                );
 
-                        if (entity instanceof LivingEntity livingEntity) {
-                            livingEntity.hurt(source.damageSources().playerAttack(source), livingEntity.getMaxHealth());
-                            livingEntity.die(source.damageSources().playerAttack(source));
+                            if (entity instanceof LivingEntity livingEntity) {
+                                livingEntity.hurt(source.damageSources().playerAttack(source), livingEntity.getMaxHealth());
+                                livingEntity.die(source.damageSources().playerAttack(source));
+                            } else entity.kill();
+                            entity.removeTag("void");
+                            entity.moveTo(entity.getX(), -200, entity.getZ());
+                            break;
                         }
-                        else entity.kill();
-                        entity.removeTag("void");
-                        entity.moveTo(entity.getX(), -200, entity.getZ());
-                        break;
                     }
                 }
+                if (SimpleUse.getEntityGameType(source) != GameType.CREATIVE) {
+                    stack.hurtAndBreak(2, serverLevel, null, _k -> {
+                    });
+                }
+                source.getCooldowns().addCooldown(stack.getItem(), 200);
             }
-            if (SimpleUse.getEntityGameType(source) != GameType.CREATIVE) {
-                stack.hurtAndBreak(2, serverLevel, null, _k -> {
-                });
-            }
-            source.getCooldowns().addCooldown(stack.getItem(), 200);
         }
     }
 }

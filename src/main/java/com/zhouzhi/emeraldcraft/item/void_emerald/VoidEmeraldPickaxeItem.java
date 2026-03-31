@@ -3,6 +3,7 @@ package com.zhouzhi.emeraldcraft.item.void_emerald;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
@@ -17,6 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class VoidEmeraldPickaxeItem extends PickaxeItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -36,6 +39,7 @@ public class VoidEmeraldPickaxeItem extends PickaxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
@@ -46,6 +50,7 @@ public class VoidEmeraldPickaxeItem extends PickaxeItem {
 		}
 
 		@Override
+		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
             return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
 			}
@@ -59,7 +64,7 @@ public class VoidEmeraldPickaxeItem extends PickaxeItem {
 	}
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miningEntity) {
+    public boolean mineBlock(ItemStack stack, @ParametersAreNonnullByDefault Level level, @ParametersAreNonnullByDefault BlockState state, @ParametersAreNonnullByDefault BlockPos pos, @ParametersAreNonnullByDefault LivingEntity miningEntity) {
         Tool tool = stack.get(DataComponents.TOOL);
         if (tool == null) {
             return false;

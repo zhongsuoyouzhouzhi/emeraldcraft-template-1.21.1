@@ -25,10 +25,10 @@ public class EmeraldShovelT3Right_clickOnAir {
 				int blockX = (int)x + dx;
 				int blockY = (int)y + dy;
 				int blockZ = (int)z + dz;
-				Block blockasd = (world.getBlockState(BlockPos.containing((double)blockX, (double)blockY, (double)blockZ))).getBlock();
+				Block blockasd = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
 				if (blockasd == Blocks.DIRT || blockasd == Blocks.GRASS_BLOCK){
-					BlockPos pos = BlockPos.containing((double)blockX, (double)blockY, (double)blockZ);
-					Block.dropResources(world.getBlockState(pos), world, BlockPos.containing((double)blockX, (double)blockY, (double)blockZ), null);
+					BlockPos pos = BlockPos.containing(blockX, blockY, blockZ);
+					Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
 					world.destroyBlock(pos, false);
 					dirtnum++;
 					}

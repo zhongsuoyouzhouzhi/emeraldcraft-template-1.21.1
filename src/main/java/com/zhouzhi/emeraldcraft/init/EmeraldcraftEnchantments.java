@@ -5,7 +5,6 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -15,7 +14,6 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class EmeraldcraftEnchantments {
     public static final ResourceKey<Enchantment> VOID_EMERALD_ATTACH =
@@ -40,14 +38,13 @@ public class EmeraldcraftEnchantments {
         HolderGetter<Item> itemGetter = context.lookup(Registries.ITEM);
         HolderSet<Enchantment> exclusiveSet = HolderSet.empty();
         DataComponentMap effects = DataComponentMap.EMPTY;
-
         Enchantment.EnchantmentDefinition void_emerald_attach_definition = Enchantment.definition(
                 itemGetter.getOrThrow(ItemTags.SWORDS),
                 itemGetter.getOrThrow(ItemTags.SWORDS),
                 4,
                 5,
-                Enchantment.constantCost(5),
-                Enchantment.constantCost(30),
+                Enchantment.dynamicCost(5,2),
+                Enchantment.dynamicCost(20,4),
                 6,
                 EquipmentSlotGroup.MAINHAND
         );
@@ -58,14 +55,13 @@ public class EmeraldcraftEnchantments {
                 effects
         );
 
-
         Enchantment.EnchantmentDefinition lighting_definition = Enchantment.definition(
                 itemGetter.getOrThrow(ItemTags.SWORDS),
                 itemGetter.getOrThrow(ItemTags.SWORDS),
                 10,
                 2,
-                Enchantment.constantCost(10),
-                Enchantment.constantCost(25),
+                Enchantment.dynamicCost(5,5),
+                Enchantment.dynamicCost(20,5),
                 2,
                 EquipmentSlotGroup.MAINHAND
         );
@@ -81,8 +77,8 @@ public class EmeraldcraftEnchantments {
                 itemGetter.getOrThrow(Tags.Items.TOOLS_SHIELD),
                 15,
                 6,
-                Enchantment.constantCost(5),
-                Enchantment.constantCost(30),
+                Enchantment.dynamicCost(5,3),
+                Enchantment.dynamicCost(30,1),
                 4,
                 EquipmentSlotGroup.HAND
         );

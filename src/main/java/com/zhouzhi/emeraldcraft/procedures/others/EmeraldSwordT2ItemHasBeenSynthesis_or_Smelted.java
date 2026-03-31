@@ -7,12 +7,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.AdvancementHolder;
 
+import java.util.Objects;
+
 public class EmeraldSwordT2ItemHasBeenSynthesis_or_Smelted {
 	public static void execute(Entity entity) {
 		if (entity == null)
 			return;
 		if (!(entity instanceof ServerPlayer _plr0 && _plr0.level() instanceof ServerLevel
-				&& _plr0.getAdvancements().getOrStartProgress(_plr0.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:craft_refined_emerald_sword_t_2"))).isDone())) {
+				&& _plr0.getAdvancements().getOrStartProgress(Objects.requireNonNull(_plr0.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:craft_refined_emerald_sword_t_2")))).isDone())) {
 			if (entity instanceof ServerPlayer _player) {
 				AdvancementHolder _adv = _player.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:craft_refined_emerald_sword_t_2"));
 				if (_adv != null) {
