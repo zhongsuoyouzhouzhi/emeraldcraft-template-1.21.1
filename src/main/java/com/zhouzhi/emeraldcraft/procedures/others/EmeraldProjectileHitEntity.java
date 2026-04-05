@@ -22,7 +22,7 @@ import com.zhouzhi.emeraldcraft.EmeraldCraft;
 import java.util.Objects;
 
 public class EmeraldProjectileHitEntity {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, Entity immediatesourceentity, Entity sourceentity) {
+	public static void execute(LevelAccessor world, Entity entity, Entity immediatesourceentity, Entity sourceentity) {
 		if (entity == null || immediatesourceentity == null)
 			return;
 		if ((immediatesourceentity instanceof LivingEntity _livingEntity6 && _livingEntity6.getAttributes().hasAttribute(EmeraldcraftAttributes.LAUNCHED) ? Objects.requireNonNull(_livingEntity6.getAttribute(EmeraldcraftAttributes.LAUNCHED)).getValue() : 0) == 1)

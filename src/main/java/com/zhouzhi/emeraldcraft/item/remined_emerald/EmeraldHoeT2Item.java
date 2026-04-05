@@ -47,7 +47,7 @@ public class EmeraldHoeT2Item extends HoeItem {
 	};
 
 	public EmeraldHoeT2Item() {
-		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 0f, 0f)));
+		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 0f, 0f)).rarity(Rarity.UNCOMMON));
 	}
 
 	@Override

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "aac",
+    "abc",
+    "acc"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:nether_bricks"
+    },
+    "b": {
+      "item": "emeraldcraft:refined_emerald"
+    },
+    "c": {
+      "item": "minecraft:netherrack"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:lava_emerald",
+    "count": 1
+  }
+}

@@ -47,7 +47,7 @@ public class IronShovelInlaidWithRefinedEmeraldItemT2 extends ShovelItem {
     };
 
     public IronShovelInlaidWithRefinedEmeraldItemT2() {
-        super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 7.5f, -3f)));
+        super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 7.5f, -3f)).rarity(Rarity.UNCOMMON));
     }
 
     @Override

@@ -2,9 +2,9 @@ package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import com.zhouzhi.emeraldcraft.procedures.others.EmeraldSwordT3HitLivingThings;
 import com.zhouzhi.emeraldcraft.procedures.others.EmeraldSwordT3Right_clickOnAir;
-import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -13,10 +13,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -61,7 +58,7 @@ public class EmeraldSwordT3Item extends SwordItem {
 	};
 
 	public EmeraldSwordT3Item() {
-		super(TOOL_TIER, new Item.Properties().attributes(SwordItem.createAttributes(TOOL_TIER, 69f, -2.4f)).fireResistant());
+		super(TOOL_TIER, new Item.Properties().attributes(SwordItem.createAttributes(TOOL_TIER, 69f, -2.4f)).fireResistant().rarity(Rarity.EPIC));
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class EmeraldShovelT2Item extends ShovelItem {
 	};
 
 	public EmeraldShovelT2Item() {
-		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 7.5f, -3f)));
+		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 7.5f, -3f)).rarity(Rarity.UNCOMMON));
 	}
 
 	@Override

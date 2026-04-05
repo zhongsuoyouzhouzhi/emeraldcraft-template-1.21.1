@@ -12,10 +12,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
@@ -61,10 +58,11 @@ public class VoidEmeraldAxeItem extends AxeItem {
 	};
 
 	public VoidEmeraldAxeItem() {
-		super(TOOL_TIER, new Properties().attributes(
-				DiggerItem.createAttributes(TOOL_TIER, 10f, -3f))
+		super(TOOL_TIER, new Properties()
+				.attributes(DiggerItem.createAttributes(TOOL_TIER, 10f, -3f))
 				.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
-				.fireResistant());
+				.fireResistant()
+				.rarity(Rarity.EPIC));
 	}
 
     @Override

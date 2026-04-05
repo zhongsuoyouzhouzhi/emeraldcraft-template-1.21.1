@@ -5,10 +5,7 @@ import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -51,7 +48,7 @@ public class IronAxeInlaidWithRefinedEmeraldItemT2 extends AxeItem {
     };
 
     public IronAxeInlaidWithRefinedEmeraldItemT2() {
-        super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 8.5f, -3f)));
+        super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 8.5f, -3f)).rarity(Rarity.UNCOMMON));
     }
 
     @Override

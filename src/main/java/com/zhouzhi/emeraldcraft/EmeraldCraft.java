@@ -1,33 +1,31 @@
 package com.zhouzhi.emeraldcraft;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftEnchantments;
+import com.zhouzhi.emeraldcraft.init.*;
+import com.zhouzhi.emeraldcraft.listening.AttackListening;
+import com.zhouzhi.emeraldcraft.listening.MiningListening;
 import com.zhouzhi.emeraldcraft.procedures.enchantment.EnchantmentEffect;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.util.Tuple;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.util.thread.SidedThreadGroups;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import net.neoforged.neoforge.network.handling.IPayloadHandler;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.fml.util.thread.SidedThreadGroups;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.bus.api.IEventBus;
-
-import net.minecraft.util.Tuple;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.FriendlyByteBuf;
-
-import com.zhouzhi.emeraldcraft.init.*;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.IPayloadHandler;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -41,6 +39,8 @@ public class EmeraldCraft {
     public EmeraldCraft(IEventBus modEventBus) {
         NeoForge.EVENT_BUS.register(this);
         NeoForge.EVENT_BUS.register(new EnchantmentEffect());
+        NeoForge.EVENT_BUS.register(new AttackListening());
+        NeoForge.EVENT_BUS.register(new MiningListening());
         modEventBus.addListener(this::registerNetworking);
         modEventBus.addListener(this::onGatherData);
         EmeraldcraftBlocks.REGISTRY.register(modEventBus);

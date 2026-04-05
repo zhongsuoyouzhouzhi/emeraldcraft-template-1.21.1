@@ -6,10 +6,7 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
@@ -55,6 +52,7 @@ public class EmeraldSwordItem extends SwordItem {
     public EmeraldSwordItem() {
         super(TOOL_TIER, new Item.Properties()
                 .attributes(SwordItem.createAttributes(TOOL_TIER, 7f, -2.4f))
+				.rarity(Rarity.UNCOMMON)
         );
     }
 

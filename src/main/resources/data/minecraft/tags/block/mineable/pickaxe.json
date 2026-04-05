@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "emeraldcraft:refined_emerald_block_3",
     "emeraldcraft:refined_emerald_block",
-    "emeraldcraft:refined_emerald_block_2"
+    "emeraldcraft:refined_emerald_block_2",
+    "emeraldcraft:refined_emerald_block_3"
   ]
 }

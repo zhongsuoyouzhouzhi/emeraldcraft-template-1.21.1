@@ -8,10 +8,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.HoeItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
@@ -59,9 +56,11 @@ public class VoidEmeraldHoeItem extends HoeItem {
 	};
 
 	public VoidEmeraldHoeItem() {
-		super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 1.5f, -2.5f))
+		super(TOOL_TIER, new Properties()
+				.attributes(DiggerItem.createAttributes(TOOL_TIER, 1.5f, -2.5f))
 				.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
-				.fireResistant());
+				.fireResistant()
+				.rarity(Rarity.EPIC));
 	}
 
     @Override

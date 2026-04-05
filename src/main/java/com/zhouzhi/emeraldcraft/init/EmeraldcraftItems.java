@@ -1,21 +1,28 @@
 package com.zhouzhi.emeraldcraft.init;
 
+import com.zhouzhi.emeraldcraft.EmeraldCraft;
+import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldAxeItem;
+import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldItem;
+import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldPickaxeItem;
+import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldSwordItem;
 import com.zhouzhi.emeraldcraft.item.remined_emerald.*;
 import com.zhouzhi.emeraldcraft.item.void_emerald.*;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.BlockItem;
-import com.zhouzhi.emeraldcraft.EmeraldCraft;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class EmeraldcraftItems {
 	public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(EmeraldCraft.MOD_ID);
 	public static final DeferredItem<Item> REFINED_EMERALD;
     public static final DeferredItem<Item> REFINED_EMERALD_T_2;
     public static final DeferredItem<Item> REFINED_EMERALD_T_3;
+	public static final DeferredItem<Item> VOID_EMERALD;
+	public static final DeferredItem<Item> LAVA_EMERALD;
+	public static final DeferredItem<Item> REFINED_EMERALD_PLUS;
 	public static final DeferredItem<Item> REFINED_EMERALD_BLOCK;
 	public static final DeferredItem<Item> REFINED_EMERALD_BLOCK_2;
     public static final DeferredItem<Item> REFINED_EMERALD_BLOCK_3;
@@ -26,18 +33,21 @@ public class EmeraldcraftItems {
     public static final DeferredItem<Item> IRON_SWORD_INLAID_WITH_REFINED_EMERALD;
     public static final DeferredItem<Item> IRON_SWORD_INLAID_WITH_REFINED_EMERALD_T2;
     public static final DeferredItem<Item> VOID_EMERALD_SWORD;
+	public static final DeferredItem<Item> LAVA_EMERALD_SWORD;
     public static final DeferredItem<Item> EMERALD_AXE;
 	public static final DeferredItem<Item> EMERALD_AXE_T_2;
     public static final DeferredItem<Item> EMERALD_AXE_T_3;
-    public static final DeferredItem<Item> VOID_EMERALD_AXE;
     public static final DeferredItem<Item> IRON_AXE_INLAID_WITH_REFINED_EMERALD;
     public static final DeferredItem<Item> IRON_AXE_INLAID_WITH_REFINED_EMERALD_T2;
+	public static final DeferredItem<Item> VOID_EMERALD_AXE;
+	public static final DeferredItem<Item> LAVA_EMERALD_AXE;
     public static final DeferredItem<Item> EMERALD_PICKAXE;
     public static final DeferredItem<Item> EMERALD_PICKAXE_T_2;
 	public static final DeferredItem<Item> EMERALD_PICKAXE_T_3;
-    public static final DeferredItem<Item> VOID_EMERALD_PICKAXE;
     public static final DeferredItem<Item> IRON_PICKAXE_INLAID_WITH_REFINED_EMERALD;
     public static final DeferredItem<Item> IRON_PICKAXE_INLAID_WITH_REFINED_EMERALD_T2;
+	public static final DeferredItem<Item> VOID_EMERALD_PICKAXE;
+	public static final DeferredItem<Item> LAVA_EMERALD_PICKAXE;
 	public static final DeferredItem<Item> EMERALD_SHOVEL;
 	public static final DeferredItem<Item> EMERALD_SHOVEL_T_2;
 	public static final DeferredItem<Item> EMERALD_SHOVEL_T_3;
@@ -62,8 +72,6 @@ public class EmeraldcraftItems {
 	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_CHESTPLATE;
 	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_LEGGINGS;
 	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_BOOTS;
-	public static final DeferredItem<Item> REFINED_EMERALD_PLUS;
-    public static final DeferredItem<Item> VOID_EMERALD;
 	static {
 		REFINED_EMERALD = REGISTRY.register("refined_emerald", RefinedEmeraldItem::new);
 		REFINED_EMERALD_BLOCK = block(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK, new Item.Properties().rarity(Rarity.RARE));
@@ -116,6 +124,10 @@ public class EmeraldcraftItems {
         VOID_EMERALD_PICKAXE = REGISTRY.register("void_emerald_pickaxe", VoidEmeraldPickaxeItem::new);
         VOID_EMERALD_SHOVEL = REGISTRY.register("void_emerald_shovel", VoidEmeraldShovelItem::new);
         VOID_EMERALD_HOE = REGISTRY.register("void_emerald_hoe", VoidEmeraldHoeItem::new);
+		LAVA_EMERALD = REGISTRY.register("lava_emerald", LavaEmeraldItem::new);
+		LAVA_EMERALD_SWORD = REGISTRY.register("lava_emerald_sword", LavaEmeraldSwordItem::new);
+		LAVA_EMERALD_AXE = REGISTRY.register("lava_emerald_axe", LavaEmeraldAxeItem::new);
+		LAVA_EMERALD_PICKAXE = REGISTRY.register("lava_emerald_pickaxe", LavaEmeraldPickaxeItem::new);
 	}
 
 	// Start of user code block custom items

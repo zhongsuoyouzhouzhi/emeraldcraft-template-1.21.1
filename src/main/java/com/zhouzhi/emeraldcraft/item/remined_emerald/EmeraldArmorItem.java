@@ -9,10 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.neoforged.api.distmarker.Dist;
@@ -52,7 +49,8 @@ public abstract class EmeraldArmorItem extends ArmorItem {
 	public static class Helmet extends EmeraldArmorItem {
 		public Helmet() {
 			super(ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(150))
-					.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
+					.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+					.rarity(Rarity.UNCOMMON));
 		}
 
 		@Override
@@ -70,7 +68,8 @@ public abstract class EmeraldArmorItem extends ArmorItem {
 	public static class Chestplate extends EmeraldArmorItem {
 		public Chestplate() {
 			super(ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(150))
-					.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
+					.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+					.rarity(Rarity.UNCOMMON));
 		}
 
 		@Override
@@ -88,7 +87,8 @@ public abstract class EmeraldArmorItem extends ArmorItem {
 	public static class Leggings extends EmeraldArmorItem {
 		public Leggings() {
 			super(ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(150))
-					.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
+					.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+					.rarity(Rarity.UNCOMMON));
 		}
 
 		@Override
@@ -106,7 +106,8 @@ public abstract class EmeraldArmorItem extends ArmorItem {
 	public static class Boots extends EmeraldArmorItem {
 		public Boots() {
 			super(ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(150))
-					.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
+					.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+					.rarity(Rarity.UNCOMMON));
 		}
 
 		@Override

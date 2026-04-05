@@ -60,6 +60,7 @@ public class VoidEmeraldSwordItem extends SwordItem {
 						.attributes(SwordItem.createAttributes(TOOL_TIER, 4f, -2.0f))
 						.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
 						.fireResistant()
+						.rarity(Rarity.EPIC)
 			);
 	}
 

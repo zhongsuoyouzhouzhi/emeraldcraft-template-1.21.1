@@ -48,7 +48,7 @@ public class IronPickaxeInlaidWithRefinedEmeraldItemT2 extends PickaxeItem {
     };
 
     public IronPickaxeInlaidWithRefinedEmeraldItemT2() {
-        super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 4.5f, -3f)));
+        super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 4.5f, -3f)).rarity(Rarity.UNCOMMON));
     }
 
     @Override

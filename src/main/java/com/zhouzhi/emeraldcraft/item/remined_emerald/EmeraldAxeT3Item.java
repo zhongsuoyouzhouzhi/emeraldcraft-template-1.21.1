@@ -52,7 +52,7 @@ public class EmeraldAxeT3Item extends AxeItem {
 	};
 
 	public EmeraldAxeT3Item() {
-		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 19f, -3f)).fireResistant());
+		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 19f, -3f)).fireResistant().rarity(Rarity.EPIC));
 	}
 
 	@Override

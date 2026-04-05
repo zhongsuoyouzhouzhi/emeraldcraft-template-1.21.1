@@ -47,7 +47,7 @@ public class EmeraldAxeT2Item extends AxeItem {
 	};
 
 	public EmeraldAxeT2Item() {
-		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 10f, -3f)));
+		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 10f, -3f)).rarity(Rarity.UNCOMMON));
 	}
 
 	@Override

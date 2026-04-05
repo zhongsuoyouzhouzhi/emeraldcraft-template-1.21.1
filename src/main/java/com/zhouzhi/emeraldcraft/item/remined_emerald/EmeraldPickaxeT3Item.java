@@ -56,7 +56,7 @@ public class EmeraldPickaxeT3Item extends PickaxeItem {
 	};
 
 	public EmeraldPickaxeT3Item() {
-		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 7f, -2.8f)).fireResistant());
+		super(TOOL_TIER, new Item.Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 7f, -2.8f)).fireResistant().rarity(Rarity.EPIC));
 	}
 
 	@Override

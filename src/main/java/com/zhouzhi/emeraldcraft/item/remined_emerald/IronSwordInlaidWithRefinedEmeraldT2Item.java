@@ -7,6 +7,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -50,7 +51,7 @@ public class IronSwordInlaidWithRefinedEmeraldT2Item extends SwordItem {
     };
 
     public IronSwordInlaidWithRefinedEmeraldT2Item() {
-        super(TOOL_TIER, new Properties().attributes(SwordItem.createAttributes(TOOL_TIER, 7.75f, -2.4f)));
+        super(TOOL_TIER, new Properties().attributes(SwordItem.createAttributes(TOOL_TIER, 7.75f, -2.4f)).rarity(Rarity.UNCOMMON));
     }
 
     @Override

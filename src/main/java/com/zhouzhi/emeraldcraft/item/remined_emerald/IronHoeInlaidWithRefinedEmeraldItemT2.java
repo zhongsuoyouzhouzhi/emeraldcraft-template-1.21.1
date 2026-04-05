@@ -47,7 +47,7 @@ public class IronHoeInlaidWithRefinedEmeraldItemT2 extends HoeItem {
     };
 
     public IronHoeInlaidWithRefinedEmeraldItemT2() {
-        super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 0f, 0f)));
+        super(TOOL_TIER, new Properties().attributes(DiggerItem.createAttributes(TOOL_TIER, 0f, 0f)).rarity(Rarity.UNCOMMON));
     }
 
     @Override

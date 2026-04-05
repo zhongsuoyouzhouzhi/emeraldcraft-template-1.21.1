@@ -70,6 +70,10 @@ public class EmeraldcraftTabs {
                 tabData.accept(EmeraldcraftItems.VOID_EMERALD_PICKAXE.get());
                 tabData.accept(EmeraldcraftItems.VOID_EMERALD_SHOVEL.get());
                 tabData.accept(EmeraldcraftItems.VOID_EMERALD_HOE.get());
+                tabData.accept(EmeraldcraftItems.LAVA_EMERALD.get());
+                tabData.accept(EmeraldcraftItems.LAVA_EMERALD_SWORD.get());
+                tabData.accept(EmeraldcraftItems.LAVA_EMERALD_AXE.get());
+                tabData.accept(EmeraldcraftItems.LAVA_EMERALD_PICKAXE.get());
 			}).withSearchBar().build());
 
 	@SubscribeEvent
@@ -99,6 +103,8 @@ public class EmeraldcraftTabs {
             tabData.accept(EmeraldcraftItems.VOID_EMERALD_PICKAXE.get());
             tabData.accept(EmeraldcraftItems.VOID_EMERALD_SHOVEL.get());
             tabData.accept(EmeraldcraftItems.VOID_EMERALD_HOE.get());
+            tabData.accept(EmeraldcraftItems.LAVA_EMERALD_AXE.get());
+            tabData.accept(EmeraldcraftItems.LAVA_EMERALD_PICKAXE.get());
 		} else if (tabData.getTabKey() == CreativeModeTabs.COMBAT) {
 			tabData.accept(EmeraldcraftItems.EMERALD_SWORD.get());
             tabData.accept(EmeraldcraftItems.EMERALD_AXE.get());
@@ -125,6 +131,15 @@ public class EmeraldcraftTabs {
             tabData.accept(EmeraldcraftItems.IRON_AXE_INLAID_WITH_REFINED_EMERALD_T2.get());
             tabData.accept(EmeraldcraftItems.VOID_EMERALD_SWORD.get());
             tabData.accept(EmeraldcraftItems.VOID_EMERALD_AXE.get());
+            tabData.accept(EmeraldcraftItems.LAVA_EMERALD_SWORD.get());
+            tabData.accept(EmeraldcraftItems.LAVA_EMERALD_AXE.get());
+		} else if (tabData.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            tabData.accept(EmeraldcraftItems.REFINED_EMERALD.get());
+            tabData.accept(EmeraldcraftItems.REFINED_EMERALD_T_2.get());
+            tabData.accept(EmeraldcraftItems.REFINED_EMERALD_T_3.get());
+            tabData.accept(EmeraldcraftItems.REFINED_EMERALD_PLUS.get());
+            tabData.accept(EmeraldcraftItems.VOID_EMERALD.get());
+            tabData.accept(EmeraldcraftItems.LAVA_EMERALD.get());
 		}
 	}
 }

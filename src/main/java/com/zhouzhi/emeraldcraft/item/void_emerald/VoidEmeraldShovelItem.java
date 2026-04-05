@@ -59,7 +59,8 @@ public class VoidEmeraldShovelItem extends ShovelItem {
 		super(TOOL_TIER, new Item.Properties()
 				.attributes(DiggerItem.createAttributes(TOOL_TIER, 7.2f, -2f))
 				.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
-				.fireResistant());
+				.fireResistant()
+				.rarity(Rarity.EPIC));
 	}
 
     @Override

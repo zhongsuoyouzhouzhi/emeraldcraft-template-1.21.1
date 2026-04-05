@@ -88,7 +88,7 @@ public class EmeraldProjectileEntity extends AbstractArrow implements ItemSuppli
 	@Override
 	public void onHitEntity(@NotNull EntityHitResult entityHitResult) {
 		super.onHitEntity(entityHitResult);
-		EmeraldProjectileHitEntity.execute(this.level(), this.getX(), this.getY(), this.getZ(), entityHitResult.getEntity(), this, this.getOwner());
+		EmeraldProjectileHitEntity.execute(this.level(), entityHitResult.getEntity(), this, this.getOwner());
 	}
 
 	@Override
