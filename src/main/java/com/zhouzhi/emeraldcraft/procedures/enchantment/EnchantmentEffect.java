@@ -1,6 +1,8 @@
 package com.zhouzhi.emeraldcraft.procedures.enchantment;
 
 import com.zhouzhi.emeraldcraft.init.EmeraldcraftEnchantments;
+import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,7 +20,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 
 public class EnchantmentEffect {
     @SubscribeEvent
@@ -34,6 +35,37 @@ public class EnchantmentEffect {
             RegistryAccess registryAccess = level.registryAccess();
 
             float newDamage = event.getOriginalDamage();
+            
+            boolean isLavaEmeraldSword = weapon.is(EmeraldcraftItems.LAVA_EMERALD_SWORD);
+            
+            //Heavy
+            {
+                Holder<Enchantment> EnchantmentHolder = registryAccess
+                        .lookupOrThrow(Registries.ENCHANTMENT)
+                        .getOrThrow(EmeraldcraftEnchantments.HEAVY);
+
+                int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
+                
+                if (isLavaEmeraldSword) {
+                    enchantmentLevel += 3;
+                }
+                
+                if (enchantmentLevel > 0 && attacker.fallDistance > 3f) {
+                    float bonusDamage;
+                    if (enchantmentLevel == 1) {
+                        bonusDamage = 2.2f*(attacker.fallDistance-2.0f);
+                    } else if (enchantmentLevel == 2) {
+                        bonusDamage = 3.2f*(attacker.fallDistance-2.2f);
+                    } else if (enchantmentLevel == 3) {
+                        bonusDamage = 4.0f*(attacker.fallDistance-2.2f);
+                    } else {
+                        bonusDamage = (4f+0.1f*enchantmentLevel)*(attacker.fallDistance-2.2f);
+                    }
+                    newDamage += bonusDamage;
+                    event.setNewDamage(newDamage);
+                }
+            }
+            
             //Lighting
             {
                 Holder<Enchantment> EnchantmentHolder = registryAccess
@@ -41,6 +73,11 @@ public class EnchantmentEffect {
                         .getOrThrow(EmeraldcraftEnchantments.LIGHTING);
 
                 int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
+
+                if (isLavaEmeraldSword && enchantmentLevel == 0) {
+                    enchantmentLevel = 2;
+                }
+
                 if (enchantmentLevel > 0) {
                     float Brightness = level.getBrightness(
                             LightLayer.BLOCK,
@@ -99,6 +136,9 @@ public class EnchantmentEffect {
         ItemStack weapon = player.getMainHandItem();
 
         RegistryAccess registryAccess = level.registryAccess();
+
+        boolean isLavaEmeraldSword = weapon.is(EmeraldcraftItems.LAVA_EMERALD_SWORD);
+        
         //Lighting
         {
             Holder<Enchantment> EnchantmentHolder = registryAccess
@@ -106,6 +146,11 @@ public class EnchantmentEffect {
                     .getOrThrow(EmeraldcraftEnchantments.LIGHTING);
 
             int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
+            
+            if (isLavaEmeraldSword) {
+                enchantmentLevel += 2;
+            }
+            
             if (enchantmentLevel > 0) {
                 float Brightness = level.getBrightness(
                         LightLayer.BLOCK,

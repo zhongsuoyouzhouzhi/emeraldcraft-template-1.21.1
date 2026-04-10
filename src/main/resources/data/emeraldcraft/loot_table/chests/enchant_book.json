@@ -1,0 +1,24 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:enchanted_book"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:enchant_randomly",
+          "enchantments": [
+            "emeraldcraft:void_emerald_attach",
+            "emeraldcraft:rebound",
+            "emeraldcraft:lighting",
+            "emeraldcraft:heavy"
+          ]
+        }
+      ]
+    }
+  ]
+}

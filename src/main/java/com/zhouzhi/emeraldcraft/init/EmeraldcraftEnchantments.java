@@ -34,6 +34,12 @@ public class EmeraldcraftEnchantments {
                     ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "rebound")
             );
 
+    public static final ResourceKey<Enchantment> HEAVY =
+            ResourceKey.create(
+                    Registries.ENCHANTMENT,
+                    ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "heavy")
+            );
+
     public static void bootstrap(BootstrapContext<Enchantment> context) {
         HolderGetter<Item> itemGetter = context.lookup(Registries.ITEM);
         HolderSet<Enchantment> exclusiveSet = HolderSet.empty();
@@ -89,9 +95,28 @@ public class EmeraldcraftEnchantments {
                 effects
         );
 
+        Enchantment.EnchantmentDefinition heavy_definition = Enchantment.definition(
+                itemGetter.getOrThrow(ItemTags.SWORDS),
+                itemGetter.getOrThrow(ItemTags.SWORDS),
+                5,
+                2,
+                Enchantment.dynamicCost(5,5),
+                Enchantment.dynamicCost(20,5),
+                7,
+                EquipmentSlotGroup.MAINHAND
+        );
+
+        Enchantment heavy_enchantment = new Enchantment(
+                Component.translatable("enchantment." + EmeraldCraft.MOD_ID + ".heavy"),
+                heavy_definition,
+                exclusiveSet,
+                effects
+        );
+
         context.register(VOID_EMERALD_ATTACH, void_emerald_attach_enchantment);
         context.register(LIGHTING, lighting_enchantment);
         context.register(REBOUND, rebound_enchantment);
+        context.register(HEAVY, heavy_enchantment);
     }
 
 }

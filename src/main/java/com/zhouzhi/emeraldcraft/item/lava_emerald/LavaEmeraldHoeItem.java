@@ -12,19 +12,20 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class LavaEmeraldPickaxeItem extends PickaxeItem {
+public class LavaEmeraldHoeItem extends HoeItem {
 	private static final Tier TIER = new Tier() {
 		@Override
 		public int getUses() {
-			return 1570;
+			return 1521;
 		}
 
 		@Override
 		public float getSpeed() {
-			return 16f;
+			return 17f;
 		}
 
 		@Override
@@ -33,8 +34,7 @@ public class LavaEmeraldPickaxeItem extends PickaxeItem {
 		}
 
 		@Override
-		@MethodsReturnNonnullByDefault
-		public TagKey<Block> getIncorrectBlocksForDrops() {
+		public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
 			return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
 		}
 
@@ -44,20 +44,18 @@ public class LavaEmeraldPickaxeItem extends PickaxeItem {
 		}
 
 		@Override
-		@MethodsReturnNonnullByDefault
-		public Ingredient getRepairIngredient() {
-            return Ingredient.of(new ItemStack(EmeraldcraftItems.LAVA_EMERALD.get()));
-			}
+		public @NotNull Ingredient getRepairIngredient() {
+			return Ingredient.of(new ItemStack(EmeraldcraftItems.LAVA_EMERALD.get()));
+		}
 	};
 
-	public LavaEmeraldPickaxeItem() {
+	public LavaEmeraldHoeItem() {
 		super(TIER, new Properties()
-				.attributes(DiggerItem.createAttributes(TIER, 5f, -2.4f))
+				.attributes(DiggerItem.createAttributes(TIER, 0f, 0f))
 				.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
 				.fireResistant()
 				.rarity(Rarity.EPIC));
 	}
-
 	@Override
 	@MethodsReturnNonnullByDefault
 	public InteractionResult useOn(@ParametersAreNonnullByDefault UseOnContext context) {

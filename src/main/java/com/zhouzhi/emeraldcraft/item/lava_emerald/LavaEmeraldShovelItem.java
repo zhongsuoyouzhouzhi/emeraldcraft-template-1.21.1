@@ -15,16 +15,16 @@ import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class LavaEmeraldPickaxeItem extends PickaxeItem {
+public class LavaEmeraldShovelItem extends ShovelItem {
 	private static final Tier TIER = new Tier() {
 		@Override
 		public int getUses() {
-			return 1570;
+			return 1340;
 		}
 
 		@Override
 		public float getSpeed() {
-			return 16f;
+			return 15f;
 		}
 
 		@Override
@@ -40,7 +40,7 @@ public class LavaEmeraldPickaxeItem extends PickaxeItem {
 
 		@Override
 		public int getEnchantmentValue() {
-			return 20;
+			return 30;
 		}
 
 		@Override
@@ -50,14 +50,13 @@ public class LavaEmeraldPickaxeItem extends PickaxeItem {
 			}
 	};
 
-	public LavaEmeraldPickaxeItem() {
+	public LavaEmeraldShovelItem() {
 		super(TIER, new Properties()
-				.attributes(DiggerItem.createAttributes(TIER, 5f, -2.4f))
+				.attributes(DiggerItem.createAttributes(TIER, 7f, -3f))
 				.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
 				.fireResistant()
 				.rarity(Rarity.EPIC));
 	}
-
 	@Override
 	@MethodsReturnNonnullByDefault
 	public InteractionResult useOn(@ParametersAreNonnullByDefault UseOnContext context) {

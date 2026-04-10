@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "emeraldcraft:lava_emerald"
+  },
+  "base": {
+    "item": "emeraldcraft:emerald_shovel"
+  },
+  "addition": {
+    "item": "minecraft:lava_bucket"
+  },
+  "result": {
+    "id": "emeraldcraft:lava_emerald_shovel"
+  }
+}

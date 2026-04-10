@@ -17,8 +17,8 @@ import com.zhouzhi.emeraldcraft.EmeraldCraft;
 @EventBusSubscriber
 public class EmeraldcraftTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, EmeraldCraft.MOD_ID);
-	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EMERALD_CRAFT = REGISTRY.register("emerald_craft",
-			() -> CreativeModeTab.builder().title(Component.translatable("item_group.emeraldcraft.emerald_craft")).icon(() -> new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get())).displayItems((parameters, tabData) -> {
+	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EMERALDCRAFT = REGISTRY.register("emeraldcraft",
+			() -> CreativeModeTab.builder().title(Component.translatable("item_group.emeraldcraft.emeraldcraft")).icon(() -> new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get())).displayItems((parameters, tabData) -> {
 				tabData.accept(EmeraldcraftItems.REFINED_EMERALD.get());
 				tabData.accept(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK.get().asItem());
 				tabData.accept(EmeraldcraftItems.EMERALD_SWORD.get());
@@ -74,6 +74,8 @@ public class EmeraldcraftTabs {
                 tabData.accept(EmeraldcraftItems.LAVA_EMERALD_SWORD.get());
                 tabData.accept(EmeraldcraftItems.LAVA_EMERALD_AXE.get());
                 tabData.accept(EmeraldcraftItems.LAVA_EMERALD_PICKAXE.get());
+                tabData.accept(EmeraldcraftItems.LAVA_EMERALD_SHOVEL.get());
+                tabData.accept(EmeraldcraftItems.LAVA_EMERALD_HOE.get());
 			}).withSearchBar().build());
 
 	@SubscribeEvent
@@ -105,6 +107,8 @@ public class EmeraldcraftTabs {
             tabData.accept(EmeraldcraftItems.VOID_EMERALD_HOE.get());
             tabData.accept(EmeraldcraftItems.LAVA_EMERALD_AXE.get());
             tabData.accept(EmeraldcraftItems.LAVA_EMERALD_PICKAXE.get());
+            tabData.accept(EmeraldcraftItems.LAVA_EMERALD_SHOVEL.get());
+            tabData.accept(EmeraldcraftItems.LAVA_EMERALD_HOE.get());
 		} else if (tabData.getTabKey() == CreativeModeTabs.COMBAT) {
 			tabData.accept(EmeraldcraftItems.EMERALD_SWORD.get());
             tabData.accept(EmeraldcraftItems.EMERALD_AXE.get());

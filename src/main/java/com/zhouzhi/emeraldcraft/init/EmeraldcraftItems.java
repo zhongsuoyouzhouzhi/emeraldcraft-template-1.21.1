@@ -1,10 +1,7 @@
 package com.zhouzhi.emeraldcraft.init;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
-import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldAxeItem;
-import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldItem;
-import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldPickaxeItem;
-import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldSwordItem;
+import com.zhouzhi.emeraldcraft.item.lava_emerald.*;
 import com.zhouzhi.emeraldcraft.item.remined_emerald.*;
 import com.zhouzhi.emeraldcraft.item.void_emerald.*;
 import net.minecraft.world.item.BlockItem;
@@ -54,12 +51,14 @@ public class EmeraldcraftItems {
     public static final DeferredItem<Item> IRON_SHOVEL_INLAID_WITH_REFINED_EMERALD;
     public static final DeferredItem<Item> IRON_SHOVEL_INLAID_WITH_REFINED_EMERALD_T2;
     public static final DeferredItem<Item> VOID_EMERALD_SHOVEL;
+	public static final DeferredItem<Item> LAVA_EMERALD_SHOVEL;
 	public static final DeferredItem<Item> EMERALD_HOE;
 	public static final DeferredItem<Item> EMERALD_HOE_T_2;
 	public static final DeferredItem<Item> EMERALD_HOE_T_3;
-    public static final DeferredItem<Item> VOID_EMERALD_HOE;
     public static final DeferredItem<Item> IRON_HOE_INLAID_WITH_REFINED_EMERALD;
     public static final DeferredItem<Item> IRON_HOE_INLAID_WITH_REFINED_EMERALD_T2;
+	public static final DeferredItem<Item> VOID_EMERALD_HOE;
+	public static final DeferredItem<Item> LAVA_EMERALD_HOE;
 	public static final DeferredItem<Item> EMERALD_ARMOR_HELMET;
 	public static final DeferredItem<Item> EMERALD_ARMOR_CHESTPLATE;
 	public static final DeferredItem<Item> EMERALD_ARMOR_LEGGINGS;
@@ -128,6 +127,8 @@ public class EmeraldcraftItems {
 		LAVA_EMERALD_SWORD = REGISTRY.register("lava_emerald_sword", LavaEmeraldSwordItem::new);
 		LAVA_EMERALD_AXE = REGISTRY.register("lava_emerald_axe", LavaEmeraldAxeItem::new);
 		LAVA_EMERALD_PICKAXE = REGISTRY.register("lava_emerald_pickaxe", LavaEmeraldPickaxeItem::new);
+		LAVA_EMERALD_SHOVEL = REGISTRY.register("lava_emerald_shovel", LavaEmeraldShovelItem::new);
+		LAVA_EMERALD_HOE = REGISTRY.register("lava_emerald_hoe", LavaEmeraldHoeItem::new);
 	}
 
 	// Start of user code block custom items

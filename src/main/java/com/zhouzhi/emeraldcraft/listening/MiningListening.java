@@ -1,7 +1,9 @@
 package com.zhouzhi.emeraldcraft.listening;
 
 import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldAxeItem;
+import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldHoeItem;
 import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldPickaxeItem;
+import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldShovelItem;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -34,11 +36,11 @@ public class MiningListening {
         if (weapon.getItem() instanceof LavaEmeraldAxeItem)
             type = 1;
         else if (weapon.getItem() instanceof LavaEmeraldPickaxeItem)
-            type = 2;/*
+            type = 2;
         else if (weapon.getItem() instanceof LavaEmeraldShovelItem)
             type = 3;
         else if (weapon.getItem() instanceof LavaEmeraldHoeItem)
-            type = 4;*/
+            type = 4;
         if (type != 0) {
             if (level instanceof ServerLevel serverLevel) {
                 ItemStack item = SimpleUse.getSmeltedResult(serverLevel, state.getBlock().asItem().getDefaultInstance());
