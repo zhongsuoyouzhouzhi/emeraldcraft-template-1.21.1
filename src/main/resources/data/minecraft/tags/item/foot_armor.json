@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:wooden_boots",
-    "minecraft:stone_boots",
-    "minecraft:iron_boots",
+    "minecraft:leather_boots",
+    "minecraft:chainmail_boots",
     "minecraft:golden_boots",
+    "minecraft:iron_boots",
     "minecraft:diamond_boots",
     "minecraft:netherite_boots",
     "emeraldcraft:emerald_armor_t_2_boots",

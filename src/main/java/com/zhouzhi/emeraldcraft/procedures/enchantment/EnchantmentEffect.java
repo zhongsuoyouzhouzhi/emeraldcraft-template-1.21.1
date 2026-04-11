@@ -49,20 +49,21 @@ public class EnchantmentEffect {
                 if (isLavaEmeraldSword) {
                     enchantmentLevel += 3;
                 }
-                
+
                 if (enchantmentLevel > 0 && attacker.fallDistance > 3f) {
                     float bonusDamage;
                     if (enchantmentLevel == 1) {
-                        bonusDamage = 2.2f*(attacker.fallDistance-2.0f);
+                        bonusDamage = 2.2f * (attacker.fallDistance - 2.0f);
                     } else if (enchantmentLevel == 2) {
-                        bonusDamage = 3.2f*(attacker.fallDistance-2.2f);
+                        bonusDamage = 3.2f * (attacker.fallDistance - 2.2f);
                     } else if (enchantmentLevel == 3) {
-                        bonusDamage = 4.0f*(attacker.fallDistance-2.2f);
+                        bonusDamage = 4.0f * (attacker.fallDistance - 2.2f);
                     } else {
-                        bonusDamage = (4f+0.1f*enchantmentLevel)*(attacker.fallDistance-2.2f);
+                        bonusDamage = (4f + 0.1f * enchantmentLevel) * (attacker.fallDistance - 2.2f);
                     }
                     newDamage += bonusDamage;
                     event.setNewDamage(newDamage);
+                    attacker.resetFallDistance();
                 }
             }
             

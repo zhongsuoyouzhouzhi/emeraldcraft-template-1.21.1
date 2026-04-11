@@ -98,7 +98,7 @@ public class EmeraldcraftEnchantments {
         Enchantment.EnchantmentDefinition heavy_definition = Enchantment.definition(
                 itemGetter.getOrThrow(ItemTags.SWORDS),
                 itemGetter.getOrThrow(ItemTags.SWORDS),
-                5,
+                10,
                 2,
                 Enchantment.dynamicCost(5,5),
                 Enchantment.dynamicCost(20,5),
