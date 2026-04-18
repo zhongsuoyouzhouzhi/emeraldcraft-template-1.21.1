@@ -36,7 +36,12 @@ public class EnchantmentEffect {
 
             float newDamage = event.getOriginalDamage();
             
-            boolean isLavaEmeraldSword = weapon.is(EmeraldcraftItems.LAVA_EMERALD_SWORD);
+            boolean isLavaEmerald = weapon.is(EmeraldcraftItems.LAVA_EMERALD) ||
+                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_SWORD) ||
+                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_AXE) ||
+                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_PICKAXE) ||
+                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_SHOVEL) ||
+                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_HOE);
             
             //Heavy
             {
@@ -46,7 +51,7 @@ public class EnchantmentEffect {
 
                 int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
                 
-                if (isLavaEmeraldSword) {
+                if (isLavaEmerald) {
                     enchantmentLevel += 3;
                 }
 
@@ -75,7 +80,7 @@ public class EnchantmentEffect {
 
                 int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
 
-                if (isLavaEmeraldSword && enchantmentLevel == 0) {
+                if (isLavaEmerald && enchantmentLevel == 0) {
                     enchantmentLevel = 2;
                 }
 
@@ -118,6 +123,17 @@ public class EnchantmentEffect {
 
                 int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
 
+                boolean isVoidEmerald = weapon.is(EmeraldcraftItems.VOID_EMERALD) ||
+                        weapon.is(EmeraldcraftItems.VOID_EMERALD_SWORD) ||
+                        weapon.is(EmeraldcraftItems.VOID_EMERALD_AXE) ||
+                        weapon.is(EmeraldcraftItems.VOID_EMERALD_PICKAXE) ||
+                        weapon.is(EmeraldcraftItems.VOID_EMERALD_SHOVEL) ||
+                        weapon.is(EmeraldcraftItems.VOID_EMERALD_HOE);
+
+                if (isVoidEmerald) {
+                    enchantmentLevel += 3;
+                }
+
                 if (enchantmentLevel > 0) {
                     float bonusDamage = enchantmentLevel * newDamage * 0.25f;
                     newDamage += bonusDamage;
@@ -138,7 +154,12 @@ public class EnchantmentEffect {
 
         RegistryAccess registryAccess = level.registryAccess();
 
-        boolean isLavaEmeraldSword = weapon.is(EmeraldcraftItems.LAVA_EMERALD_SWORD);
+        boolean isLavaEmerald = weapon.is(EmeraldcraftItems.LAVA_EMERALD) ||
+                weapon.is(EmeraldcraftItems.LAVA_EMERALD_SWORD) ||
+                weapon.is(EmeraldcraftItems.LAVA_EMERALD_AXE) ||
+                weapon.is(EmeraldcraftItems.LAVA_EMERALD_PICKAXE) ||
+                weapon.is(EmeraldcraftItems.LAVA_EMERALD_SHOVEL) ||
+                weapon.is(EmeraldcraftItems.LAVA_EMERALD_HOE);
         
         //Lighting
         {
@@ -148,7 +169,7 @@ public class EnchantmentEffect {
 
             int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
             
-            if (isLavaEmeraldSword) {
+            if (isLavaEmerald) {
                 enchantmentLevel += 2;
             }
             
