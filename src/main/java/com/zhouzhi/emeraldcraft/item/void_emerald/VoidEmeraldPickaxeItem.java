@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -52,7 +52,7 @@ public class VoidEmeraldPickaxeItem extends PickaxeItem {
 		@Override
 		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
-            return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
+            return Ingredient.of(new ItemStack(ModItems.VOID_EMERALD.get()));
 			}
 	};
 
@@ -72,7 +72,7 @@ public class VoidEmeraldPickaxeItem extends PickaxeItem {
         } else {
             if (!level.isClientSide && state.getDestroySpeed(level, pos) != 0.0F && tool.damagePerBlock() > 0) {
                 stack.hurtAndBreak(tool.damagePerBlock(), miningEntity, EquipmentSlot.MAINHAND);
-                if ((SimpleUse.isStone(state.getBlock()) || state.getBlock() == Blocks.EMERALD_ORE || state.getBlock() == Blocks.DEEPSLATE_EMERALD_ORE) && !TagChange.getOrCreateComponent(stack,"Scope",false)) {
+                if ((SimpleUse.isStone(state.getBlock()) || state.getBlock() == Blocks.EMERALD_ORE || state.getBlock() == Blocks.DEEPSLATE_EMERALD_ORE) && TagChange.getOrCreateComponent(stack,"Scope",false)) {
                     SimpleUse.OperateBlock(
                             level,
                             pos.getX(),

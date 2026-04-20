@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.lava_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
@@ -45,7 +45,7 @@ public class LavaEmeraldHoeItem extends HoeItem {
 
 		@Override
 		public @NotNull Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftItems.LAVA_EMERALD.get()));
+			return Ingredient.of(new ItemStack(ModItems.LAVA_EMERALD.get()));
 		}
 	};
 

@@ -18,6 +18,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.util.thread.SidedThreadGroups;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -43,13 +44,13 @@ public class EmeraldCraft {
         NeoForge.EVENT_BUS.register(new MiningListening());
         modEventBus.addListener(this::registerNetworking);
         modEventBus.addListener(this::onGatherData);
-        EmeraldcraftBlocks.REGISTRY.register(modEventBus);
-        EmeraldcraftItems.REGISTRY.register(modEventBus);
-        EmeraldcraftEntities.REGISTRY.register(modEventBus);
-        EmeraldcraftTabs.REGISTRY.register(modEventBus);
-        EmeraldcraftPotions.REGISTRY.register(modEventBus);
-        EmeraldcraftMobEffects.REGISTRY.register(modEventBus);
-        EmeraldcraftAttributes.REGISTRY.register(modEventBus);
+        ModBlocks.REGISTRY.register(modEventBus);
+        ModItems.REGISTRY.register(modEventBus);
+        ModEntities.REGISTRY.register(modEventBus);
+        ModTabs.REGISTRY.register(modEventBus);
+        ModPotions.REGISTRY.register(modEventBus);
+        ModMobEffects.REGISTRY.register(modEventBus);
+        ModAttributes.REGISTRY.register(modEventBus);
 
     }
 
@@ -97,7 +98,7 @@ public class EmeraldCraft {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         RegistrySetBuilder registryBuilder = new RegistrySetBuilder()
-                .add(Registries.ENCHANTMENT, EmeraldcraftEnchantments::bootstrap);
+                .add(Registries.ENCHANTMENT, ModEnchantments::bootstrap);
 
         generator.addProvider(
                 event.includeServer(),
@@ -108,5 +109,8 @@ public class EmeraldCraft {
                         Set.of(MOD_ID)
                 )
         );
+
+        BlockTagsProvider blockTagsProvider = event.createProvider(ModBlockTagsProvider::new);
+        generator.addProvider(event.includeServer(), new ModItemTagsProvider(output, lookupProvider, CompletableFuture.completedFuture(blockTagsProvider)));
     }
 }

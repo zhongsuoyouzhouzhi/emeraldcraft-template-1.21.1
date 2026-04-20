@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -36,7 +36,7 @@ public abstract class EmeraldArmorT2Item extends ArmorItem {
 				map.put(ArmorItem.Type.HELMET, 9);
 				map.put(ArmorItem.Type.BODY, 18);
 			}), 15, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EMPTY),
-					() -> Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_2.get())),
+					() -> Ingredient.of(new ItemStack(ModItems.REFINED_EMERALD_T_2.get())),
 					List.of(new ArmorMaterial.Layer(ResourceLocation.parse("emeraldcraft:refined_emerald_t2"))),
 					3f,
 					0.1f);

@@ -1,7 +1,7 @@
 package com.zhouzhi.emeraldcraft.procedures;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.MTR;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.SLTZ;
@@ -30,7 +30,7 @@ public class SpecialSkillPressed {
 	public static void execute(Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
 			ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.MAINHAND);
-			if (itemstack.is(EmeraldcraftItems.EMERALD_SWORD_T_3.get())){
+			if (itemstack.is(ModItems.EMERALD_SWORD_T_3.get())){
                 if (entity instanceof Player _player) {
                     if (!_player.getCooldowns().isOnCooldown(itemstack.getItem())) {
                         _player.getCooldowns().addCooldown(itemstack.getItem(), 40);
@@ -43,7 +43,7 @@ public class SpecialSkillPressed {
                         SLTZ.execute(world, entity, x, y, z, radius, damage);
                     }
                 }
-			} else if (itemstack.is(EmeraldcraftItems.REFINED_EMERALD_PLUS)) {
+			} else if (itemstack.is(ModItems.REFINED_EMERALD_PLUS)) {
                 if (entity instanceof Player _player && !(SimpleUse.getEntityGameType(_player) == GameType.CREATIVE)){
                     itemstack.setCount(itemstack.getCount() - 1);
                 }
@@ -54,7 +54,7 @@ public class SpecialSkillPressed {
                         SLTZ.execute(level, _player, _player.getX(), _player.getY(), _player.getZ(), 64, 64));
                     level.playSound(_player, _player.getX(), _player.getY(), _player.getZ(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 2.0f, 1.0f);
                 }
-            } else if (itemstack.is(EmeraldcraftItems.EMERALD_PICKAXE_T_3)) {
+            } else if (itemstack.is(ModItems.EMERALD_PICKAXE_T_3)) {
                 Level world = livingEntity.level();
                 if (world instanceof ServerLevel _level) {
                     itemstack.hurtAndBreak(1, _level, null, a -> {
@@ -69,7 +69,7 @@ public class SpecialSkillPressed {
                 double y = entity.getY();
                 double z = entity.getZ();
                 MobEffectALL.execute(world, x, y, z, effects, 12 ,5 ,12);
-            } else if (itemstack.is(EmeraldcraftItems.SKYFILLING_BLADE)) {
+            } else if (itemstack.is(ModItems.SKYFILLING_BLADE)) {
                 Level world = livingEntity.level();
                 if (world instanceof ServerLevel _level) {
                     itemstack.hurtAndBreak(1, _level, null, a -> {
@@ -110,7 +110,7 @@ public class SpecialSkillPressed {
                     }
                     saveComponent(itemstack,"special_skill_type",tag);
                 }
-            } else if (itemstack.is(EmeraldcraftItems.VOID_EMERALD_SWORD)) {
+            } else if (itemstack.is(ModItems.VOID_EMERALD_SWORD)) {
                 if (livingEntity.level() instanceof ServerLevel serverLevel) {
                     if (entity.isShiftKeyDown()) {
                         for (Entity _entity : serverLevel.getAllEntities()) {
@@ -128,7 +128,7 @@ public class SpecialSkillPressed {
                         }
                     }
                 }
-            } else if (itemstack.is(EmeraldcraftItems.VOID_EMERALD_AXE) || itemstack.is(EmeraldcraftItems.VOID_EMERALD_PICKAXE) || itemstack.is(EmeraldcraftItems.VOID_EMERALD_SHOVEL) || itemstack.is(EmeraldcraftItems.VOID_EMERALD_HOE)) {
+            } else if (itemstack.is(ModItems.VOID_EMERALD_AXE) || itemstack.is(ModItems.VOID_EMERALD_PICKAXE) || itemstack.is(ModItems.VOID_EMERALD_SHOVEL) || itemstack.is(ModItems.VOID_EMERALD_HOE)) {
                 boolean tag = getOrCreateComponent(itemstack,"Scope",false);
                 saveComponent(itemstack,"Scope",!tag);
                 if (entity instanceof Player _player) {

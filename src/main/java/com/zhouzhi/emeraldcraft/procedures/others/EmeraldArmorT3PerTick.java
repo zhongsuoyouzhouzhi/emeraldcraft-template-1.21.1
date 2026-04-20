@@ -1,12 +1,11 @@
 package com.zhouzhi.emeraldcraft.procedures.others;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
+import com.zhouzhi.emeraldcraft.init.ModMobEffects;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.SLTZ;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,9 +20,9 @@ public class EmeraldArmorT3PerTick {
             return;
         if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide()) {
             MobEffectInstance[] effectInstances = new MobEffectInstance[]{
-                    new MobEffectInstance(EmeraldcraftMobEffects.EMERALD_ATTACH, 40, 8, false, false),
-                    new MobEffectInstance(EmeraldcraftMobEffects.EMERALD_BONUS, 20, 14, false, false),
-                    new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 40, 0, false, false)
+                    new MobEffectInstance(ModMobEffects.EMERALD_ATTACH, 40, 8, false, false),
+                    new MobEffectInstance(ModMobEffects.EMERALD_BONUS, 20, 14, false, false),
+                    new MobEffectInstance(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE, 40, 0, false, false)
             };
             MobEffectALL.execute(_entity.level(), effectInstances, _entity);
         }
@@ -60,7 +59,7 @@ public class EmeraldArmorT3PerTick {
         }
         if (entity.isShiftKeyDown()) {
             if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-                _entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1, 20, false, false));
+                _entity.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 1, 20, false, false));
             if (entity.isInWall()) {
                 {
                     BlockPos _pos = BlockPos.containing(x, y + 1, z);

@@ -1,18 +1,18 @@
 package com.zhouzhi.emeraldcraft.procedures.others;
 
 import com.zhouzhi.emeraldcraft.entity.EmeraldProjectileEntity;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftEntities;
+import com.zhouzhi.emeraldcraft.init.ModEntities;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.server.level.ServerLevel;
 
 public class SkyFillingBladeRight_clickOnAir {
 	public static void execute(LevelAccessor world, Entity entity, ItemStack itemstack) {
@@ -25,7 +25,7 @@ public class SkyFillingBladeRight_clickOnAir {
         {
             Level projectileLevel = entity.level();
             if (!projectileLevel.isClientSide()) {
-                Projectile _entityToSpawn = initArrowProjectile(new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), 0, 0, 0, projectileLevel, createArrowWeaponItemStack(projectileLevel)), entity
+                Projectile _entityToSpawn = initArrowProjectile(new EmeraldProjectileEntity(ModEntities.EMERALD_PROJECTILE.get(), 0, 0, 0, projectileLevel, createArrowWeaponItemStack(projectileLevel)), entity
                 );
                 _entityToSpawn.setPos(entity.getX(), entity.getEyeY() - 0.1, entity.getZ());
                 _entityToSpawn.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, (float) 4, 0);

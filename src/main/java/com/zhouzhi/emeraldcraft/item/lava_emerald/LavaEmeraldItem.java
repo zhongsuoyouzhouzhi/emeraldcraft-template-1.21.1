@@ -21,8 +21,9 @@ public class LavaEmeraldItem extends Item{
         if (!context.getLevel().isClientSide) {
             if (context.getLevel().getBlockState(context.getClickedPos()) == Blocks.CAULDRON.defaultBlockState()) {
                 context.getLevel().setBlockAndUpdate(context.getClickedPos(), Blocks.LAVA_CAULDRON.defaultBlockState());
+                return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResult.PASS;
     }
 }

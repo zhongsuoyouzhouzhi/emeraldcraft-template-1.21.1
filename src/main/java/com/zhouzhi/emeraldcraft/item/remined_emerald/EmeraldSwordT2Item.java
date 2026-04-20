@@ -1,9 +1,9 @@
 package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
-import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldT2ToolIsBeingDamagedPerTick;
-import com.zhouzhi.emeraldcraft.procedures.others.EmeraldSwordT2ItemHasBeenSynthesis_or_Smelted;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import com.zhouzhi.emeraldcraft.procedures.others.EmeraldSwordT2ItemHasBeenSynthesis_or_Smelted;
+import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldT2ToolIsBeingDamagedPerTick;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -50,7 +50,7 @@ public class EmeraldSwordT2Item extends SwordItem {
 		@Override
 		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_2.get()));
+			return Ingredient.of(new ItemStack(ModItems.REFINED_EMERALD_T_2.get()));
 		}
 	};
 

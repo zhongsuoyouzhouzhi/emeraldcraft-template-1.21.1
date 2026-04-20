@@ -1,34 +1,32 @@
 package com.zhouzhi.emeraldcraft.entity;
 
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.api.distmarker.Dist;
-
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.util.RandomSource;
-import net.minecraft.core.registries.Registries;
-
+import com.zhouzhi.emeraldcraft.init.ModEntities;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.others.EmeraldProjectileHitEntity;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftEntities;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class EmeraldProjectileEntity extends AbstractArrow implements ItemSupplier {
-	public static final ItemStack PROJECTILE_ITEM = new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get());
+	public static final ItemStack PROJECTILE_ITEM = new ItemStack(ModItems.REFINED_EMERALD_T_3.get());
 	private int knockback = 0;
     private float count;
 
@@ -59,7 +57,7 @@ public class EmeraldProjectileEntity extends AbstractArrow implements ItemSuppli
 
 	@Override
 	protected @NotNull ItemStack getDefaultPickupItem() {
-		return new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get());
+		return new ItemStack(ModItems.REFINED_EMERALD_T_3.get());
 	}
 
 	@Override
@@ -117,7 +115,7 @@ public class EmeraldProjectileEntity extends AbstractArrow implements ItemSuppli
 	}
 
 	public static EmeraldProjectileEntity shoot(Level world, LivingEntity entity, RandomSource random, float power, double damage, int knockback) {
-		EmeraldProjectileEntity entityArrow = new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), entity, world, null);
+		EmeraldProjectileEntity entityArrow = new EmeraldProjectileEntity(ModEntities.EMERALD_PROJECTILE.get(), entity, world, null);
 		entityArrow.shoot(entity.getViewVector(1).x, entity.getViewVector(1).y, entity.getViewVector(1).z, power * 2, 0);
 		entityArrow.setSilent(true);
 		entityArrow.setCritArrow(false);
@@ -128,7 +126,7 @@ public class EmeraldProjectileEntity extends AbstractArrow implements ItemSuppli
 	}
 
 	public static EmeraldProjectileEntity shoot(LivingEntity entity, LivingEntity target) {
-		EmeraldProjectileEntity entityArrow = new EmeraldProjectileEntity(EmeraldcraftEntities.EMERALD_PROJECTILE.get(), entity, entity.level(), null);
+		EmeraldProjectileEntity entityArrow = new EmeraldProjectileEntity(ModEntities.EMERALD_PROJECTILE.get(), entity, entity.level(), null);
 		double dx = target.getX() - entity.getX();
 		double dy = target.getY() + target.getEyeHeight() - 1.1;
 		double dz = target.getZ() - entity.getZ();

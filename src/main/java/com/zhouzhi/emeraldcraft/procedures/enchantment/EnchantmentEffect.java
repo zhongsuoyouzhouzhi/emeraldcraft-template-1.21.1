@@ -1,7 +1,8 @@
 package com.zhouzhi.emeraldcraft.procedures.enchantment;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftEnchantments;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModEnchantments;
+import com.zhouzhi.emeraldcraft.init.ModItems;
+import com.zhouzhi.emeraldcraft.init.ModTags;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -21,6 +22,8 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
+import static com.zhouzhi.emeraldcraft.procedures.compress.TagChange.getOrCreateComponent;
+
 public class EnchantmentEffect {
     @SubscribeEvent
     public void onLivingDamage(LivingDamageEvent.Pre event) {
@@ -36,18 +39,14 @@ public class EnchantmentEffect {
 
             float newDamage = event.getOriginalDamage();
             
-            boolean isLavaEmerald = weapon.is(EmeraldcraftItems.LAVA_EMERALD) ||
-                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_SWORD) ||
-                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_AXE) ||
-                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_PICKAXE) ||
-                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_SHOVEL) ||
-                    weapon.is(EmeraldcraftItems.LAVA_EMERALD_HOE);
+            boolean isLavaEmerald = weapon.is(ModItems.LAVA_EMERALD) ||
+                    weapon.is(ModTags.LAVA_EMERALD_TOOLS);
             
             //Heavy
             {
                 Holder<Enchantment> EnchantmentHolder = registryAccess
                         .lookupOrThrow(Registries.ENCHANTMENT)
-                        .getOrThrow(EmeraldcraftEnchantments.HEAVY);
+                        .getOrThrow(ModEnchantments.HEAVY);
 
                 int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
                 
@@ -76,7 +75,7 @@ public class EnchantmentEffect {
             {
                 Holder<Enchantment> EnchantmentHolder = registryAccess
                         .lookupOrThrow(Registries.ENCHANTMENT)
-                        .getOrThrow(EmeraldcraftEnchantments.LIGHTING);
+                        .getOrThrow(ModEnchantments.LIGHTING);
 
                 int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
 
@@ -119,19 +118,18 @@ public class EnchantmentEffect {
             {
                 Holder<Enchantment> EnchantmentHolder = registryAccess
                         .lookupOrThrow(Registries.ENCHANTMENT)
-                        .getOrThrow(EmeraldcraftEnchantments.VOID_EMERALD_ATTACH);
+                        .getOrThrow(ModEnchantments.VOID_EMERALD_ATTACH);
 
                 int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
 
-                boolean isVoidEmerald = weapon.is(EmeraldcraftItems.VOID_EMERALD) ||
-                        weapon.is(EmeraldcraftItems.VOID_EMERALD_SWORD) ||
-                        weapon.is(EmeraldcraftItems.VOID_EMERALD_AXE) ||
-                        weapon.is(EmeraldcraftItems.VOID_EMERALD_PICKAXE) ||
-                        weapon.is(EmeraldcraftItems.VOID_EMERALD_SHOVEL) ||
-                        weapon.is(EmeraldcraftItems.VOID_EMERALD_HOE);
+                boolean isVoidEmerald = weapon.is(ModItems.VOID_EMERALD) ||
+                        weapon.is(ModTags.VOID_EMERALD_TOOLS);
 
                 if (isVoidEmerald) {
-                    enchantmentLevel += 3;
+                    enchantmentLevel += 1;
+                    if (!getOrCreateComponent(weapon, "Void_Open", true)) {
+                        enchantmentLevel += 3;
+                    }
                 }
 
                 if (enchantmentLevel > 0) {
@@ -154,18 +152,14 @@ public class EnchantmentEffect {
 
         RegistryAccess registryAccess = level.registryAccess();
 
-        boolean isLavaEmerald = weapon.is(EmeraldcraftItems.LAVA_EMERALD) ||
-                weapon.is(EmeraldcraftItems.LAVA_EMERALD_SWORD) ||
-                weapon.is(EmeraldcraftItems.LAVA_EMERALD_AXE) ||
-                weapon.is(EmeraldcraftItems.LAVA_EMERALD_PICKAXE) ||
-                weapon.is(EmeraldcraftItems.LAVA_EMERALD_SHOVEL) ||
-                weapon.is(EmeraldcraftItems.LAVA_EMERALD_HOE);
+        boolean isLavaEmerald = weapon.is(ModItems.LAVA_EMERALD) ||
+                weapon.is(ModTags.LAVA_EMERALD_TOOLS);
         
         //Lighting
         {
             Holder<Enchantment> EnchantmentHolder = registryAccess
                     .lookupOrThrow(Registries.ENCHANTMENT)
-                    .getOrThrow(EmeraldcraftEnchantments.LIGHTING);
+                    .getOrThrow(ModEnchantments.LIGHTING);
 
             int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
             
@@ -207,7 +201,7 @@ public class EnchantmentEffect {
         {
             Holder<Enchantment> EnchantmentHolder = registryAccess
                     .lookupOrThrow(Registries.ENCHANTMENT)
-                    .getOrThrow(EmeraldcraftEnchantments.REBOUND);
+                    .getOrThrow(ModEnchantments.REBOUND);
 
             int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
 

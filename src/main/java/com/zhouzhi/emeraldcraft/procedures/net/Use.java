@@ -1,11 +1,15 @@
 package com.zhouzhi.emeraldcraft.procedures.net;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
+import com.zhouzhi.emeraldcraft.init.ModMobEffects;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -20,19 +24,19 @@ import net.minecraft.world.phys.AABB;
 
 public class Use {
     public static void EmeraldSwordHitLivingThings(LivingEntity entity){
-        entity.addEffect(new MobEffectInstance(EmeraldcraftMobEffects.SUPPRESS, 40, 1, false, true));
+        entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 40, 1, false, true));
     }
 
     public static void EmeraldSwordT2HitLivingThings(LivingEntity entity){
-        entity.addEffect(new MobEffectInstance(EmeraldcraftMobEffects.SUPPRESS, 50, 2, false, true));
+        entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 50, 2, false, true));
     }
 
     public static void EmeraldSwordT3HitLivingThings(LivingEntity entity){
-        entity.addEffect(new MobEffectInstance(EmeraldcraftMobEffects.SUPPRESS, 60, 3, false, true));
+        entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 60, 3, false, true));
     }
 
     public static void IronSwordHitLivingThings(LivingEntity entity, LivingEntity source){
-        entity.addEffect(new MobEffectInstance(EmeraldcraftMobEffects.SUPPRESS, 20, 0, false, true));
+        entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 20, 0, false, true));
         if (source.getHealth() < source.getMaxHealth()){
             source.setHealth(source.getHealth()+1f);
         } else {
@@ -41,7 +45,7 @@ public class Use {
     }
 
     public static void IronSwordT2HitLivingThings(LivingEntity entity, LivingEntity source){
-        entity.addEffect(new MobEffectInstance(EmeraldcraftMobEffects.SUPPRESS, 40, 1, false, true));
+        entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 40, 1, false, true));
         if (source.getHealth() < source.getMaxHealth()){
             source.setHealth(source.getHealth()+1f);
         } else {
@@ -184,8 +188,12 @@ public class Use {
                     for (String a : entity.getTags().toArray(b)) {
                         if (a.equals("void")) {
                             if (entity.getType().equals(EntityType.ENDER_DRAGON)) {
-                                if (entity instanceof LivingEntity livingEntity)
+                                if (entity instanceof LivingEntity livingEntity) {
                                     livingEntity.hurt(source.damageSources().playerAttack(source), livingEntity.getMaxHealth());
+                                    livingEntity.die(source.damageSources().playerAttack(source));
+                                    if (livingEntity.getHealth() > 0f)
+                                        livingEntity.hurt(new DamageSource(world.holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), livingEntity.getMaxHealth());
+                                } else entity.kill();
                                 entity.removeTag("void");
                                 continue every_entity;
                             }
@@ -201,10 +209,7 @@ public class Use {
                                         0
                                 );
 
-                            if (entity instanceof LivingEntity livingEntity) {
-                                livingEntity.hurt(source.damageSources().playerAttack(source), livingEntity.getMaxHealth());
-                                livingEntity.die(source.damageSources().playerAttack(source));
-                            } else entity.kill();
+
                             entity.removeTag("void");
                             entity.moveTo(entity.getX(), -200, entity.getZ());
                             break;

@@ -1,7 +1,7 @@
 package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModBlocks;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -43,7 +43,7 @@ public class EmeraldHoeT3Item extends HoeItem {
 
 		@Override
 		public @NotNull Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get()));
+			return Ingredient.of(new ItemStack(ModBlocks.REFINED_EMERALD_BLOCK_3.get()), new ItemStack(ModItems.REFINED_EMERALD_T_3.get()));
 		}
 	};
 

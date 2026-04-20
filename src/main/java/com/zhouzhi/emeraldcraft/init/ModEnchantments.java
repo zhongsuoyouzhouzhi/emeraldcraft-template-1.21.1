@@ -15,7 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.neoforge.common.Tags;
 
-public class EmeraldcraftEnchantments {
+public class ModEnchantments {
     public static final ResourceKey<Enchantment> VOID_EMERALD_ATTACH =
             ResourceKey.create(
                     Registries.ENCHANTMENT,

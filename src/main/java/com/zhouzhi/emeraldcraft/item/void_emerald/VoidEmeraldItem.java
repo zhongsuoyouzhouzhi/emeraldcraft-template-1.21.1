@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
+import com.zhouzhi.emeraldcraft.init.ModBlocks;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -37,13 +36,13 @@ public class VoidEmeraldItem extends Item {
         int z = pos.getZ();
         BlockState state = world.getBlockState(pos);
         int a = 3;
-        if (state.getBlock() == EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3.value()) {
+        if (state.getBlock() == ModBlocks.REFINED_EMERALD_BLOCK_3.value()) {
             a += 3;
             world.destroyBlock(pos, false);
             world.explode(context.getPlayer(), x, y, z, 32, Level.ExplosionInteraction.BLOCK);
         }
         SimpleUse.OperateBlock(x, y, z, a, (blockPos, bx, by, bz) -> {
-            if (world.getBlockState(blockPos).getBlock() == Blocks.AIR) return;
+            if (world.getBlockState(blockPos).getBlock() == net.minecraft.world.level.block.Blocks.AIR) return;
             if (!world.isClientSide() && world instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(
                         ParticleTypes.END_ROD,
@@ -56,7 +55,7 @@ public class VoidEmeraldItem extends Item {
             if (Math.random() >= 0.75) {
                 Block.dropResources(world.getBlockState(blockPos), world, blockPos, null);
             }
-            world.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+            world.setBlockAndUpdate(blockPos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
         });
         if (SimpleUse.getEntityGameType(context.getPlayer()) == GameType.SURVIVAL) {
             context.getItemInHand().shrink(1);

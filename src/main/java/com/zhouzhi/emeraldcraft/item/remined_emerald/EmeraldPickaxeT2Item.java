@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldT2ToolIsBeingDamagedPerTick;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.tags.BlockTags;
@@ -46,7 +46,7 @@ public class EmeraldPickaxeT2Item extends PickaxeItem {
 		@Override
 		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_2.get()));
+			return Ingredient.of(new ItemStack(ModItems.REFINED_EMERALD_T_2.get()));
 		}
 	};
 

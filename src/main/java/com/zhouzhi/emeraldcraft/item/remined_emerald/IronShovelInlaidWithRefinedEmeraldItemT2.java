@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -42,7 +42,7 @@ public class IronShovelInlaidWithRefinedEmeraldItemT2 extends ShovelItem {
 
         @Override
         public @NotNull Ingredient getRepairIngredient() {
-            return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_2.get()));
+            return Ingredient.of(new ItemStack(ModItems.REFINED_EMERALD_T_2.get()));
         }
     };
 

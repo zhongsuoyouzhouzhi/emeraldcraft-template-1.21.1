@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.component.DataComponents;
@@ -49,7 +49,7 @@ public class VoidEmeraldSwordItem extends SwordItem {
 		@Override
 		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
+			return Ingredient.of(new ItemStack(ModItems.VOID_EMERALD.get()));
 		}
 	};
 

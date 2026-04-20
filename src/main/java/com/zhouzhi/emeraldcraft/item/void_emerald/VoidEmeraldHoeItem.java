@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -51,7 +51,7 @@ public class VoidEmeraldHoeItem extends HoeItem {
 		@Override
 		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
-            return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
+            return Ingredient.of(new ItemStack(ModItems.VOID_EMERALD.get()));
 		}
 	};
 

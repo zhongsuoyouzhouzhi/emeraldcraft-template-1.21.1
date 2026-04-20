@@ -1,7 +1,7 @@
 package com.zhouzhi.emeraldcraft.potion;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
+import com.zhouzhi.emeraldcraft.init.ModMobEffects;
 import com.zhouzhi.emeraldcraft.procedures.effect.SuppressOnEffectStarted;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -37,6 +37,6 @@ public class SuppressMobEffect extends MobEffect {
             public boolean isVisibleInGui(@NotNull MobEffectInstance effect) {
                 return false;
             }
-        }, EmeraldcraftMobEffects.SUPPRESS.get());
+        }, ModMobEffects.SUPPRESS.get());
     }
 }

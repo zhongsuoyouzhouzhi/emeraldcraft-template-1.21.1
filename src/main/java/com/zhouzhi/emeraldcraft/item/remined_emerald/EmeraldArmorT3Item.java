@@ -1,8 +1,8 @@
 package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.google.common.collect.Iterables;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftBlocks;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModBlocks;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.others.EmeraldArmorT3PerTick;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
@@ -40,7 +40,7 @@ public abstract class EmeraldArmorT3Item extends ArmorItem {
 				map.put(ArmorItem.Type.HELMET, 25);
 				map.put(ArmorItem.Type.BODY, 60);
 			}), 30, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EMPTY),
-					() -> Ingredient.of(new ItemStack(EmeraldcraftBlocks.REFINED_EMERALD_BLOCK_3.get()), new ItemStack(EmeraldcraftItems.REFINED_EMERALD_T_3.get())),
+					() -> Ingredient.of(new ItemStack(ModBlocks.REFINED_EMERALD_BLOCK_3.get()), new ItemStack(ModItems.REFINED_EMERALD_T_3.get())),
 					List.of(new ArmorMaterial.Layer(ResourceLocation.parse("emeraldcraft:refined_emerald_t3"))),
 					6f,
 					0.5f);

@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -41,7 +41,7 @@ public class IronSwordInlaidWithRefinedEmeraldItem extends SwordItem {
 
         @Override
         public @NotNull Ingredient getRepairIngredient() {
-            return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD.get()));
+            return Ingredient.of(new ItemStack(ModItems.REFINED_EMERALD.get()));
         }
     };
 

@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.others.SkyFillingBladeHitLivingThings;
 import com.zhouzhi.emeraldcraft.procedures.others.SkyFillingBladeRight_clickOnAir;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -50,7 +50,7 @@ public class SkyFillingBladeItem extends SwordItem {
 		@Override
 		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD_PLUS.get()));
+			return Ingredient.of(new ItemStack(ModItems.REFINED_EMERALD_PLUS.get()));
 		}
 	};
 

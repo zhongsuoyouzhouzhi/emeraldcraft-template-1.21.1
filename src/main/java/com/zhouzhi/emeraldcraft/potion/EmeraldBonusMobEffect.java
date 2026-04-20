@@ -1,19 +1,17 @@
 package com.zhouzhi.emeraldcraft.potion;
 
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtensions;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.bus.api.SubscribeEvent;
-
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.resources.ResourceLocation;
-
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftMobEffects;
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
+import com.zhouzhi.emeraldcraft.init.ModMobEffects;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber
@@ -33,6 +31,6 @@ public class EmeraldBonusMobEffect extends MobEffect {
 			public boolean isVisibleInGui(@NotNull MobEffectInstance effect) {
 				return false;
 			}
-		}, EmeraldcraftMobEffects.EMERALD_BONUS.get());
+		}, ModMobEffects.EMERALD_BONUS.get());
 	}
 }

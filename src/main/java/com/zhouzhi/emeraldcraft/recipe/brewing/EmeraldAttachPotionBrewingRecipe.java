@@ -1,17 +1,14 @@
 package com.zhouzhi.emeraldcraft.recipe.brewing;
 
-import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
-import net.neoforged.neoforge.common.brewing.IBrewingRecipe;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.bus.api.SubscribeEvent;
-
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.Items;
+import com.zhouzhi.emeraldcraft.init.ModItems;
+import com.zhouzhi.emeraldcraft.init.ModPotions;
 import net.minecraft.world.item.ItemStack;
-
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftPotions;
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.brewing.IBrewingRecipe;
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber
@@ -23,18 +20,18 @@ public class EmeraldAttachPotionBrewingRecipe implements IBrewingRecipe {
 
 	@Override
 	public boolean isInput(@NotNull ItemStack input) {
-		return Ingredient.of(new ItemStack(Items.POTION)).test(input);
+		return Ingredient.of(new ItemStack(net.minecraft.world.item.Items.POTION)).test(input);
 	}
 
 	@Override
 	public boolean isIngredient(@NotNull ItemStack ingredient) {
-		return Ingredient.of(new ItemStack(EmeraldcraftItems.REFINED_EMERALD.get())).test(ingredient);
+		return Ingredient.of(new ItemStack(ModItems.REFINED_EMERALD.get())).test(ingredient);
 	}
 
 	@Override
 	public @NotNull ItemStack getOutput(@NotNull ItemStack input, @NotNull ItemStack ingredient) {
 		if (isInput(input) && isIngredient(ingredient)) {
-			return PotionContents.createItemStack(Items.POTION, EmeraldcraftPotions.EMERALD_ATTACH_POTION);
+			return PotionContents.createItemStack(net.minecraft.world.item.Items.POTION, ModPotions.EMERALD_ATTACH_POTION);
 		}
 		return ItemStack.EMPTY;
 	}

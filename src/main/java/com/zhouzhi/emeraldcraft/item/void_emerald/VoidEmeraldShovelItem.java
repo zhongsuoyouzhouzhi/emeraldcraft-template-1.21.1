@@ -1,6 +1,6 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -51,7 +51,7 @@ public class VoidEmeraldShovelItem extends ShovelItem {
 		@Override
 		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
-			return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
+			return Ingredient.of(new ItemStack(ModItems.VOID_EMERALD.get()));
 		}
 	};
 
@@ -65,7 +65,7 @@ public class VoidEmeraldShovelItem extends ShovelItem {
 
     @Override
     public boolean mineBlock(@ParametersAreNonnullByDefault ItemStack stack,@ParametersAreNonnullByDefault Level level, BlockState state,@ParametersAreNonnullByDefault BlockPos pos,@ParametersAreNonnullByDefault LivingEntity miningEntity) {
-        if (isDirt(state.getBlock()) && !TagChange.getOrCreateComponent(stack,"Scope",false))
+        if (isDirt(state.getBlock()) && TagChange.getOrCreateComponent(stack,"Scope",false))
             destroyDirt(level,pos.getX(),pos.getY(),pos.getZ(),1,false);
         return super.mineBlock(stack, level, state, pos, miningEntity);
     }

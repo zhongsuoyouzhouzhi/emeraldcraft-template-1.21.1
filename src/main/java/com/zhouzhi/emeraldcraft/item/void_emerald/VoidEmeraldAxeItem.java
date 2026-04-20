@@ -1,13 +1,11 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
-import com.zhouzhi.emeraldcraft.init.EmeraldcraftItems;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -53,7 +51,7 @@ public class VoidEmeraldAxeItem extends AxeItem {
 		@Override
 		@MethodsReturnNonnullByDefault
 		public Ingredient getRepairIngredient() {
-            return Ingredient.of(new ItemStack(EmeraldcraftItems.VOID_EMERALD.get()));
+            return Ingredient.of(new ItemStack(ModItems.VOID_EMERALD.get()));
 		}
 	};
 
@@ -73,11 +71,8 @@ public class VoidEmeraldAxeItem extends AxeItem {
         } else {
             if (!level.isClientSide && state.getDestroySpeed(level, pos) != 0.0F && tool.damagePerBlock() > 0) {
                 stack.hurtAndBreak(tool.damagePerBlock(), miningEntity, EquipmentSlot.MAINHAND);
-                if (SimpleUse.isLog(state.getBlock()) && !TagChange.getOrCreateComponent(stack,"Scope",false)) {
-                    int logs = SimpleUse.destroyLog(level,pos.getX(),pos.getY(),pos.getZ(),1,false);
-					if (miningEntity instanceof ServerPlayer player){
-						player.sendSystemMessage(Component.literal(logs+" Logs"));
-					}
+                if (SimpleUse.isLog(state.getBlock()) && TagChange.getOrCreateComponent(stack,"Scope",false)) {
+                    SimpleUse.destroyLog(level,pos.getX(),pos.getY(),pos.getZ(),1,false);
                 }
             }
             return true;
