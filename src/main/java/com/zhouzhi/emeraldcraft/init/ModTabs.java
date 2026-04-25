@@ -68,6 +68,10 @@ public class ModTabs {
                 tabData.accept(ModItems.VOID_EMERALD_PICKAXE.get());
                 tabData.accept(ModItems.VOID_EMERALD_SHOVEL.get());
                 tabData.accept(ModItems.VOID_EMERALD_HOE.get());
+                tabData.accept(ModItems.VOID_EMERALD_ARMOR_HELMET.get());
+                tabData.accept(ModItems.VOID_EMERALD_ARMOR_CHESTPLATE.get());
+                tabData.accept(ModItems.VOID_EMERALD_ARMOR_LEGGINGS.get());
+                tabData.accept(ModItems.VOID_EMERALD_ARMOR_BOOTS.get());
                 tabData.accept(ModItems.LAVA_EMERALD.get());
                 tabData.accept(ModItems.LAVA_EMERALD_SWORD.get());
                 tabData.accept(ModItems.LAVA_EMERALD_AXE.get());
@@ -133,6 +137,10 @@ public class ModTabs {
             tabData.accept(ModItems.IRON_AXE_INLAID_WITH_REFINED_EMERALD_T2.get());
             tabData.accept(ModItems.VOID_EMERALD_SWORD.get());
             tabData.accept(ModItems.VOID_EMERALD_AXE.get());
+            tabData.accept(ModItems.VOID_EMERALD_ARMOR_HELMET.get());
+            tabData.accept(ModItems.VOID_EMERALD_ARMOR_CHESTPLATE.get());
+            tabData.accept(ModItems.VOID_EMERALD_ARMOR_LEGGINGS.get());
+            tabData.accept(ModItems.VOID_EMERALD_ARMOR_BOOTS.get());
             tabData.accept(ModItems.LAVA_EMERALD_SWORD.get());
             tabData.accept(ModItems.LAVA_EMERALD_AXE.get());
 		} else if (tabData.getTabKey() == CreativeModeTabs.INGREDIENTS) {

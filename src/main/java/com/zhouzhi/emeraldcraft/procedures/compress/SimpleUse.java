@@ -1,5 +1,6 @@
 package com.zhouzhi.emeraldcraft.procedures.compress;
 
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.net.function.Function_BlockOperation;
 import com.zhouzhi.emeraldcraft.procedures.net.function.Function_BlockPosOperation;
 import com.zhouzhi.emeraldcraft.procedures.net.function.Function_EntityOperation;
@@ -14,8 +15,10 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -268,28 +271,20 @@ public class SimpleUse {
     public static class Message {
         public static void send(Player player, String message, boolean isTranslate) {
             if (isTranslate)
-                player.displayClientMessage(Component.translatable(message),true);
+                player.displayClientMessage(Component.translatable(message), true);
             else
-                player.displayClientMessage(Component.literal(message),true);
+                player.displayClientMessage(Component.literal(message), true);
         }
 
         public static void send(Player player, String message, boolean isTranslate, boolean actionBar) {
             if (isTranslate)
-                player.displayClientMessage(Component.translatable(message),actionBar);
+                player.displayClientMessage(Component.translatable(message), actionBar);
             else
-                player.displayClientMessage(Component.literal(message),actionBar);
+                player.displayClientMessage(Component.literal(message), actionBar);
         }
-        public static void send(Player player, Component message, boolean isTranslate) {
-            if (isTranslate)
-                player.displayClientMessage(message,true);
-            else
-                player.displayClientMessage(message,true);
-        }
-        public static void send(Player player, Component message, boolean isTranslate, boolean actionBar) {
-            if (isTranslate)
-                player.displayClientMessage(message,actionBar);
-            else
-                player.displayClientMessage(message,actionBar);
+
+        public static void send(Player player, Component message, boolean actionBar) {
+            player.displayClientMessage(message, actionBar);
         }
     }
 
@@ -305,4 +300,41 @@ public class SimpleUse {
         return recipe.map(r -> r.assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(input), level.registryAccess()))
                 .orElse(ItemStack.EMPTY);
     }
+
+    public static int VoidArmorNumber(LivingEntity entity) {
+        EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+        Item[] armorItems = {
+            ModItems.VOID_EMERALD_ARMOR_HELMET.asItem(),
+            ModItems.VOID_EMERALD_ARMOR_CHESTPLATE.asItem(),
+            ModItems.VOID_EMERALD_ARMOR_LEGGINGS.asItem(),
+            ModItems.VOID_EMERALD_ARMOR_BOOTS.asItem()
+        };
+        int count = 0;
+        for (int i = 0; i < slots.length; i++) {
+            ItemStack stack = entity.getItemBySlot(slots[i]);
+            if (stack.is(armorItems[i])) {
+                count++;
+            }
+        }
+        return count;
+    }
+    /*
+    public int LavaArmorNumber(LivingEntity entity) {
+        EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+        Item[] armorItems = {
+            ModItems.LAVA_EMERALD_ARMOR_HELMET.asItem(),
+            ModItems.LAVA_EMERALD_ARMOR_CHESTPLATE.asItem(),
+            ModItems.LAVA_EMERALD_ARMOR_LEGGINGS.asItem(),
+            ModItems.LAVA_EMERALD_ARMOR_BOOTS.asItem()
+        };
+        int count = 0;
+        for (int i = 0; i < slots.length; i++) {
+            ItemStack stack = entity.getItemBySlot(slots[i]);
+            if (stack.is(armorItems[i])) {
+                count++;
+            }
+        }
+        return count;
+    }
+    */
 }

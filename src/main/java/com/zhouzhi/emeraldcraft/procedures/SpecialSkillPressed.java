@@ -2,10 +2,7 @@ package com.zhouzhi.emeraldcraft.procedures;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
 import com.zhouzhi.emeraldcraft.init.ModItems;
-import com.zhouzhi.emeraldcraft.procedures.compress.MTR;
-import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
-import com.zhouzhi.emeraldcraft.procedures.compress.SLTZ;
-import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
+import com.zhouzhi.emeraldcraft.procedures.compress.*;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -134,6 +131,21 @@ public class SpecialSkillPressed {
                 if (entity instanceof Player _player) {
                     _player.getCooldowns().addCooldown(itemstack.getItem(), 10);
                     sendOpen(_player, getOrCreateComponent(itemstack, "Scope", true));
+                }
+            }
+
+
+            ItemStack armor = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
+            int van = SimpleUse.VoidArmorNumber(livingEntity);
+            if (van == 4 && livingEntity.isShiftKeyDown()) {
+                boolean tag;
+                tag = TagChange.getOrCreateComponent(armor, "Void", false);
+                TagChange.saveComponent(armor, "Void", !tag);
+                if (entity instanceof Player player) {
+                    if (!tag)
+                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.true")),true);
+                    else
+                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.false")),true);
                 }
             }
         }

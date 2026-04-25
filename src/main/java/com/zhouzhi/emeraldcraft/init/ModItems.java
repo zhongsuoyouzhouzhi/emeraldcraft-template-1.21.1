@@ -71,6 +71,10 @@ public class ModItems {
 	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_CHESTPLATE;
 	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_LEGGINGS;
 	public static final DeferredItem<Item> EMERALD_ARMOR_T_3_BOOTS;
+	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_HELMET;
+	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_CHESTPLATE;
+	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_LEGGINGS;
+	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_BOOTS;
 	static {
 		REFINED_EMERALD = REGISTRY.register("refined_emerald", RefinedEmeraldItem::new);
 		REFINED_EMERALD_BLOCK = block(ModBlocks.REFINED_EMERALD_BLOCK, new Item.Properties().rarity(Rarity.RARE));
@@ -105,6 +109,10 @@ public class ModItems {
 		EMERALD_ARMOR_T_3_CHESTPLATE = REGISTRY.register("emerald_armor_t_3_chestplate", EmeraldArmorT3Item.Chestplate::new);
 		EMERALD_ARMOR_T_3_LEGGINGS = REGISTRY.register("emerald_armor_t_3_leggings", EmeraldArmorT3Item.Leggings::new);
 		EMERALD_ARMOR_T_3_BOOTS = REGISTRY.register("emerald_armor_t_3_boots", EmeraldArmorT3Item.Boots::new);
+		VOID_EMERALD_ARMOR_HELMET = REGISTRY.register("void_emerald_helmet", VoidEmeraldArmorItem.Helmet::new);
+		VOID_EMERALD_ARMOR_CHESTPLATE = REGISTRY.register("void_emerald_chestplate", VoidEmeraldArmorItem.Chestplate::new);
+		VOID_EMERALD_ARMOR_LEGGINGS = REGISTRY.register("void_emerald_leggings", VoidEmeraldArmorItem.Leggings::new);
+		VOID_EMERALD_ARMOR_BOOTS = REGISTRY.register("void_emerald_boots", VoidEmeraldArmorItem.Boots::new);
 		REFINED_EMERALD_PLUS = REGISTRY.register("refined_emerald_plus", RefinedEmeraldPlusItem::new);
 		SKYFILLING_BLADE = REGISTRY.register("skyfilling_blade", SkyFillingBladeItem::new);
         IRON_SWORD_INLAID_WITH_REFINED_EMERALD = REGISTRY.register("iron_sword_with_refined_emerald", IronSwordInlaidWithRefinedEmeraldItem::new);

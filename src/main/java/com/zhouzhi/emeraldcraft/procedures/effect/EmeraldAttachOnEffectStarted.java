@@ -1,7 +1,7 @@
 package com.zhouzhi.emeraldcraft.procedures.effect;
 
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 public class EmeraldAttachOnEffectStarted {
 	public static void execute(Entity entity) {

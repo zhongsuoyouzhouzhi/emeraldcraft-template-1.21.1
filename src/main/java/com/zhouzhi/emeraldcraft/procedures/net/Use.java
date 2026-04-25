@@ -1,6 +1,7 @@
 package com.zhouzhi.emeraldcraft.procedures.net;
 
 import com.zhouzhi.emeraldcraft.init.ModMobEffects;
+import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.core.particles.ParticleTypes;
@@ -187,16 +188,16 @@ public class Use {
                     String[] b = {};
                     for (String a : entity.getTags().toArray(b)) {
                         if (a.equals("void")) {
-                            if (entity.getType().equals(EntityType.ENDER_DRAGON)) {
-                                if (entity instanceof LivingEntity livingEntity) {
-                                    livingEntity.hurt(source.damageSources().playerAttack(source), livingEntity.getMaxHealth());
-                                    livingEntity.die(source.damageSources().playerAttack(source));
-                                    if (livingEntity.getHealth() > 0f)
-                                        livingEntity.hurt(new DamageSource(world.holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), livingEntity.getMaxHealth());
-                                } else entity.kill();
-                                entity.removeTag("void");
+                            float damage = 0x7FFFFFFF;
+                            if (entity instanceof LivingEntity livingEntity) {
+                                livingEntity.hurt(source.damageSources().playerAttack(source), damage);
+                                livingEntity.die(source.damageSources().playerAttack(source));
+                                if (livingEntity.getHealth() > 0f)
+                                    livingEntity.hurt(new DamageSource(world.holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), damage);
+                            } else entity.kill();
+                            entity.removeTag("void");
+                            if (entity.getType().equals(EntityType.ENDER_DRAGON))
                                 continue every_entity;
-                            }
                             entity.setInvisible(true);
                             entity.setInvulnerable(false);
                             entity.setSilent(true);
@@ -221,6 +222,18 @@ public class Use {
                     });
                 }
                 source.getCooldowns().addCooldown(stack.getItem(), 200);
+            }
+        }
+    }
+
+    public static void VoidEmeraldArmorPerTick(Level world, Player player, ItemStack stack) {
+        int van = SimpleUse.VoidArmorNumber(player);
+        if (van == 4) {
+            if (TagChange.getOrCreateComponent(stack, "Void", false)) {
+                MobEffectInstance[] effectInstances = new MobEffectInstance[]{
+                        new MobEffectInstance(ModMobEffects.VOID, 2, 5, false, false),
+                };
+                MobEffectALL.execute(world, effectInstances, player);
             }
         }
     }
