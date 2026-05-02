@@ -1,9 +1,7 @@
 package com.zhouzhi.emeraldcraft.procedures.compress;
 
 import com.zhouzhi.emeraldcraft.init.ModItems;
-import com.zhouzhi.emeraldcraft.procedures.net.function.Function_BlockOperation;
-import com.zhouzhi.emeraldcraft.procedures.net.function.Function_BlockPosOperation;
-import com.zhouzhi.emeraldcraft.procedures.net.function.Function_EntityOperation;
+import com.zhouzhi.emeraldcraft.procedures.net.function.Function;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.core.BlockPos;
@@ -134,7 +132,7 @@ public class SimpleUse {
         return block.builtInRegistryHolder().is(BlockTags.MINEABLE_WITH_SHOVEL);
     }
 
-    public static int OperateBlock(LevelAccessor world, int x, int y, int z, int radius , Predicate<Block> condition, Function_BlockOperation lambdaOperate){
+    public static int OperateBlock(LevelAccessor world, int x, int y, int z, int radius , Predicate<Block> condition, Function.Function_BlockOperation lambdaOperate){
         int count = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -153,7 +151,7 @@ public class SimpleUse {
         return count;
     }
 
-    public static int OperateBlock(LevelAccessor world, int x, int y, int z, int xRadius, int yRadius, int zRadius, Predicate<Block> condition, Function_BlockOperation lambdaOperate){
+    public static int OperateBlock(LevelAccessor world, int x, int y, int z, int xRadius, int yRadius, int zRadius, Predicate<Block> condition, Function.Function_BlockOperation lambdaOperate){
         int count = 0;
         for (int dx = -xRadius; dx <= xRadius; dx++) {
             for (int dy = -yRadius; dy <= yRadius; dy++) {
@@ -172,7 +170,7 @@ public class SimpleUse {
         return count;
     }
 
-    public static int OperateBlockPos(LevelAccessor world, int x, int y, int z, int xRadius, int yRadius, int zRadius, Predicate<BlockPos> condition, Function_BlockOperation lambdaOperate){
+    public static int OperateBlockPos(LevelAccessor world, int x, int y, int z, int xRadius, int yRadius, int zRadius, Predicate<BlockPos> condition, Function.Function_BlockOperation lambdaOperate){
         int count = 0;
         for (int dx = -xRadius; dx <= xRadius; dx++) {
             for (int dy = -yRadius; dy <= yRadius; dy++) {
@@ -191,7 +189,7 @@ public class SimpleUse {
         return count;
     }
 
-    public static int OperateBlock(int x, int y, int z, int radius, Function_BlockPosOperation Operate) {
+    public static int OperateBlock(int x, int y, int z, int radius, Function.Function_BlockPosOperation Operate) {
         int count = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -207,7 +205,7 @@ public class SimpleUse {
         return count;
     }
 
-    public static void OperateEntity(Level world, Entity source, int XRadius, int YRadius, int ZRadius, Function_EntityOperation Operate) {
+    public static void OperateEntity(Level world, Entity source, int XRadius, int YRadius, int ZRadius, Function.Function_EntityOperation Operate) {
         if (world instanceof ServerLevel serverLevel) {
             int minX = (int) (source.getX() - XRadius);
             int minY = (int) (source.getY() - YRadius);

@@ -39,7 +39,7 @@ public abstract class VoidEmeraldArmorItem extends ArmorItem {
 				map.put(Type.CHESTPLATE, 50);
 				map.put(Type.HELMET, 30);
 				map.put(Type.BODY, 50);
-			}), 60, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EMPTY),
+			}), 90, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.EMPTY),
 					() -> Ingredient.of(new ItemStack(ModItems.VOID_EMERALD.get())),
 					List.of(new ArmorMaterial.Layer(ResourceLocation.parse("emeraldcraft:void_emerald"))),
 					7f,

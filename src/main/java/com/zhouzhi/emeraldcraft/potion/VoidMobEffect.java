@@ -20,7 +20,17 @@ import org.jetbrains.annotations.NotNull;
 public class VoidMobEffect extends MobEffect {
     public VoidMobEffect() {
         super(MobEffectCategory.BENEFICIAL, 0x213F0E);
-        this.addAttributeModifier(Attributes.FOLLOW_RANGE, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_0"), 1, AttributeModifier.Operation.ADD_VALUE);
+        this.addAttributeModifier(Attributes.FOLLOW_RANGE, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_0"), -0.04, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        this.addAttributeModifier(Attributes.BLOCK_INTERACTION_RANGE, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_1"), 1, AttributeModifier.Operation.ADD_VALUE);
+        this.addAttributeModifier(Attributes.ENTITY_INTERACTION_RANGE, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_2"), 1.2, AttributeModifier.Operation.ADD_VALUE);
+        this.addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_3"), 0.075, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        this.addAttributeModifier(Attributes.FLYING_SPEED, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_4"), 0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        this.addAttributeModifier(Attributes.ATTACK_SPEED, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_5"), 0.075, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        this.addAttributeModifier(Attributes.STEP_HEIGHT, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_6"), 0.5, AttributeModifier.Operation.ADD_VALUE);
+        this.addAttributeModifier(Attributes.GRAVITY, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_7"), -0.075, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        this.addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_8"), 0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        this.addAttributeModifier(Attributes.BURNING_TIME, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_9"), -1, AttributeModifier.Operation.ADD_VALUE);
+        this.addAttributeModifier(Attributes.SNEAKING_SPEED, ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "effect.void_10"), 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     }
 
     @Override

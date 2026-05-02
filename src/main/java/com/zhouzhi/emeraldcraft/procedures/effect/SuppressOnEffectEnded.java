@@ -14,18 +14,18 @@ public class SuppressOnEffectEnded {
             DamageSource magicDamage = entity.level().damageSources().magic();
             int num = TagChange.getOrCreateComponent(entity, "suppress", 0);
             if (num >= 3) {
-                float damage = 0.72f * ((SimpleUse.getEffectLevel(entity, ModMobEffects.SUPPRESS)+7.5f)*12);
+                float damage = 0.72f * ((SimpleUse.getEffectLevel(entity, ModMobEffects.SUPPRESS)+7.5f)*2);//12.24,13.68,15.12
                 num = TagChange.getOrCreateComponent(entity, "suppress_end", 0);
                 TagChange.saveComponent(entity, "suppress_end", num);
                 if (num >= 6) {
-                    entity.hurt(magicDamage, damage * 1.5f);
+                    entity.hurt(magicDamage, damage * 0.35f);//25.704,28.728,31.752
                     TagChange.saveComponent(entity, "suppress_end", 0);
                 } else {
                     entity.hurt(magicDamage, damage);
                     TagChange.saveComponent(entity, "suppress_end", ++num);
                 }
             } else {
-                entity.hurt(magicDamage, 0.5f * ((SimpleUse.getEffectLevel(entity, ModMobEffects.SUPPRESS)+8)*9));
+                entity.hurt(magicDamage, 0.05f * ((SimpleUse.getEffectLevel(entity, ModMobEffects.SUPPRESS)+8)*9));//4.05,4.5,4.95
             }
         }
     }

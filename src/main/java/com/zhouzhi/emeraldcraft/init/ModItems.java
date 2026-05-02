@@ -114,7 +114,7 @@ public class ModItems {
 		VOID_EMERALD_ARMOR_LEGGINGS = REGISTRY.register("void_emerald_leggings", VoidEmeraldArmorItem.Leggings::new);
 		VOID_EMERALD_ARMOR_BOOTS = REGISTRY.register("void_emerald_boots", VoidEmeraldArmorItem.Boots::new);
 		REFINED_EMERALD_PLUS = REGISTRY.register("refined_emerald_plus", RefinedEmeraldPlusItem::new);
-		SKYFILLING_BLADE = REGISTRY.register("skyfilling_blade", SkyFillingBladeItem::new);
+		SKYFILLING_BLADE = REGISTRY.register("sky_filling_blade", SkyFillingBladeItem::new);
         IRON_SWORD_INLAID_WITH_REFINED_EMERALD = REGISTRY.register("iron_sword_with_refined_emerald", IronSwordInlaidWithRefinedEmeraldItem::new);
         IRON_SWORD_INLAID_WITH_REFINED_EMERALD_T2 = REGISTRY.register("iron_sword_with_refined_emerald_t2", IronSwordInlaidWithRefinedEmeraldT2Item::new);
         IRON_AXE_INLAID_WITH_REFINED_EMERALD = REGISTRY.register("iron_axe_with_refined_emerald", IronAxeInlaidWithRefinedEmeraldItem::new);

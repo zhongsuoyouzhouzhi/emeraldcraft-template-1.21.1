@@ -19,8 +19,11 @@ public class LavaEmeraldItem extends Item{
     public InteractionResult useOn(@ParametersAreNonnullByDefault UseOnContext context) {
         super.useOn(context);
         if (!context.getLevel().isClientSide) {
-            if (context.getLevel().getBlockState(context.getClickedPos()) == Blocks.CAULDRON.defaultBlockState()) {
+            if (context.getLevel().getBlockState(context.getClickedPos()).is(Blocks.CAULDRON)) {
                 context.getLevel().setBlockAndUpdate(context.getClickedPos(), Blocks.LAVA_CAULDRON.defaultBlockState());
+                return InteractionResult.SUCCESS;
+            } else if (context.getLevel().getBlockState(context.getClickedPos()).is(Blocks.SNOW)) {
+                context.getLevel().setBlockAndUpdate(context.getClickedPos(), Blocks.AIR.defaultBlockState());
                 return InteractionResult.SUCCESS;
             }
         }

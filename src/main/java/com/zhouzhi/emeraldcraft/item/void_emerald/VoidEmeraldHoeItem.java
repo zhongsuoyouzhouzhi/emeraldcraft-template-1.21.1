@@ -45,7 +45,7 @@ public class VoidEmeraldHoeItem extends HoeItem {
 
 		@Override
 		public int getEnchantmentValue() {
-			return 60;
+			return 90;
 		}
 
 		@Override

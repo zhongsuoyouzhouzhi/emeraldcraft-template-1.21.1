@@ -128,7 +128,7 @@ public class EnchantmentEffect {
                 if (isVoidEmerald) {
                     enchantmentLevel += 1;
                     if (!getOrCreateComponent(weapon, "Void_Open", true)) {
-                        enchantmentLevel += 3;
+                        enchantmentLevel += 8;
                     }
                 }
 
@@ -185,12 +185,14 @@ public class EnchantmentEffect {
     }
 
     @SubscribeEvent
-    public void shield(LivingShieldBlockEvent event) {
+    public void Shield(LivingShieldBlockEvent event) {
         if (event.isCanceled()) return;
 
         LivingEntity target = event.getEntity();
         Level level = event.getEntity().getCommandSenderWorld();
         if (level.isClientSide()) {
+            return;
+        } else if (!event.getBlocked()) {
             return;
         }
 

@@ -46,7 +46,7 @@ public class VoidEmeraldPickaxeItem extends PickaxeItem {
 
 		@Override
 		public int getEnchantmentValue() {
-			return 60;
+			return 90;
 		}
 
 		@Override

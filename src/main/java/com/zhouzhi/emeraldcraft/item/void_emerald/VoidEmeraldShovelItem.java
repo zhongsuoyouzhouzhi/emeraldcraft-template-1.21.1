@@ -45,7 +45,7 @@ public class VoidEmeraldShovelItem extends ShovelItem {
 
 		@Override
 		public int getEnchantmentValue() {
-			return 60;
+			return 90;
 		}
 
 		@Override

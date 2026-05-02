@@ -43,7 +43,7 @@ public class VoidEmeraldSwordItem extends SwordItem {
 
 		@Override
 		public int getEnchantmentValue() {
-			return 60;
+			return 90;
 		}
 
 		@Override
@@ -57,7 +57,7 @@ public class VoidEmeraldSwordItem extends SwordItem {
 	public VoidEmeraldSwordItem() {
 		super(TOOL_TIER,
 				new Item.Properties()
-						.attributes(SwordItem.createAttributes(TOOL_TIER, 4f, -2.0f))
+						.attributes(SwordItem.createAttributes(TOOL_TIER, 14f, -2.0f))
 						.component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
 						.fireResistant()
 						.rarity(Rarity.EPIC)

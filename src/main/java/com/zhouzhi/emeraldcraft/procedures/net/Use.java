@@ -188,6 +188,9 @@ public class Use {
                     String[] b = {};
                     for (String a : entity.getTags().toArray(b)) {
                         if (a.equals("void")) {
+                            entity.setInvisible(true);
+                            entity.setInvulnerable(false);
+                            entity.setSilent(true);
                             float damage = 0x7FFFFFFF;
                             if (entity instanceof LivingEntity livingEntity) {
                                 livingEntity.hurt(source.damageSources().playerAttack(source), damage);
@@ -198,9 +201,6 @@ public class Use {
                             entity.removeTag("void");
                             if (entity.getType().equals(EntityType.ENDER_DRAGON))
                                 continue every_entity;
-                            entity.setInvisible(true);
-                            entity.setInvulnerable(false);
-                            entity.setSilent(true);
                             if (!world.isClientSide())
                                 serverLevel.sendParticles(
                                         ParticleTypes.END_ROD,
@@ -209,8 +209,6 @@ public class Use {
                                         0.5, 0.5, 0.5,
                                         0
                                 );
-
-
                             entity.removeTag("void");
                             entity.moveTo(entity.getX(), -200, entity.getZ());
                             break;
