@@ -26,6 +26,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -43,16 +44,23 @@ public class SimpleUse {
         return -1;
     }
 
-    public static GameType getEntityGameType(Entity entity) {
-        if (entity instanceof ServerPlayer serverPlayer) {
-            return serverPlayer.gameMode.getGameModeForPlayer();
-        } else if (entity instanceof Player player && player.level().isClientSide()) {
-            PlayerInfo playerInfo = Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(player.getGameProfile().getId());
-            if (playerInfo != null)
-                return playerInfo.getGameMode();
+    public static class GameTypeGetter {
+        public static @Nullable GameType getEntityGameType(Entity entity) {
+            if (entity instanceof ServerPlayer serverPlayer) {
+                return serverPlayer.gameMode.getGameModeForPlayer();
+            } else if (entity instanceof Player player && player.level().isClientSide()) {
+                PlayerInfo playerInfo = Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(player.getGameProfile().getId());
+                if (playerInfo != null)
+                    return playerInfo.getGameMode();
+            }
+            return null;
         }
-        return null;
+
+        public static boolean isCreativeOrSpectator(Entity entity) {
+            return GameTypeGetter.getEntityGameType(entity) == GameType.CREATIVE || GameTypeGetter.getEntityGameType(entity) == GameType.SPECTATOR;
+        }
     }
+
 
     public static int destroyLog(LevelAccessor world, int x, int y, int z, int radius, boolean drop){
         int count = 0;

@@ -15,7 +15,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.sendOpen;
@@ -41,7 +40,7 @@ public class SpecialSkillPressed {
                     }
                 }
 			} else if (itemstack.is(ModItems.REFINED_EMERALD_PLUS)) {
-                if (entity instanceof Player _player && !(SimpleUse.getEntityGameType(_player) == GameType.CREATIVE)){
+                if (entity instanceof Player _player && !(SimpleUse.GameTypeGetter.isCreativeOrSpectator(_player))){
                     itemstack.setCount(itemstack.getCount() - 1);
                 }
                 Level level = entity.level();

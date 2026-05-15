@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -57,7 +56,7 @@ public class VoidEmeraldItem extends Item {
             }
             world.setBlockAndUpdate(blockPos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
         });
-        if (SimpleUse.getEntityGameType(context.getPlayer()) == GameType.SURVIVAL) {
+        if (SimpleUse.GameTypeGetter.isCreativeOrSpectator(context.getPlayer())) {
             context.getItemInHand().shrink(1);
         }
         return InteractionResult.SUCCESS;

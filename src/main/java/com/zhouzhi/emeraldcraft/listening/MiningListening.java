@@ -14,7 +14,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -25,7 +24,7 @@ public class MiningListening {
     @SubscribeEvent
     public void LavaEmeraldToolMining(BlockEvent.BreakEvent event){
         Player entity = event.getPlayer();
-        if (SimpleUse.getEntityGameType(entity) != GameType.SURVIVAL) {
+        if (SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity)) {
             return;
         }
         Level level = entity.getCommandSenderWorld();
@@ -74,7 +73,7 @@ public class MiningListening {
     @SubscribeEvent
     public void EmeraldToolBreakSpeed(PlayerEvent.BreakSpeed event){
         Player entity = event.getEntity();
-        if (SimpleUse.getEntityGameType(entity) != GameType.SURVIVAL) {
+        if (SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity)) {
             return;
         }
         Level level = entity.getCommandSenderWorld();
@@ -90,6 +89,21 @@ public class MiningListening {
             if (state.is(ModTags.EMERALD_BLOCKS)) {
                 event.setNewSpeed(event.getNewSpeed() * 2);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void VoidEmeraldArmorBreakSpeed(PlayerEvent.BreakSpeed event){
+        Player entity = event.getEntity();
+        if (SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity)) {
+            return;
+        }
+        Level level = entity.getCommandSenderWorld();
+        if (level.isClientSide()) {
+            return;
+        }
+        if (SimpleUse.VoidArmorNumber(entity) == 4) {
+            event.setNewSpeed(event.getNewSpeed() * 8);
         }
     }
 }

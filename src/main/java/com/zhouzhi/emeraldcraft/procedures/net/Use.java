@@ -18,7 +18,6 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.AABB;
@@ -215,7 +214,7 @@ public class Use {
                         }
                     }
                 }
-                if (SimpleUse.getEntityGameType(source) != GameType.CREATIVE) {
+                if (!SimpleUse.GameTypeGetter.isCreativeOrSpectator(source)) {
                     stack.hurtAndBreak(2, serverLevel, null, _k -> {
                     });
                 }
