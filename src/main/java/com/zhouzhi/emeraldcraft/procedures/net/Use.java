@@ -1,7 +1,9 @@
 package com.zhouzhi.emeraldcraft.procedures.net;
 
+import com.zhouzhi.emeraldcraft.init.ModEntities;
 import com.zhouzhi.emeraldcraft.init.ModMobEffects;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
+import com.zhouzhi.emeraldcraft.procedures.compress.PushAway;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.core.particles.ParticleTypes;
@@ -231,6 +233,16 @@ public class Use {
                         new MobEffectInstance(ModMobEffects.VOID, 2, 5, false, false),
                 };
                 MobEffectALL.execute(world, effectInstances, player);
+
+                PushAway.executeWhen(world, player, player.getX(), player.getY(), player.getZ(), 3.5, entity->
+                    entity.getType().equals(EntityType.ARROW) ||
+                            entity.getType().equals(EntityType.FIREBALL) ||
+                            entity.getType().equals(EntityType.SMALL_FIREBALL) ||
+                            entity.getType().equals(EntityType.DRAGON_FIREBALL) ||
+                            entity.getType().equals(EntityType.ENDER_PEARL) ||
+                            entity.getType().equals(EntityType.SNOWBALL) ||
+                            entity.getType().equals(ModEntities.EMERALD_PROJECTILE.get())
+                );
             }
         }
     }

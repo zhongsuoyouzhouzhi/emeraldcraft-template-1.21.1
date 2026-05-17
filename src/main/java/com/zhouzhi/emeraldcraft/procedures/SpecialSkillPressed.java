@@ -36,18 +36,19 @@ public class SpecialSkillPressed {
                         double z = entity.getZ();
                         double radius = 22.5;
                         float damage = 20.0f;
-                        SLTZ.execute(world, entity, x, y, z, radius, damage);
+                        PushAway.execute(world, entity, x, y, z, radius, damage);
                     }
                 }
 			} else if (itemstack.is(ModItems.REFINED_EMERALD_PLUS)) {
                 if (entity instanceof Player _player && !(SimpleUse.GameTypeGetter.isCreativeOrSpectator(_player))){
                     itemstack.setCount(itemstack.getCount() - 1);
+                    _player.getCooldowns().addCooldown(itemstack.getItem(), 20);
                 }
                 Level level = entity.level();
                 livingEntity.moveTo(entity.getX(),entity.getY()+4,entity.getZ());
                 if (entity instanceof Player _player) {
                     EmeraldCraft.queueServerWork(20, () ->
-                        SLTZ.execute(level, _player, _player.getX(), _player.getY(), _player.getZ(), 64, 64));
+                        PushAway.execute(level, _player, _player.getX(), _player.getY(), _player.getZ(), 64, 64));
                     level.playSound(_player, _player.getX(), _player.getY(), _player.getZ(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 2.0f, 1.0f);
                 }
             } else if (itemstack.is(ModItems.EMERALD_PICKAXE_T_3)) {

@@ -2,7 +2,7 @@ package com.zhouzhi.emeraldcraft.procedures.others;
 
 import com.zhouzhi.emeraldcraft.init.ModMobEffects;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
-import com.zhouzhi.emeraldcraft.procedures.compress.SLTZ;
+import com.zhouzhi.emeraldcraft.procedures.compress.PushAway;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -72,7 +72,7 @@ public class EmeraldArmorT3PerTick {
             double _x = entity.getX();
             double _y = entity.getY();
             double _z = entity.getZ();
-            SLTZ.execute(_world, entity, _x, _y, _z, 4);
+            PushAway.execute(_world, entity, _x, _y, _z, 4);
         }
     }
 }
