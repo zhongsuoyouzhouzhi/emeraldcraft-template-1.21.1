@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -192,7 +193,7 @@ public class Use {
                             entity.setInvisible(true);
                             entity.setInvulnerable(false);
                             entity.setSilent(true);
-                            float damage = 0x7FFFFFFF;
+                            float damage = Float.MAX_VALUE;
                             if (entity instanceof LivingEntity livingEntity) {
                                 livingEntity.hurt(source.damageSources().playerAttack(source), damage);
                                 livingEntity.die(source.damageSources().playerAttack(source));
@@ -236,11 +237,11 @@ public class Use {
 
                 PushAway.executeWhen(world, player, player.getX(), player.getY(), player.getZ(), 3.5, entity->
                     entity.getType().equals(EntityType.ARROW) ||
-                            entity.getType().equals(EntityType.FIREBALL) ||
-                            entity.getType().equals(EntityType.SMALL_FIREBALL) ||
-                            entity.getType().equals(EntityType.DRAGON_FIREBALL) ||
                             entity.getType().equals(EntityType.ENDER_PEARL) ||
-                            entity.getType().equals(EntityType.SNOWBALL) ||
+                            entity.getType().equals(EntityType.SHULKER_BULLET) ||
+                            entity.getType().equals(EntityType.POTION) ||
+                            entity.getType().is(EntityTypeTags.IMPACT_PROJECTILES) ||
+                            entity.getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE) ||
                             entity.getType().equals(ModEntities.EMERALD_PROJECTILE.get())
                 );
             }
