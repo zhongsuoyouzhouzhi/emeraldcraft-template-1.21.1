@@ -62,7 +62,7 @@ public class SimpleUse {
     }
 
 
-    public static int destroyLog(LevelAccessor world, int x, int y, int z, int radius, boolean drop){
+    public static int destroyLog(LevelAccessor world, int x, int y, int z, int radius, boolean drop, ServerPlayer mining){
         int count = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -73,8 +73,10 @@ public class SimpleUse {
                     Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
                     if (isLog(block)){
                         BlockPos pos = BlockPos.containing(blockX, blockY, blockZ);
-                        Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY,blockZ), null);
-                        world.destroyBlock(pos, drop);
+                        if (mining == null) {
+                            Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
+                            world.destroyBlock(pos, drop);
+                        } else mining.gameMode.destroyBlock(pos);
                         count++;
                     }
                 }
@@ -87,7 +89,7 @@ public class SimpleUse {
         return block.builtInRegistryHolder().is(BlockTags.LOGS);
     }
 
-    public static int destroyStone(LevelAccessor world, int x, int y, int z, int radius, boolean drop){
+    public static int destroyStone(LevelAccessor world, int x, int y, int z, int radius, boolean drop, ServerPlayer mining){
         int count = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -98,11 +100,13 @@ public class SimpleUse {
                     Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
                     if (isStone(block)){
                         BlockPos pos = BlockPos.containing(blockX, blockY, blockZ);
-                        Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
-                        world.destroyBlock(pos, drop);
-                    }
+                        if (mining == null) {
+                            Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
+                            world.destroyBlock(pos, drop);
+                        } else mining.gameMode.destroyBlock(pos);
                         count++;
                     }
+                }
             }
         }
         return count;
@@ -115,7 +119,7 @@ public class SimpleUse {
         return overworld || nether || end || block == Blocks.COBBLESTONE || block == Blocks.COBBLED_DEEPSLATE;
     }
 
-    public static int destroyDirt(LevelAccessor world, int x, int y, int z, int radius, boolean drop){
+    public static int destroyDirt(LevelAccessor world, int x, int y, int z, int radius, boolean drop, ServerPlayer mining){
         int count = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -126,8 +130,10 @@ public class SimpleUse {
                     Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
                     if (isDirt(block)){
                         BlockPos pos = BlockPos.containing(blockX, blockY, blockZ);
-                        Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
-                        world.destroyBlock(pos, drop);
+                        if (mining == null) {
+                            Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
+                            world.destroyBlock(pos, drop);
+                        } else mining.gameMode.destroyBlock(pos);
                         count++;
                     }
                 }
