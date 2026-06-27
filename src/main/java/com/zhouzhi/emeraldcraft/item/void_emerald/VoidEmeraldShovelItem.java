@@ -1,24 +1,31 @@
 package com.zhouzhi.emeraldcraft.item.void_emerald;
 
 import com.zhouzhi.emeraldcraft.init.ModItems;
+import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-
-import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.destroyDirt;
-import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.isDirt;
+import java.util.List;
 
 public class VoidEmeraldShovelItem extends ShovelItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -64,10 +71,61 @@ public class VoidEmeraldShovelItem extends ShovelItem {
 	}
 
     @Override
-    public boolean mineBlock(@ParametersAreNonnullByDefault ItemStack stack,@ParametersAreNonnullByDefault Level level, BlockState state,@ParametersAreNonnullByDefault BlockPos pos,@ParametersAreNonnullByDefault LivingEntity miningEntity) {
-        if (isDirt(state.getBlock()) && TagChange.getOrCreateComponent(stack,"Scope",false))
-            destroyDirt(level,pos.getX(),pos.getY(),pos.getZ(),1,false);
-        return super.mineBlock(stack, level, state, pos, miningEntity);
-    }
+	public boolean mineBlock(@ParametersAreNonnullByDefault ItemStack stack, Level level, @ParametersAreNonnullByDefault BlockState state, @ParametersAreNonnullByDefault BlockPos pos, @ParametersAreNonnullByDefault LivingEntity miningEntity) {
+		if (level.isClientSide()) {
+			return true;
+		}
+
+		if (!(miningEntity instanceof ServerPlayer player)) {
+			return false;
+		}
+		Tool tool = stack.get(DataComponents.TOOL);
+		breakBlockAt(player, pos, stack,state,tool);
+		return true;
+	}
+
+	private void breakBlockAt(ServerPlayer player, BlockPos pos, ItemStack stack, BlockState state,Tool tool) {
+		ServerLevel level = player.serverLevel();
+		if (state.getDestroySpeed(level, pos) != 0.0F && tool.damagePerBlock() > 0) {
+			stack.hurtAndBreak(tool.damagePerBlock(), player, EquipmentSlot.MAINHAND);
+			if (SimpleUse.isDirt(state.getBlock()) && TagChange.getOrCreateComponent(stack, "Scope", false)) {
+				level.getServer().execute(() -> SimpleUse.OperateBlock(
+						level,
+						pos.getX(),
+						pos.getY(),
+						pos.getZ(),
+						1,
+						SimpleUse::isDirt,
+						(block, x, y, z) -> {
+							BlockPos _pos = BlockPos.containing(x, y, z);
+							BlockState _state = level.getBlockState(_pos);
+
+							List<ItemStack> drops = Block.getDrops(_state , level, _pos, null, null, stack);
+
+							for (ItemStack drop : drops) {
+								Block.popResource(level, _pos, drop);
+							}
+
+							int exp = _state.getExpDrop(level, _pos, null, player, stack);
+							if (exp > 0) {
+								ExperienceOrb.award(level, Vec3.atCenterOf(_pos), exp);
+							}
+
+							level.removeBlock(_pos, false);
+
+							level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, _pos, Block.getId(_state));
+							level.playSound(null, _pos, _state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+							level.levelEvent(
+									null,
+									LevelEvent.PARTICLES_DESTROY_BLOCK,
+									_pos,
+									Block.getId(_state)
+							);
+						})
+				);
+			}
+		}
+	}
+
 
 }
