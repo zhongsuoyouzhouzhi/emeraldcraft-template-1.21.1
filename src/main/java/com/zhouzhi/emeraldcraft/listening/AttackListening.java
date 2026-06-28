@@ -83,7 +83,7 @@ public class AttackListening {
                 if (level instanceof ServerLevel serverLevel) {
                     for (ItemStack itemStack : armor) {
                         if (itemStack.getItem() instanceof VoidEmeraldArmorItem) {
-                            itemStack.hurtAndBreak(2, serverLevel, null, item -> {
+                            itemStack.hurtAndBreak(van/2, serverLevel, null, item -> {
                                });
                         }
                     }
