@@ -15,10 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -244,6 +241,14 @@ public class Use {
                             entity.getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE) ||
                             entity.getType().equals(ModEntities.EMERALD_PROJECTILE.get())
                 );
+            } else if (player.isInWaterRainOrBubble()) {
+                EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+                for (EquipmentSlot slot : slots) {
+                    ItemStack itemstack = player.getItemBySlot(slot);
+                    if (itemstack.getDamageValue() > 0) {
+                        itemstack.setDamageValue(itemstack.getDamageValue() - 1);
+                    }
+                }
             }
         }
     }

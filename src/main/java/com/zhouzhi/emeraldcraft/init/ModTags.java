@@ -49,4 +49,29 @@ public class ModTags {
             Registries.BLOCK,
             ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "emerald_blocks")
     );
+
+    public static final TagKey<Item> REFINED_EMERALD_ARMOR = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "refined_emerald_armor")
+    );
+
+    public static final TagKey<Item> REFINED_EMERALD_ARMOR_T2 = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "refined_emerald_armor_t2")
+    );
+
+    public static final TagKey<Item> REFINED_EMERALD_ARMOR_T3 = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "refined_emerald_armor_t3")
+    );
+
+    public static final TagKey<Item> VOID_EMERALD_ARMOR = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "void_emerald_armor")
+    );
+
+    public static final TagKey<Item> EMERALD_ARMOR = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "emerald_armor")
+    );
 }

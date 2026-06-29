@@ -70,5 +70,35 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .addTag(ModTags.SPECIAL_TOOLS)
                 .addTag(ModTags.INLAID_WITH_REFINED_EMERALD)
                 .addTag(ModTags.INLAID_WITH_REFINED_EMERALD_T2);
+
+        this.tag(ModTags.REFINED_EMERALD_ARMOR)
+                .add(ModItems.EMERALD_ARMOR_HELMET.get())
+                .add(ModItems.EMERALD_ARMOR_CHESTPLATE.get())
+                .add(ModItems.EMERALD_ARMOR_LEGGINGS.get())
+                .add(ModItems.EMERALD_ARMOR_BOOTS.get());
+
+        this.tag(ModTags.REFINED_EMERALD_ARMOR_T2)
+                .add(ModItems.EMERALD_ARMOR_T_2_HELMET.get())
+                .add(ModItems.EMERALD_ARMOR_T_2_CHESTPLATE.get())
+                .add(ModItems.EMERALD_ARMOR_T_2_LEGGINGS.get())
+                .add(ModItems.EMERALD_ARMOR_T_2_BOOTS.get());
+
+        this.tag(ModTags.REFINED_EMERALD_ARMOR_T3)
+                .add(ModItems.EMERALD_ARMOR_T_3_HELMET.get())
+                .add(ModItems.EMERALD_ARMOR_T_3_CHESTPLATE.get())
+                .add(ModItems.EMERALD_ARMOR_T_3_LEGGINGS.get())
+                .add(ModItems.EMERALD_ARMOR_T_3_BOOTS.get());
+
+        this.tag(ModTags.VOID_EMERALD_ARMOR)
+                .add(ModItems.VOID_EMERALD_ARMOR_HELMET.get())
+                .add(ModItems.VOID_EMERALD_ARMOR_CHESTPLATE.get())
+                .add(ModItems.VOID_EMERALD_ARMOR_LEGGINGS.get())
+                .add(ModItems.VOID_EMERALD_ARMOR_BOOTS.get());
+
+        this.tag(ModTags.EMERALD_ARMOR)
+                .addTag(ModTags.REFINED_EMERALD_ARMOR)
+                .addTag(ModTags.REFINED_EMERALD_ARMOR_T2)
+                .addTag(ModTags.REFINED_EMERALD_ARMOR_T3)
+                .addTag(ModTags.VOID_EMERALD_ARMOR);
     }
 }
