@@ -47,7 +47,7 @@ public class Use {
     public static void IronSwordT2HitLivingThings(LivingEntity entity, LivingEntity source){
         entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 40, 1, false, true));
         if (source.getHealth() < source.getMaxHealth()){
-            source.setHealth(source.getHealth()+1f);
+            source.setHealth(source.getHealth()+2f);
         } else {
             source.setHealth(source.getMaxHealth());
         }

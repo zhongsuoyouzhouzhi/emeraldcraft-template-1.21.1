@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.Random;
 
@@ -32,10 +33,10 @@ public class AttackListening {
     }
 
     @SubscribeEvent
-    public void VoidEmeraldArmorBeAttacked(LivingDamageEvent.Pre event) {
+    public void VoidEmeraldArmorBeAttacked(LivingIncomingDamageEvent event) {
         LivingEntity target = event.getEntity();
         Level level = target.getCommandSenderWorld();
-        float damage = event.getOriginalDamage();
+        float damage = event.getAmount();
         ItemStack[] armor = {
                 target.getItemBySlot(EquipmentSlot.HEAD),
                 target.getItemBySlot(EquipmentSlot.CHEST),
@@ -49,7 +50,7 @@ public class AttackListening {
                 armor[3].getItem() instanceof VoidEmeraldArmorItem) {
             if (level instanceof ServerLevel serverLevel) {
                 if (TagChange.getOrCreateComponent(armor[0], "Void", false)) {
-                    event.setNewDamage(0);
+                    event.setCanceled(true);
                     if (event.getSource().getEntity() instanceof LivingEntity attacker) {
                         for (ItemStack itemStack : armor) {
                             itemStack.hurtAndBreak((int) (2.5f * damage), serverLevel, attacker, item -> {
@@ -63,13 +64,13 @@ public class AttackListening {
                     }
                 } else {
                     if (random.nextInt(100) < 80) {
-                        event.setNewDamage(0);
+                        event.setCanceled(true);
                         for (ItemStack itemStack : armor) {
                             itemStack.hurtAndBreak(1, serverLevel, null, item -> {
                             });
                         }
                     } else if (random.nextInt(100) < 50){
-                        event.setNewDamage(event.getNewDamage() * 0.2f);
+                        event.setAmount(event.getAmount() * 0.2f);
                         for (ItemStack itemStack : armor) {
                             itemStack.hurtAndBreak(4, serverLevel, null, item -> {
                             });
@@ -79,12 +80,12 @@ public class AttackListening {
             }
         } else if (van > 0) {
             if (random.nextDouble(100) < van * 17.5) {
-                event.setNewDamage(0);
+                event.setCanceled(true);
                 if (level instanceof ServerLevel serverLevel) {
                     for (ItemStack itemStack : armor) {
                         if (itemStack.getItem() instanceof VoidEmeraldArmorItem) {
                             itemStack.hurtAndBreak(van/2, serverLevel, null, item -> {
-                               });
+                            });
                         }
                     }
                 }
