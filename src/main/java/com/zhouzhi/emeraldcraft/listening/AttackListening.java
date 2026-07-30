@@ -1,10 +1,13 @@
 package com.zhouzhi.emeraldcraft.listening;
 
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.item.lava_emerald.*;
 import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldArmorItem;
+import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldItem;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -12,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 
 import java.util.Random;
 
@@ -36,6 +40,10 @@ public class AttackListening {
     public void VoidEmeraldArmorBeAttacked(LivingIncomingDamageEvent event) {
         LivingEntity target = event.getEntity();
         Level level = target.getCommandSenderWorld();
+        DamageSource damageSource = event.getSource();
+        if (target.isDamageSourceBlocked(damageSource)) {
+            return;
+        }
         float damage = event.getAmount();
         ItemStack[] armor = {
                 target.getItemBySlot(EquipmentSlot.HEAD),
@@ -89,6 +97,39 @@ public class AttackListening {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void ShieldBlock(LivingShieldBlockEvent event) {
+        if (event.isCanceled()) return;
+        LivingEntity livingEntity = event.getEntity();
+        Level level = event.getEntity().getCommandSenderWorld();
+        if (level.isClientSide()) {
+            return;
+        } else if (!event.getBlocked()) {
+            return;
+        }
+        ItemStack itemstack = livingEntity.getUseItem();
+
+        if (itemstack.is(ModItems.VOID_EMERALD_SHIELD)) {
+            if (itemstack.getDamageValue() > itemstack.getMaxDamage()-200) {
+                if (level instanceof ServerLevel serverLevel) {
+                    itemstack.hurtAndBreak(200,serverLevel,livingEntity,item -> {});
+                }
+                livingEntity.hurt(livingEntity.damageSources().indirectMagic(livingEntity,livingEntity),5);
+                VoidEmeraldItem.explode(level,livingEntity.getOnPos().above(),livingEntity,8);
+                SimpleUse.OperateEntity(level,livingEntity,8,8,8,entity->{
+                    if (entity == livingEntity) return;
+                    String[] b = {};
+                    for (String a : entity.getTags().toArray(b)) {
+                        if (a.equals("void")) {
+                            return;
+                        }
+                    }
+                    entity.addTag("void");
+                });
             }
         }
     }

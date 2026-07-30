@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
@@ -17,10 +18,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.OperateBlockPos;
 
 public class VoidEmeraldHoeItem extends HoeItem {
+	private static final int BAR_COLOR = FastColor.ARGB32.color(0, 25, 93, 60);
 	private static final Tier TOOL_TIER = new Tier() {
 		@Override
 		public int getUses() {
@@ -92,4 +95,9 @@ public class VoidEmeraldHoeItem extends HoeItem {
         }
         return super.useOn (context);
     }
+
+	@Override
+	public int getBarColor(@NotNull ItemStack stack) {
+		return BAR_COLOR;
+	}
 }

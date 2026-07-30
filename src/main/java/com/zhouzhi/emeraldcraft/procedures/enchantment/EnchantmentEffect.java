@@ -199,6 +199,8 @@ public class EnchantmentEffect {
         ItemStack weapon = target.getUseItem();
 
         RegistryAccess registryAccess = level.registryAccess();
+
+        boolean isVoidEmeraldShield = weapon.is(ModItems.VOID_EMERALD_SHIELD);
         //Rebound
         {
             Holder<Enchantment> EnchantmentHolder = registryAccess
@@ -207,7 +209,9 @@ public class EnchantmentEffect {
 
             int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
 
-
+            if (isVoidEmeraldShield) {
+                enchantmentLevel += 4;
+            }
 
             if (enchantmentLevel > 0 && event.getDamageSource().getEntity() instanceof LivingEntity entity) {
                 entity.hurt(event.getDamageSource(), enchantmentLevel * 0.25f * event.getOriginalBlockedDamage());

@@ -75,6 +75,7 @@ public class ModItems {
 	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_CHESTPLATE;
 	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_LEGGINGS;
 	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_BOOTS;
+	public static final DeferredItem<Item> VOID_EMERALD_SHIELD;
 	static {
 		REFINED_EMERALD = REGISTRY.register("refined_emerald", RefinedEmeraldItem::new);
 		REFINED_EMERALD_BLOCK = block(ModBlocks.REFINED_EMERALD_BLOCK, new Item.Properties().rarity(Rarity.RARE));
@@ -131,6 +132,7 @@ public class ModItems {
         VOID_EMERALD_PICKAXE = REGISTRY.register("void_emerald_pickaxe", VoidEmeraldPickaxeItem::new);
         VOID_EMERALD_SHOVEL = REGISTRY.register("void_emerald_shovel", VoidEmeraldShovelItem::new);
         VOID_EMERALD_HOE = REGISTRY.register("void_emerald_hoe", VoidEmeraldHoeItem::new);
+		VOID_EMERALD_SHIELD = REGISTRY.register("void_emerald_shield", VoidEmeraldShieldItem::new);
 		LAVA_EMERALD = REGISTRY.register("lava_emerald", LavaEmeraldItem::new);
 		LAVA_EMERALD_SWORD = REGISTRY.register("lava_emerald_sword", LavaEmeraldSwordItem::new);
 		LAVA_EMERALD_AXE = REGISTRY.register("lava_emerald_axe", LavaEmeraldAxeItem::new);

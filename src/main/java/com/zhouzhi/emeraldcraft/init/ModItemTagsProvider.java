@@ -4,6 +4,7 @@ import com.zhouzhi.emeraldcraft.EmeraldCraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +28,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .add(ModItems.VOID_EMERALD_PICKAXE.get())
                 .add(ModItems.VOID_EMERALD_AXE.get())
                 .add(ModItems.VOID_EMERALD_SHOVEL.get())
-                .add(ModItems.VOID_EMERALD_HOE.get());
+                .add(ModItems.VOID_EMERALD_HOE.get())
+                .add(ModItems.VOID_EMERALD_SHIELD.get());
         this.tag(ModTags.REFINED_EMERALD_TOOLS)
                 .add(ModItems.EMERALD_SWORD.get())
                 .add(ModItems.EMERALD_PICKAXE.get())
@@ -100,5 +102,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .addTag(ModTags.REFINED_EMERALD_ARMOR_T2)
                 .addTag(ModTags.REFINED_EMERALD_ARMOR_T3)
                 .addTag(ModTags.VOID_EMERALD_ARMOR);
+
+        this.tag(Tags.Items.TOOLS_SHIELD)
+                .add(ModItems.VOID_EMERALD_SHIELD.get());
     }
 }
