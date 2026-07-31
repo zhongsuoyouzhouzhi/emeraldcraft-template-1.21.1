@@ -9,9 +9,9 @@ import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class LavaEmeraldItem extends Item{
-    public LavaEmeraldItem() {
-        super(new Properties().rarity(Rarity.RARE));
+public class LavaEmeraldT2Item extends Item{
+    public LavaEmeraldT2Item() {
+        super(new Properties().rarity(Rarity.EPIC));
     }
 
     @Override

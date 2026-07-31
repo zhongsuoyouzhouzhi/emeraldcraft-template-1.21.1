@@ -1,7 +1,7 @@
 package com.zhouzhi.emeraldcraft.listening;
 
 import com.zhouzhi.emeraldcraft.init.ModItems;
-import com.zhouzhi.emeraldcraft.item.lava_emerald.*;
+import com.zhouzhi.emeraldcraft.init.ModTags;
 import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldArmorItem;
 import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldItem;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
@@ -30,8 +30,25 @@ public class AttackListening {
         }
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             ItemStack weapon = attacker.getMainHandItem();
-            if (weapon.getItem() instanceof LavaEmeraldItem || weapon.getItem() instanceof LavaEmeraldSwordItem || weapon.getItem() instanceof LavaEmeraldAxeItem || weapon.getItem() instanceof LavaEmeraldPickaxeItem || weapon.getItem() instanceof LavaEmeraldShovelItem || weapon.getItem() instanceof LavaEmeraldHoeItem) {
+            if (weapon.is(ModItems.LAVA_EMERALD) || weapon.is(ModTags.LAVA_EMERALD_TOOLS)) {
                 target.lavaHurt();
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void LavaEmeraldT2ToolAttack(LivingDamageEvent.Pre event){
+        LivingEntity target = event.getEntity();
+        Level level = event.getEntity().getCommandSenderWorld();
+        if (level.isClientSide()) {
+            return;
+        }
+        if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+            ItemStack weapon = attacker.getMainHandItem();
+            if (weapon.is(ModItems.LAVA_EMERALD_T2) || weapon.is(ModTags.LAVA_EMERALD_T2_TOOLS)) {
+                target.lavaHurt();
+                target.setHealth(target.getHealth() - 1f);
+                target.startSleeping(target.getOnPos());
             }
         }
     }

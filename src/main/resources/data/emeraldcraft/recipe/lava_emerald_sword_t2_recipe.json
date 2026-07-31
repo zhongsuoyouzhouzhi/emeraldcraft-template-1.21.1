@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "emeraldcraft:lava_emerald_t2"
+  },
+  "base": {
+    "item": "emeraldcraft:lava_sword"
+  },
+  "addition": {
+    "item": "minecraft:lava_bucket"
+  },
+  "result": {
+    "id": "emeraldcraft:lava_emerald_sword_t2"
+  }
+}

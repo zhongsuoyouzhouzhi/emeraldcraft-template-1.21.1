@@ -25,6 +25,16 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import static com.zhouzhi.emeraldcraft.procedures.compress.TagChange.getOrCreateComponent;
 
 public class EnchantmentEffect {
+    private boolean isLavaEmerald(ItemStack itemstack){
+        return itemstack.is(ModItems.LAVA_EMERALD) ||
+                itemstack.is(ModTags.LAVA_EMERALD_TOOLS);
+    }
+
+    private boolean isLavaEmeraldT2(ItemStack itemstack){
+        return itemstack.is(ModItems.LAVA_EMERALD_T2) ||
+                itemstack.is(ModTags.LAVA_EMERALD_T2_TOOLS);
+    }
+
     @SubscribeEvent
     public void onLivingDamage(LivingDamageEvent.Pre event) {
         LivingEntity target = event.getEntity();
@@ -39,8 +49,6 @@ public class EnchantmentEffect {
 
             float newDamage = event.getOriginalDamage();
             
-            boolean isLavaEmerald = weapon.is(ModItems.LAVA_EMERALD) ||
-                    weapon.is(ModTags.LAVA_EMERALD_TOOLS);
             
             //Heavy
             {
@@ -50,8 +58,10 @@ public class EnchantmentEffect {
 
                 int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
                 
-                if (isLavaEmerald) {
+                if (isLavaEmerald(weapon)) {
                     enchantmentLevel += 3;
+                } else if (isLavaEmeraldT2(weapon)) {
+                    enchantmentLevel += 5;
                 }
 
                 if (enchantmentLevel > 0 && attacker.fallDistance > 3f) {
@@ -63,7 +73,7 @@ public class EnchantmentEffect {
                     } else if (enchantmentLevel == 3) {
                         bonusDamage = 4.0f * (attacker.fallDistance - 2.2f);
                     } else {
-                        bonusDamage = (4f + 0.1f * enchantmentLevel) * (attacker.fallDistance - 2.2f);
+                        bonusDamage = (4f + 0.1f * enchantmentLevel) * (attacker.fallDistance - 1.5f);
                     }
                     newDamage += bonusDamage;
                     event.setNewDamage(newDamage);
@@ -79,8 +89,10 @@ public class EnchantmentEffect {
 
                 int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
 
-                if (isLavaEmerald && enchantmentLevel == 0) {
-                    enchantmentLevel = 2;
+                if (isLavaEmerald(weapon)) {
+                    enchantmentLevel += 2;
+                } else if (isLavaEmeraldT2(weapon)) {
+                    enchantmentLevel += 5;
                 }
 
                 if (enchantmentLevel > 0) {
@@ -151,9 +163,6 @@ public class EnchantmentEffect {
         ItemStack weapon = player.getMainHandItem();
 
         RegistryAccess registryAccess = level.registryAccess();
-
-        boolean isLavaEmerald = weapon.is(ModItems.LAVA_EMERALD) ||
-                weapon.is(ModTags.LAVA_EMERALD_TOOLS);
         
         //Lighting
         {
@@ -163,8 +172,10 @@ public class EnchantmentEffect {
 
             int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentHolder);
             
-            if (isLavaEmerald) {
+            if (isLavaEmerald(weapon)) {
                 enchantmentLevel += 2;
+            } else if (isLavaEmeraldT2(weapon)) {
+                enchantmentLevel += 5;
             }
             
             if (enchantmentLevel > 0) {

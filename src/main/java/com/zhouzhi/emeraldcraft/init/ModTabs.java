@@ -72,12 +72,19 @@ public class ModTabs {
                 tabData.accept(ModItems.VOID_EMERALD_ARMOR_CHESTPLATE.get());
                 tabData.accept(ModItems.VOID_EMERALD_ARMOR_LEGGINGS.get());
                 tabData.accept(ModItems.VOID_EMERALD_ARMOR_BOOTS.get());
+                tabData.accept(ModItems.VOID_EMERALD_SHIELD.get());
                 tabData.accept(ModItems.LAVA_EMERALD.get());
                 tabData.accept(ModItems.LAVA_EMERALD_SWORD.get());
                 tabData.accept(ModItems.LAVA_EMERALD_AXE.get());
                 tabData.accept(ModItems.LAVA_EMERALD_PICKAXE.get());
                 tabData.accept(ModItems.LAVA_EMERALD_SHOVEL.get());
                 tabData.accept(ModItems.LAVA_EMERALD_HOE.get());
+                tabData.accept(ModItems.LAVA_EMERALD_T2.get());
+                tabData.accept(ModItems.LAVA_EMERALD_SWORD_T2.get());
+                tabData.accept(ModItems.LAVA_EMERALD_AXE_T2.get());
+                tabData.accept(ModItems.LAVA_EMERALD_PICKAXE_T2.get());
+                tabData.accept(ModItems.LAVA_EMERALD_SHOVEL_T2.get());
+                tabData.accept(ModItems.LAVA_EMERALD_HOE_T2.get());
 			}).withSearchBar().build());
 
 	@SubscribeEvent
@@ -111,6 +118,10 @@ public class ModTabs {
             tabData.accept(ModItems.LAVA_EMERALD_PICKAXE.get());
             tabData.accept(ModItems.LAVA_EMERALD_SHOVEL.get());
             tabData.accept(ModItems.LAVA_EMERALD_HOE.get());
+            tabData.accept(ModItems.LAVA_EMERALD_AXE_T2.get());
+            tabData.accept(ModItems.LAVA_EMERALD_PICKAXE_T2.get());
+            tabData.accept(ModItems.LAVA_EMERALD_SHOVEL_T2.get());
+            tabData.accept(ModItems.LAVA_EMERALD_HOE_T2.get());
 		} else if (tabData.getTabKey() == CreativeModeTabs.COMBAT) {
 			tabData.accept(ModItems.EMERALD_SWORD.get());
             tabData.accept(ModItems.EMERALD_AXE.get());
@@ -141,8 +152,11 @@ public class ModTabs {
             tabData.accept(ModItems.VOID_EMERALD_ARMOR_CHESTPLATE.get());
             tabData.accept(ModItems.VOID_EMERALD_ARMOR_LEGGINGS.get());
             tabData.accept(ModItems.VOID_EMERALD_ARMOR_BOOTS.get());
+            tabData.accept(ModItems.VOID_EMERALD_SHIELD.get());
             tabData.accept(ModItems.LAVA_EMERALD_SWORD.get());
             tabData.accept(ModItems.LAVA_EMERALD_AXE.get());
+            tabData.accept(ModItems.LAVA_EMERALD_SWORD_T2.get());
+            tabData.accept(ModItems.LAVA_EMERALD_AXE_T2.get());
 		} else if (tabData.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             tabData.accept(ModItems.REFINED_EMERALD.get());
             tabData.accept(ModItems.REFINED_EMERALD_T_2.get());
@@ -150,6 +164,7 @@ public class ModTabs {
             tabData.accept(ModItems.REFINED_EMERALD_PLUS.get());
             tabData.accept(ModItems.VOID_EMERALD.get());
             tabData.accept(ModItems.LAVA_EMERALD.get());
+            tabData.accept(ModItems.LAVA_EMERALD_T2.get());
 		}
 	}
 }

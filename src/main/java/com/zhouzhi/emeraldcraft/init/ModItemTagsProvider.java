@@ -23,6 +23,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .add(ModItems.LAVA_EMERALD_AXE.get())
                 .add(ModItems.LAVA_EMERALD_SHOVEL.get())
                 .add(ModItems.LAVA_EMERALD_HOE.get());
+        this.tag(ModTags.LAVA_EMERALD_T2_TOOLS)
+                .add(ModItems.LAVA_EMERALD_SWORD_T2.get())
+                .add(ModItems.LAVA_EMERALD_PICKAXE_T2.get())
+                .add(ModItems.LAVA_EMERALD_AXE_T2.get())
+                .add(ModItems.LAVA_EMERALD_SHOVEL_T2.get())
+                .add(ModItems.LAVA_EMERALD_HOE_T2.get());
         this.tag(ModTags.VOID_EMERALD_TOOLS)
                 .add(ModItems.VOID_EMERALD_SWORD.get())
                 .add(ModItems.VOID_EMERALD_PICKAXE.get())
@@ -69,6 +75,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .addTag(ModTags.REFINED_EMERALD_TOOLS_T3)
                 .addTag(ModTags.VOID_EMERALD_TOOLS)
                 .addTag(ModTags.LAVA_EMERALD_TOOLS)
+                .addTag(ModTags.LAVA_EMERALD_T2_TOOLS)
                 .addTag(ModTags.SPECIAL_TOOLS)
                 .addTag(ModTags.INLAID_WITH_REFINED_EMERALD)
                 .addTag(ModTags.INLAID_WITH_REFINED_EMERALD_T2);

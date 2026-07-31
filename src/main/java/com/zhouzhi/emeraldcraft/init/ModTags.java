@@ -12,6 +12,10 @@ public class ModTags {
             Registries.ITEM,
             ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "lava_emerald_tools")
     );
+    public static final TagKey<Item> LAVA_EMERALD_T2_TOOLS = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "lava_emerald_t2_tools")
+    );
     public static final TagKey<Item> VOID_EMERALD_TOOLS = TagKey.create(
             Registries.ITEM,
             ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "void_emerald_tools")

@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "emeraldcraft:item/lava_emerald_hoe_t2"
+  }
+}

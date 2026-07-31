@@ -192,6 +192,7 @@ public class Use {
                             entity.setSilent(true);
                             float damage = Float.MAX_VALUE;
                             if (entity instanceof LivingEntity livingEntity) {
+                                livingEntity.setHealth(0);
                                 livingEntity.hurt(source.damageSources().playerAttack(source), damage);
                                 livingEntity.die(source.damageSources().playerAttack(source));
                                 if (livingEntity.getHealth() > 0f)

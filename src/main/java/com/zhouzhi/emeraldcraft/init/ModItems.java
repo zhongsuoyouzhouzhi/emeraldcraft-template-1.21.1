@@ -19,6 +19,7 @@ public class ModItems {
     public static final DeferredItem<Item> REFINED_EMERALD_T_3;
 	public static final DeferredItem<Item> VOID_EMERALD;
 	public static final DeferredItem<Item> LAVA_EMERALD;
+	public static final DeferredItem<Item> LAVA_EMERALD_T2;
 	public static final DeferredItem<Item> REFINED_EMERALD_PLUS;
 	public static final DeferredItem<Item> REFINED_EMERALD_BLOCK;
 	public static final DeferredItem<Item> REFINED_EMERALD_BLOCK_2;
@@ -76,6 +77,11 @@ public class ModItems {
 	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_LEGGINGS;
 	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_BOOTS;
 	public static final DeferredItem<Item> VOID_EMERALD_SHIELD;
+	public static final DeferredItem<Item> LAVA_EMERALD_SWORD_T2;
+	public static final DeferredItem<Item> LAVA_EMERALD_AXE_T2;
+	public static final DeferredItem<Item> LAVA_EMERALD_PICKAXE_T2;
+	public static final DeferredItem<Item> LAVA_EMERALD_SHOVEL_T2;
+	public static final DeferredItem<Item> LAVA_EMERALD_HOE_T2;
 	static {
 		REFINED_EMERALD = REGISTRY.register("refined_emerald", RefinedEmeraldItem::new);
 		REFINED_EMERALD_BLOCK = block(ModBlocks.REFINED_EMERALD_BLOCK, new Item.Properties().rarity(Rarity.RARE));
@@ -139,6 +145,12 @@ public class ModItems {
 		LAVA_EMERALD_PICKAXE = REGISTRY.register("lava_emerald_pickaxe", LavaEmeraldPickaxeItem::new);
 		LAVA_EMERALD_SHOVEL = REGISTRY.register("lava_emerald_shovel", LavaEmeraldShovelItem::new);
 		LAVA_EMERALD_HOE = REGISTRY.register("lava_emerald_hoe", LavaEmeraldHoeItem::new);
+		LAVA_EMERALD_T2 = REGISTRY.register("lava_emerald_t2", LavaEmeraldT2Item::new);
+		LAVA_EMERALD_SWORD_T2 = REGISTRY.register("lava_emerald_sword_t2", LavaEmeraldSwordT2Item::new);
+		LAVA_EMERALD_AXE_T2 = REGISTRY.register("lava_emerald_axe_t2", LavaEmeraldAxeT2Item::new);
+		LAVA_EMERALD_PICKAXE_T2 = REGISTRY.register("lava_emerald_pickaxe_t2", LavaEmeraldPickaxeT2Item::new);
+		LAVA_EMERALD_SHOVEL_T2 = REGISTRY.register("lava_emerald_shovel_t2", LavaEmeraldShovelT2Item::new);
+		LAVA_EMERALD_HOE_T2 = REGISTRY.register("lava_emerald_hoe_t2", LavaEmeraldHoeT2Item::new);
 	}
 	private static DeferredItem<Item> block(DeferredHolder<Block, Block> block) {
 		return block(block, new Item.Properties());
