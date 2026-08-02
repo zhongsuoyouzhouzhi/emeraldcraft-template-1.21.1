@@ -13,7 +13,7 @@ import org.lwjgl.glfw.GLFW;
 
 @EventBusSubscriber(Dist.CLIENT)
 public class ModKeyMappings {
-	public static final KeyMapping SPECIAL_SKILL = new KeyMapping("key.emeraldcraft.special_skill", GLFW.GLFW_KEY_R, "key.categories.gameplay") {
+	public static final KeyMapping SPECIAL_SKILL = new KeyMapping("key.emeraldcraft.special_skill", GLFW.GLFW_KEY_R, "key.categories.emeraldcraft") {
 		private boolean isDownOld = false;
 
 		@Override
