@@ -1,4 +1,4 @@
-package com.zhouzhi.emeraldcraft.item.lava_emerald;
+package com.zhouzhi.emeraldcraft.item.inferno_emerald;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.InteractionResult;
@@ -9,11 +9,10 @@ import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class LavaEmeraldItem extends Item{
-    public LavaEmeraldItem() {
-        super(new Properties().rarity(Rarity.RARE));
+public class InfernoEmeraldItem extends Item {
+    public InfernoEmeraldItem() {
+        super(new Properties().rarity(Rarity.EPIC).fireResistant());
     }
-
     @Override
     @MethodsReturnNonnullByDefault
     public InteractionResult useOn(@ParametersAreNonnullByDefault UseOnContext context) {

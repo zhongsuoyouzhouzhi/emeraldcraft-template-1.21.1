@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "b b",
+    " a ",
+    "b b"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:refined_emerald_plus"
+    },
+    "b": {
+      "item": "emeraldcraft:refined_emerald_block_3"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:emerald_upgrade_core",
+    "count": 2
+  }
+}

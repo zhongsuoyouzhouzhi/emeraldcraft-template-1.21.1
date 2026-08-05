@@ -8,6 +8,9 @@
     "#emeraldcraft:lava_emerald_t2_tools",
     "#emeraldcraft:special_tools",
     "#emeraldcraft:inlaid_with_refined_emerald",
-    "#emeraldcraft:inlaid_with_refined_emerald_t2"
+    "#emeraldcraft:inlaid_with_refined_emerald_t2",
+    "#emeraldcraft:genesis_emerald_tools",
+    "#emeraldcraft:inferno_emerald_tools",
+    "#emeraldcraft:oblivion_emerald_tools"
   ]
 }

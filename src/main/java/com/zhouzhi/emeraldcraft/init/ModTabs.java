@@ -85,6 +85,13 @@ public class ModTabs {
                 tabData.accept(ModItems.LAVA_EMERALD_PICKAXE_T2.get());
                 tabData.accept(ModItems.LAVA_EMERALD_SHOVEL_T2.get());
                 tabData.accept(ModItems.LAVA_EMERALD_HOE_T2.get());
+                tabData.accept(ModItems.EMERALD_UPGRADE_CORE);
+                tabData.accept(ModItems.GENESIS_EMERALD.get());
+                tabData.accept(ModItems.GENESIS_EMERALD_SWORD.get());
+                tabData.accept(ModItems.INFERNO_EMERALD.get());
+                tabData.accept(ModItems.INFERNO_EMERALD_SWORD.get());
+                tabData.accept(ModItems.OBLIVION_EMERALD.get());
+                tabData.accept(ModItems.OBLIVION_EMERALD_SWORD.get());
 			}).withSearchBar().build());
 
 	@SubscribeEvent
@@ -157,6 +164,9 @@ public class ModTabs {
             tabData.accept(ModItems.LAVA_EMERALD_AXE.get());
             tabData.accept(ModItems.LAVA_EMERALD_SWORD_T2.get());
             tabData.accept(ModItems.LAVA_EMERALD_AXE_T2.get());
+            tabData.accept(ModItems.GENESIS_EMERALD_SWORD.get());
+            tabData.accept(ModItems.INFERNO_EMERALD_SWORD.get());
+            tabData.accept(ModItems.OBLIVION_EMERALD_SWORD.get());
 		} else if (tabData.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             tabData.accept(ModItems.REFINED_EMERALD.get());
             tabData.accept(ModItems.REFINED_EMERALD_T_2.get());
@@ -165,6 +175,9 @@ public class ModTabs {
             tabData.accept(ModItems.VOID_EMERALD.get());
             tabData.accept(ModItems.LAVA_EMERALD.get());
             tabData.accept(ModItems.LAVA_EMERALD_T2.get());
+            tabData.accept(ModItems.GENESIS_EMERALD.get());
+            tabData.accept(ModItems.INFERNO_EMERALD.get());
+            tabData.accept(ModItems.OBLIVION_EMERALD.get());
 		}
 	}
 }

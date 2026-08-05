@@ -16,11 +16,19 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Use {
     public static void EmeraldSwordHitLivingThings(LivingEntity entity){
@@ -190,14 +198,7 @@ public class Use {
                             entity.setInvisible(true);
                             entity.setInvulnerable(false);
                             entity.setSilent(true);
-                            float damage = Float.MAX_VALUE;
-                            if (entity instanceof LivingEntity livingEntity) {
-                                livingEntity.setHealth(0);
-                                livingEntity.hurt(source.damageSources().playerAttack(source), damage);
-                                livingEntity.die(source.damageSources().playerAttack(source));
-                                if (livingEntity.getHealth() > 0f)
-                                    livingEntity.hurt(new DamageSource(world.holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), damage);
-                            } else entity.kill();
+                            killEntity(entity,source);
                             entity.removeTag("void");
                             if (entity.getType().equals(EntityType.ENDER_DRAGON))
                                 continue every_entity;
@@ -222,6 +223,17 @@ public class Use {
                 source.getCooldowns().addCooldown(stack.getItem(), 200);
             }
         }
+    }
+
+    public static void killEntity(Entity entity,LivingEntity source) {
+        float damage = Float.MAX_VALUE;
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.hurt(source.damageSources().mobAttack(source), damage);
+            livingEntity.setHealth(0);
+            livingEntity.die(source.damageSources().mobAttack(source));
+            if (livingEntity.getHealth() > 0f)
+                livingEntity.hurt(new DamageSource(entity.level().holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), damage);
+        } else entity.kill();
     }
 
     public static void VoidEmeraldArmorPerTick(Level world, Player player, ItemStack stack) {
@@ -252,5 +264,122 @@ public class Use {
                 }
             }
         }
+    }
+    public static class EntityPause {
+        /**
+         * 暂停生物
+         */
+        public static void pauseEntities(Level level, Vec3 center, double radius, int time) {
+            if (level.isClientSide()) return;
+            long currentTick = level.getGameTime();
+            AABB aabb = new AABB(center.x - radius, center.y - radius, center.z - radius,
+                    center.x + radius, center.y + radius, center.z + radius);
+            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, aabb);
+            for (LivingEntity entity : entities) {
+                if (entity instanceof Player) continue;
+                if (level instanceof ServerLevel serverLevel) {
+                    Brain<?> brain = entity.getBrain();
+                    ((Brain<LivingEntity>) brain).stopAll(serverLevel, entity);
+                    brain.eraseMemory(MemoryModuleType.ATTACK_TARGET);
+                    brain.eraseMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
+                    brain.eraseMemory(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES);
+                    brain.eraseMemory(MemoryModuleType.ANGRY_AT);
+                }
+
+                entity.setNoActionTime(time * 20);
+                entity.setDeltaMovement(Vec3.ZERO);
+                entity.setNoGravity(true);
+                TagChange.getOrCreateComponent(entity, "PausedByGenesisEmeraldSword", true);
+                TagChange.saveComponent(entity, "PausedByGenesisEmeraldSword", true);
+                TagChange.getOrCreateComponent(entity, "PausedStartTickByGenesisEmeraldSword", currentTick);
+                TagChange.saveComponent(entity, "PausedStartTickByGenesisEmeraldSword", currentTick);
+            }
+        }
+        /**
+         * 自动解除暂停
+         */
+        public static void tickPausedEntities(ServerLevel level, int time) {
+            if (level.isClientSide()) return;
+            long currentTick = level.getGameTime();
+            for (Entity entity : level.getEntities().getAll()) {
+                if (entity instanceof LivingEntity livingEntity) {
+                    if (TagChange.getOrCreateComponent(entity, "PausedByGenesisEmeraldSword", false)) {
+                        long startTick = TagChange.getOrCreateComponent(entity, "PausedStartTickByGenesisEmeraldSword", currentTick);
+                        if (currentTick - startTick >= (long) time * 20) {
+                            livingEntity.setNoActionTime(0);
+                            livingEntity.setNoGravity(false);
+                            TagChange.saveComponent(livingEntity, "PausedByGenesisEmeraldSword", false);
+                            TagChange.saveComponent(livingEntity, "PausedStartTickByGenesisEmeraldSword", 0);
+                        } else {
+                            livingEntity.setDeltaMovement(Vec3.ZERO);
+                            Brain<?> brain = livingEntity.getBrain();
+                            ((Brain<LivingEntity>) brain).stopAll(level, livingEntity);
+                            brain.eraseMemory(MemoryModuleType.ATTACK_TARGET);
+                            brain.eraseMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
+                            brain.eraseMemory(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES);
+                            brain.eraseMemory(MemoryModuleType.ANGRY_AT);
+                        }
+                    }
+                }
+            }
+        }
+        /**
+         * 检查是否暂停
+         */
+        public static boolean isPaused(LivingEntity entity) {
+            return TagChange.getOrCreateComponent(entity, "PausedByGenesisEmeraldSword", false);
+        }
+    }
+
+    public static void OblivionEmeraldSwordRight_click(Player player) {
+        for (LivingEntity entity:getEntitiesInCrosshair(player,32,Math.PI / 6)) {
+            entity.setSilent(true);
+            killEntity(entity, player);
+            if (entity.getType().equals(EntityType.ENDER_DRAGON))
+                return;
+            if (player.level() instanceof ServerLevel serverLevel && !serverLevel.isClientSide()) {
+                serverLevel.sendParticles(
+                        ParticleTypes.END_ROD,
+                        entity.getX(), entity.getY(), entity.getZ(),
+                        128,
+                        0.5, 0.5, 0.5,
+                        0.25
+                );
+            }
+            entity.moveTo(entity.getX(), -200, entity.getZ());
+        }
+    }
+
+    private static List<LivingEntity> getEntitiesInCrosshair(Player player, double maxDistance, double angleThreshold) {
+        List<LivingEntity> result = new ArrayList<>();
+        Level level = player.level();
+        Vec3 eyePos = player.getEyePosition();
+        Vec3 lookVec = player.getViewVector(1.0F);
+        AABB area = new AABB(eyePos.x - maxDistance, eyePos.y - maxDistance, eyePos.z - maxDistance,
+                eyePos.x + maxDistance, eyePos.y + maxDistance, eyePos.z + maxDistance);
+        List<LivingEntity> candidates = level.getEntitiesOfClass(LivingEntity.class, area);
+        candidates.remove(player);
+        for (LivingEntity target : candidates) {
+            Vec3 targetPos = target.position().add(0, target.getBbHeight() * 0.5, 0);
+            Vec3 toTarget = targetPos.subtract(eyePos);
+            double distance = toTarget.length();
+            if (distance > maxDistance) continue;
+            Vec3 toTargetNorm = toTarget.scale(1.0 / distance);
+            double cosAngle = lookVec.dot(toTargetNorm);
+            if (cosAngle < Math.cos(angleThreshold)) continue;
+            ClipContext clipContext = new ClipContext(eyePos, targetPos,
+                    ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player);
+            var hitResult = level.clip(clipContext);
+
+            if (hitResult.getType() == HitResult.Type.MISS) {
+                result.add(target);
+            } else {
+                double hitDist = eyePos.distanceTo(hitResult.getLocation());
+                if (hitDist >= distance - 0.1) {
+                    result.add(target);
+                }
+            }
+        }
+        return result;
     }
 }

@@ -175,4 +175,16 @@ public class TagChange {
     public static void saveComponent(Entity entity, String key, double data) {
         entity.getPersistentData().putDouble(key, data);
     }//double
+
+    public static long getOrCreateComponent(Entity entity, String key, long normalData) {
+        CompoundTag persistentData = entity.getPersistentData();
+        if (persistentData.contains(key, Tag.TAG_LONG)) {
+            return persistentData.getLong(key);
+        }
+        return normalData;
+    }
+
+    public static void saveComponent(Entity entity, String key, long data) {
+        entity.getPersistentData().putLong(key, data);
+    }//long
 }

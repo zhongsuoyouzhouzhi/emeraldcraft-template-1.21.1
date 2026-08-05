@@ -23,7 +23,7 @@ public class LavaEmeraldT2Item extends Item{
                 context.getLevel().setBlockAndUpdate(context.getClickedPos(), Blocks.LAVA_CAULDRON.defaultBlockState());
             } else if (context.getLevel().getBlockState(context.getClickedPos()).is(Blocks.SNOW)) {
                 context.getLevel().setBlockAndUpdate(context.getClickedPos(), Blocks.AIR.defaultBlockState());
-            }
+            } else return InteractionResult.PASS;
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

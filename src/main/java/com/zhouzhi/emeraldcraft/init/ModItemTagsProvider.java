@@ -68,6 +68,24 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .add(ModItems.IRON_PICKAXE_INLAID_WITH_REFINED_EMERALD_T2.get())
                 .add(ModItems.IRON_SHOVEL_INLAID_WITH_REFINED_EMERALD_T2.get())
                 .add(ModItems.IRON_HOE_INLAID_WITH_REFINED_EMERALD_T2.get());
+        this.tag(ModTags.GENESIS_EMERALD_TOOLS)
+                .add(ModItems.GENESIS_EMERALD_SWORD.get())
+                /*.add(ModItems.GENESIS_EMERALD_PICKAXE.get())
+                .add(ModItems.GENESIS_EMERALD_AXE.get())
+                .add(ModItems.GENESIS_EMERALD_SHOVEL.get())
+                .add(ModItems.GENESIS_EMERALD_HOE.get())*/;
+        this.tag(ModTags.INFERNO_EMERALD_TOOLS)
+                .add(ModItems.INFERNO_EMERALD_SWORD.get())
+                /*.add(ModItems.INFERNO_EMERALD_PICKAXE.get())
+                .add(ModItems.INFERNO_EMERALD_AXE.get())
+                .add(ModItems.INFERNO_EMERALD_SHOVEL.get())
+                .add(ModItems.INFERNO_EMERALD_HOE.get())*/;
+        this.tag(ModTags.OBLIVION_EMERALD_TOOLS)
+                .add(ModItems.OBLIVION_EMERALD_SWORD.get())
+                /*.add(ModItems.OBLIVION_EMERALD_PICKAXE.get())
+                .add(ModItems.OBLIVION_EMERALD_AXE.get())
+                .add(ModItems.OBLIVION_EMERALD_SHOVEL.get())
+                .add(ModItems.OBLIVION_EMERALD_HOE.get())*/;
 
         this.tag(ModTags.EMERALD_TOOLS)
                 .addTag(ModTags.REFINED_EMERALD_TOOLS)
@@ -78,7 +96,10 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .addTag(ModTags.LAVA_EMERALD_T2_TOOLS)
                 .addTag(ModTags.SPECIAL_TOOLS)
                 .addTag(ModTags.INLAID_WITH_REFINED_EMERALD)
-                .addTag(ModTags.INLAID_WITH_REFINED_EMERALD_T2);
+                .addTag(ModTags.INLAID_WITH_REFINED_EMERALD_T2)
+                .addTag(ModTags.GENESIS_EMERALD_TOOLS)
+                .addTag(ModTags.INFERNO_EMERALD_TOOLS)
+                .addTag(ModTags.OBLIVION_EMERALD_TOOLS);
 
         this.tag(ModTags.REFINED_EMERALD_ARMOR)
                 .add(ModItems.EMERALD_ARMOR_HELMET.get())
