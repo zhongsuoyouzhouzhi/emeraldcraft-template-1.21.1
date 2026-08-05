@@ -1,7 +1,14 @@
 package com.zhouzhi.emeraldcraft.init;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
+import com.zhouzhi.emeraldcraft.item.EmeraldUpgradeCore;
+import com.zhouzhi.emeraldcraft.item.genesis_emerald.GenesisEmeraldItem;
+import com.zhouzhi.emeraldcraft.item.genesis_emerald.GenesisEmeraldSwordItem;
+import com.zhouzhi.emeraldcraft.item.inferno_emerald.InfernoEmeraldItem;
+import com.zhouzhi.emeraldcraft.item.inferno_emerald.InfernoEmeraldSwordItem;
 import com.zhouzhi.emeraldcraft.item.lava_emerald.*;
+import com.zhouzhi.emeraldcraft.item.oblivion_emerald.OblivionEmeraldItem;
+import com.zhouzhi.emeraldcraft.item.oblivion_emerald.OblivionEmeraldSwordItem;
 import com.zhouzhi.emeraldcraft.item.remined_emerald.*;
 import com.zhouzhi.emeraldcraft.item.void_emerald.*;
 import net.minecraft.world.item.BlockItem;
@@ -21,6 +28,10 @@ public class ModItems {
 	public static final DeferredItem<Item> LAVA_EMERALD;
 	public static final DeferredItem<Item> LAVA_EMERALD_T2;
 	public static final DeferredItem<Item> REFINED_EMERALD_PLUS;
+	public static final DeferredItem<Item> EMERALD_UPGRADE_CORE;
+	public static final DeferredItem<Item> GENESIS_EMERALD;
+	public static final DeferredItem<Item> INFERNO_EMERALD;
+	public static final DeferredItem<Item> OBLIVION_EMERALD;
 	public static final DeferredItem<Item> REFINED_EMERALD_BLOCK;
 	public static final DeferredItem<Item> REFINED_EMERALD_BLOCK_2;
     public static final DeferredItem<Item> REFINED_EMERALD_BLOCK_3;
@@ -32,6 +43,9 @@ public class ModItems {
     public static final DeferredItem<Item> IRON_SWORD_INLAID_WITH_REFINED_EMERALD_T2;
     public static final DeferredItem<Item> VOID_EMERALD_SWORD;
 	public static final DeferredItem<Item> LAVA_EMERALD_SWORD;
+	public static final DeferredItem<Item> GENESIS_EMERALD_SWORD;
+	public static final DeferredItem<Item> INFERNO_EMERALD_SWORD;
+	public static final DeferredItem<Item> OBLIVION_EMERALD_SWORD;
     public static final DeferredItem<Item> EMERALD_AXE;
 	public static final DeferredItem<Item> EMERALD_AXE_T_2;
     public static final DeferredItem<Item> EMERALD_AXE_T_3;
@@ -39,6 +53,9 @@ public class ModItems {
     public static final DeferredItem<Item> IRON_AXE_INLAID_WITH_REFINED_EMERALD_T2;
 	public static final DeferredItem<Item> VOID_EMERALD_AXE;
 	public static final DeferredItem<Item> LAVA_EMERALD_AXE;
+	//public static final DeferredItem<Item> GENESIS_EMERALD_AXE;
+	//public static final DeferredItem<Item> INFERNO_EMERALD_AXE;
+	//public static final DeferredItem<Item> OBLIVION_EMERALD_AXE;
     public static final DeferredItem<Item> EMERALD_PICKAXE;
     public static final DeferredItem<Item> EMERALD_PICKAXE_T_2;
 	public static final DeferredItem<Item> EMERALD_PICKAXE_T_3;
@@ -46,6 +63,9 @@ public class ModItems {
     public static final DeferredItem<Item> IRON_PICKAXE_INLAID_WITH_REFINED_EMERALD_T2;
 	public static final DeferredItem<Item> VOID_EMERALD_PICKAXE;
 	public static final DeferredItem<Item> LAVA_EMERALD_PICKAXE;
+	//public static final DeferredItem<Item> GENESIS_EMERALD_PICKAXE;
+	//public static final DeferredItem<Item> INFERNO_EMERALD_PICKAXE;
+	//public static final DeferredItem<Item> OBLIVION_EMERALD_PICKAXE;
 	public static final DeferredItem<Item> EMERALD_SHOVEL;
 	public static final DeferredItem<Item> EMERALD_SHOVEL_T_2;
 	public static final DeferredItem<Item> EMERALD_SHOVEL_T_3;
@@ -53,6 +73,9 @@ public class ModItems {
     public static final DeferredItem<Item> IRON_SHOVEL_INLAID_WITH_REFINED_EMERALD_T2;
     public static final DeferredItem<Item> VOID_EMERALD_SHOVEL;
 	public static final DeferredItem<Item> LAVA_EMERALD_SHOVEL;
+	//public static final DeferredItem<Item> GENESIS_EMERALD_SHOVEL;
+	//public static final DeferredItem<Item> INFERNO_EMERALD_SHOVEL;
+	//public static final DeferredItem<Item> OBLIVION_EMERALD_SHOVEL;
 	public static final DeferredItem<Item> EMERALD_HOE;
 	public static final DeferredItem<Item> EMERALD_HOE_T_2;
 	public static final DeferredItem<Item> EMERALD_HOE_T_3;
@@ -60,6 +83,9 @@ public class ModItems {
     public static final DeferredItem<Item> IRON_HOE_INLAID_WITH_REFINED_EMERALD_T2;
 	public static final DeferredItem<Item> VOID_EMERALD_HOE;
 	public static final DeferredItem<Item> LAVA_EMERALD_HOE;
+	//public static final DeferredItem<Item> GENESIS_EMERALD_HOE;
+	//public static final DeferredItem<Item> INFERNO_EMERALD_HOE;
+	//public static final DeferredItem<Item> OBLIVION_EMERALD_HOE;
 	public static final DeferredItem<Item> EMERALD_ARMOR_HELMET;
 	public static final DeferredItem<Item> EMERALD_ARMOR_CHESTPLATE;
 	public static final DeferredItem<Item> EMERALD_ARMOR_LEGGINGS;
@@ -151,6 +177,13 @@ public class ModItems {
 		LAVA_EMERALD_PICKAXE_T2 = REGISTRY.register("lava_emerald_pickaxe_t2", LavaEmeraldPickaxeT2Item::new);
 		LAVA_EMERALD_SHOVEL_T2 = REGISTRY.register("lava_emerald_shovel_t2", LavaEmeraldShovelT2Item::new);
 		LAVA_EMERALD_HOE_T2 = REGISTRY.register("lava_emerald_hoe_t2", LavaEmeraldHoeT2Item::new);
+		EMERALD_UPGRADE_CORE = REGISTRY.register("emerald_upgrade_core", EmeraldUpgradeCore::new);
+		GENESIS_EMERALD = REGISTRY.register("genesis_emerald", GenesisEmeraldItem::new);
+		GENESIS_EMERALD_SWORD = REGISTRY.register("genesis_emerald_sword", GenesisEmeraldSwordItem::new);
+        INFERNO_EMERALD = REGISTRY.register("inferno_emerald", InfernoEmeraldItem::new);
+		INFERNO_EMERALD_SWORD = REGISTRY.register("inferno_emerald_sword", InfernoEmeraldSwordItem::new);
+        OBLIVION_EMERALD = REGISTRY.register("oblivion_emerald", OblivionEmeraldItem::new);
+		OBLIVION_EMERALD_SWORD = REGISTRY.register("oblivion_emerald_sword", OblivionEmeraldSwordItem::new);
 	}
 	private static DeferredItem<Item> block(DeferredHolder<Block, Block> block) {
 		return block(block, new Item.Properties());

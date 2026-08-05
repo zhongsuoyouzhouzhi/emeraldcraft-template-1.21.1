@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "bcb",
+    "aba",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:refined_emerald_t_3"
+    },
+    "b": {
+      "item": "emeraldcraft:refined_emerald_block_3"
+    },
+    "c": {
+      "item": "emeraldcraft:emerald_upgrade_core"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:genesis_emerald",
+    "count": 1
+  }
+}

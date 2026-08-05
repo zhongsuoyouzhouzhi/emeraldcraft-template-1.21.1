@@ -4,10 +4,14 @@ import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.init.ModTags;
 import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldArmorItem;
 import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldItem;
+import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -22,7 +26,7 @@ import java.util.Random;
 public class AttackListening {
     private static final Random random = new Random();
     @SubscribeEvent
-    public void LavaEmeraldToolAttack(LivingDamageEvent.Pre event){
+    public void LavaEmeraldToolAndInfernoEmeraldToolAttack(LivingDamageEvent.Pre event){
         LivingEntity target = event.getEntity();
         Level level = event.getEntity().getCommandSenderWorld();
         if (level.isClientSide()) {
@@ -30,7 +34,7 @@ public class AttackListening {
         }
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             ItemStack weapon = attacker.getMainHandItem();
-            if (weapon.is(ModItems.LAVA_EMERALD) || weapon.is(ModTags.LAVA_EMERALD_TOOLS)) {
+            if (weapon.is(ModItems.LAVA_EMERALD) || weapon.is(ModTags.LAVA_EMERALD_TOOLS) || weapon.is(ModItems.INFERNO_EMERALD) || weapon.is(ModTags.INFERNO_EMERALD_TOOLS)) {
                 target.lavaHurt();
             }
         }
@@ -49,6 +53,63 @@ public class AttackListening {
                 target.lavaHurt();
                 target.setHealth(target.getHealth() - 1f);
                 target.startSleeping(target.getOnPos());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void InfernoEmeraldSwordAttack(LivingDamageEvent.Post event){
+        LivingEntity target = event.getEntity();
+        Level level = event.getEntity().getCommandSenderWorld();
+        if (level.isClientSide()) {
+            return;
+        }
+        if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+            ItemStack weapon = attacker.getMainHandItem();
+            if (weapon.is(ModItems.INFERNO_EMERALD_SWORD)) {
+                int Blood_boil_Brand = TagChange.getOrCreateComponent(target,"Blood-boil Brand",0);
+                TagChange.saveComponent(target,"Blood-boil Brand",++Blood_boil_Brand);
+                if (Blood_boil_Brand >= 3){
+                    TagChange.saveComponent(target,"Blood-boil Brand",0);
+                    float k = event.getNewDamage() / event.getOriginalDamage();
+                    if (k < 1F)
+                        k = 1F;
+                    target.setHealth(target.getHealth() - 0.5F * k * (target.getMaxHealth()-target.getHealth()));
+                    MobEffectInstance[] effects = new MobEffectInstance[]{
+                            new MobEffectInstance(MobEffects.WEAKNESS, 80, 7, false, true),
+                            new MobEffectInstance(MobEffects.BLINDNESS, 80, 4, false, true),
+                    };
+                    MobEffectALL.execute(target.level(),effects,target);
+                    if (level instanceof ServerLevel serverLevel && !serverLevel.isClientSide()) {
+                        double x = target.getX();
+                        double y = target.getY();
+                        double z = target.getZ();
+                        serverLevel.sendParticles(ParticleTypes.LAVA, x, y, z, 256 ,0,0.2,0,3);
+                    }
+                }
+            }
+            int attacker_Blood_boil_Brand = TagChange.getOrCreateComponent(attacker,"Blood-boil Brand",0);
+            if (attacker_Blood_boil_Brand > 0) {
+                TagChange.saveComponent(attacker,"Blood-boil Brand", ++attacker_Blood_boil_Brand);
+                if (attacker_Blood_boil_Brand >= 3){
+                    TagChange.saveComponent(attacker,"Blood-boil Brand",0);
+                    float k = event.getNewDamage() / event.getOriginalDamage();
+                    if (k < 1F)
+                        k = 1F;
+                    attacker.setHealth(attacker.getHealth() - 0.5F * k * (attacker.getMaxHealth()-attacker.getHealth()));
+                    attacker.hurt(attacker.damageSources().mobAttack(target),0);
+                    MobEffectInstance[] effects = new MobEffectInstance[]{
+                            new MobEffectInstance(MobEffects.WEAKNESS, 80, 7, false, true),
+                            new MobEffectInstance(MobEffects.BLINDNESS, 80, 4, false, true),
+                    };
+                    MobEffectALL.execute(attacker.level(),effects,attacker);
+                    if (level instanceof ServerLevel serverLevel && !serverLevel.isClientSide()) {
+                        double x = attacker.getX();
+                        double y = attacker.getY();
+                        double z = attacker.getZ();
+                        serverLevel.sendParticles(ParticleTypes.LAVA, x, y, z, 256 ,0,0.2,0,3);
+                    }
+                }
             }
         }
     }
@@ -147,6 +208,39 @@ public class AttackListening {
                     }
                     entity.addTag("void");
                 });
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void GenesisEmeraldSwordAttack(LivingDamageEvent.Pre event){
+        LivingEntity target = event.getEntity();
+        Level level = event.getEntity().getCommandSenderWorld();
+        if (level.isClientSide()) {
+            return;
+        }
+        if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+            ItemStack weapon = attacker.getMainHandItem();
+            if (weapon.is(ModItems.GENESIS_EMERALD_SWORD)) {
+                float damage = event.getNewDamage();
+                if (damage < 150)
+                    damage = 150;
+                event.setNewDamage(0);
+                target.setHealth(target.getHealth()-damage);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void OblivionEmeraldSwordAttack(LivingDamageEvent.Pre event){
+        Level level = event.getEntity().getCommandSenderWorld();
+        if (level.isClientSide()) {
+            return;
+        }
+        if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+            ItemStack weapon = attacker.getMainHandItem();
+            if (weapon.is(ModItems.OBLIVION_EMERALD_SWORD)) {
+                event.setNewDamage(event.getNewDamage() * 3.5f);
             }
         }
     }

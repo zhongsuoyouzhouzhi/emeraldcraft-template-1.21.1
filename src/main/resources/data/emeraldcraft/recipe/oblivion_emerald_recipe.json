@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "aaa",
+    "cbc",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:void_emerald"
+    },
+    "b": {
+      "item": "emeraldcraft:emerald_upgrade_core"
+    },
+    "c": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:oblivion_emerald",
+    "count": 1
+  }
+}

@@ -35,6 +35,11 @@ public class EnchantmentEffect {
                 itemstack.is(ModTags.LAVA_EMERALD_T2_TOOLS);
     }
 
+    private boolean isInfernoEmerald(ItemStack itemstack){
+        return itemstack.is(ModItems.INFERNO_EMERALD) ||
+                itemstack.is(ModTags.INFERNO_EMERALD_TOOLS);
+    }
+
     @SubscribeEvent
     public void onLivingDamage(LivingDamageEvent.Pre event) {
         LivingEntity target = event.getEntity();
@@ -62,6 +67,8 @@ public class EnchantmentEffect {
                     enchantmentLevel += 3;
                 } else if (isLavaEmeraldT2(weapon)) {
                     enchantmentLevel += 5;
+                } else if (isInfernoEmerald(weapon)) {
+                    enchantmentLevel += 10;
                 }
 
                 if (enchantmentLevel > 0 && attacker.fallDistance > 3f) {
@@ -93,6 +100,8 @@ public class EnchantmentEffect {
                     enchantmentLevel += 2;
                 } else if (isLavaEmeraldT2(weapon)) {
                     enchantmentLevel += 5;
+                } else if (isInfernoEmerald(weapon)) {
+                    enchantmentLevel += 8;
                 }
 
                 if (enchantmentLevel > 0) {
@@ -113,15 +122,27 @@ public class EnchantmentEffect {
                                 0.2
                         );
 
-                        serverLevel.sendParticles(
-                                ParticleTypes.GLOW,
-                                vec3.x,
-                                vec3.y,
-                                vec3.z,
-                                128 * (int) Brightness,
-                                0.5, 0.75, 0.5,
-                                0.075
-                        );
+                        if (!weapon.is(ModItems.INFERNO_EMERALD_SWORD)) {
+                            serverLevel.sendParticles(
+                                    ParticleTypes.GLOW,
+                                    vec3.x,
+                                    vec3.y,
+                                    vec3.z,
+                                    128 * (int) Brightness,
+                                    0.5, 0.75, 0.5,
+                                    0.075
+                            );
+                        } else {
+                            serverLevel.sendParticles(
+                                    ParticleTypes.GLOW,
+                                    vec3.x,
+                                    vec3.y,
+                                    vec3.z,
+                                    16 * (int) Brightness,
+                                    0.5, 0.75, 0.5,
+                                    0.075
+                            );
+                        }
                     }
                 }
             }
@@ -176,6 +197,8 @@ public class EnchantmentEffect {
                 enchantmentLevel += 2;
             } else if (isLavaEmeraldT2(weapon)) {
                 enchantmentLevel += 5;
+            } else if (isInfernoEmerald(weapon)) {
+                enchantmentLevel += 8;
             }
             
             if (enchantmentLevel > 0) {

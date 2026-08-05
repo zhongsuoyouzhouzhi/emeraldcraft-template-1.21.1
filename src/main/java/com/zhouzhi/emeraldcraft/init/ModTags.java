@@ -44,6 +44,18 @@ public class ModTags {
             Registries.ITEM,
             ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "inlaid_with_refined_emerald_t2")
     );
+    public static final TagKey<Item> GENESIS_EMERALD_TOOLS = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "genesis_emerald_tools")
+    );
+    public static final TagKey<Item> INFERNO_EMERALD_TOOLS = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "inferno_emerald_tools")
+    );
+    public static final TagKey<Item> OBLIVION_EMERALD_TOOLS = TagKey.create(
+            Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "oblivion_emerald_tools")
+    );
     public static final TagKey<Item> EMERALD_TOOLS = TagKey.create(
             Registries.ITEM,
             ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "emerald_tools")

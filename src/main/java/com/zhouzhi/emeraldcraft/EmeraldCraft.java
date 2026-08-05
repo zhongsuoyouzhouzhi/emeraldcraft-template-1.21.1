@@ -3,6 +3,7 @@ package com.zhouzhi.emeraldcraft;
 import com.zhouzhi.emeraldcraft.init.*;
 import com.zhouzhi.emeraldcraft.listening.AttackListening;
 import com.zhouzhi.emeraldcraft.listening.MiningListening;
+import com.zhouzhi.emeraldcraft.listening.TickListening;
 import com.zhouzhi.emeraldcraft.procedures.enchantment.EnchantmentEffect;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
@@ -42,6 +43,7 @@ public class EmeraldCraft {
         NeoForge.EVENT_BUS.register(new EnchantmentEffect());
         NeoForge.EVENT_BUS.register(new AttackListening());
         NeoForge.EVENT_BUS.register(new MiningListening());
+        NeoForge.EVENT_BUS.register(new TickListening());
         modEventBus.addListener(this::registerNetworking);
         modEventBus.addListener(this::onGatherData);
         ModBlocks.REGISTRY.register(modEventBus);

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:lava_emerald_t2"
+    },
+    "b": {
+      "item": "emeraldcraft:emerald_upgrade_core"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:inferno_emerald",
+    "count": 1
+  }
+}

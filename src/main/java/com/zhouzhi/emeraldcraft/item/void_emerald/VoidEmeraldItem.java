@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -31,8 +32,9 @@ public class VoidEmeraldItem extends Item {
         super.useOn(context);
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
-        explode(world,pos,context.getPlayer(),3);
-        if (SimpleUse.GameTypeGetter.isCreativeOrSpectator(context.getPlayer())) {
+        Player player = context.getPlayer();
+        explode(world,pos,player,3);
+        if (SimpleUse.GameTypeGetter.isCreativeOrSpectator(player)) {
             context.getItemInHand().shrink(1);
         }
         return InteractionResult.SUCCESS;
