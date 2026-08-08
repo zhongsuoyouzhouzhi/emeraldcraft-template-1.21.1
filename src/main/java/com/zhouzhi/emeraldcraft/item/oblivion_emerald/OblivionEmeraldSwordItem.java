@@ -87,10 +87,12 @@ public class OblivionEmeraldSwordItem extends SwordItem {
 		InteractionResultHolder<ItemStack> itemStackInteractionResultHolder = super.use(world, entity, hand);
         entity.getCooldowns().addCooldown(this, 80);
 		ItemStack itemStack = entity.getItemInHand(hand);
-		if (!SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity) && entity.level() instanceof ServerLevel serverLevel) {
-			itemStack.hurtAndBreak(250, serverLevel, entity, item -> {});
+		if (Use.OblivionEmeraldSwordRight_click(entity) != 0) {
+			if (!SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity) && entity.level() instanceof ServerLevel serverLevel) {
+				itemStack.hurtAndBreak(250, serverLevel, entity, item -> {
+				});
+			}
 		}
-		Use.OblivionEmeraldSwordRight_click(entity);
 		return itemStackInteractionResultHolder;
 	}
 }

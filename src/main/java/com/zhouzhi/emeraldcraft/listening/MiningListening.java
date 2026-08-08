@@ -1,10 +1,6 @@
 package com.zhouzhi.emeraldcraft.listening;
 
 import com.zhouzhi.emeraldcraft.init.ModTags;
-import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldAxeItem;
-import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldHoeItem;
-import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldPickaxeItem;
-import com.zhouzhi.emeraldcraft.item.lava_emerald.LavaEmeraldShovelItem;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -22,7 +18,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 
 public class MiningListening {
     @SubscribeEvent
-    public void LavaEmeraldToolMining(BlockEvent.BreakEvent event){
+    public void LavaEmeraldAndInfernoEmeraldToolMining(BlockEvent.BreakEvent event){
         Player entity = event.getPlayer();
         if (SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity)) {
             return;
@@ -36,26 +32,14 @@ public class MiningListening {
         BlockState state = event.getState();
         if (level instanceof ServerLevel serverLevel) {
             ItemStack item = SimpleUse.getSmeltedResult(serverLevel, state.getBlock().asItem().getDefaultInstance());
-            if (item.isEmpty()) {
-                return;
+            if (item.isEmpty()) return;
+            if (weapon.is(ModTags.LAVA_EMERALD_TOOLS) || weapon.is(ModTags.LAVA_EMERALD_T2_TOOLS) || weapon.is(ModTags.INFERNO_EMERALD_TOOLS)) {
+                if (weapon.is(ItemTags.AXES) && !state.is(BlockTags.MINEABLE_WITH_AXE)) return;
+                else if (weapon.is(ItemTags.PICKAXES) && !state.is(BlockTags.MINEABLE_WITH_PICKAXE)) return;
+                else if (weapon.is(ItemTags.SHOVELS) && !state.is(BlockTags.MINEABLE_WITH_SHOVEL)) return;
+                else if (weapon.is(ItemTags.HOES) && !state.is(BlockTags.MINEABLE_WITH_HOE)) return;
             }
-            switch (weapon.getItem()) {
-                case LavaEmeraldAxeItem ignored -> {
-                    if (!state.is(BlockTags.MINEABLE_WITH_AXE)) return;
-                }
-                case LavaEmeraldPickaxeItem ignored -> {
-                    if (!state.is(BlockTags.MINEABLE_WITH_PICKAXE)) return;
-                }
-                case LavaEmeraldShovelItem ignored -> {
-                    if (!state.is(BlockTags.MINEABLE_WITH_SHOVEL)) return;
-                }
-                case LavaEmeraldHoeItem ignored -> {
-                    if (!state.is(BlockTags.MINEABLE_WITH_HOE)) return;
-                }
-                default -> {
-                    return;
-                }
-            }
+                else return;
             event.setCanceled(true);
             level.destroyBlock(event.getPos(), false, entity);
             weapon.hurtAndBreak(1, serverLevel, entity, a -> {

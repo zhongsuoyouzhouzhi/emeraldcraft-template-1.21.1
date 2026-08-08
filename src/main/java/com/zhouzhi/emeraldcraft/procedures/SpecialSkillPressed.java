@@ -26,7 +26,19 @@ public class SpecialSkillPressed {
 	public static void execute(Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
 			ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.MAINHAND);
-			if (itemstack.is(ModItems.EMERALD_SWORD_T_3.get())){
+            ItemStack armor = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
+            int van = SimpleUse.VoidArmorNumber(livingEntity);
+            if (van == 4 && livingEntity.isShiftKeyDown()) {
+                boolean tag;
+                tag = TagChange.getOrCreateComponent(armor, "Void", false);
+                TagChange.saveComponent(armor, "Void", !tag);
+                if (entity instanceof Player player) {
+                    if (!tag)
+                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.true")),true);
+                    else
+                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.false")),true);
+                }
+            } else if (itemstack.is(ModItems.EMERALD_SWORD_T_3.get())){
                 if (entity instanceof Player _player) {
                     if (!_player.getCooldowns().isOnCooldown(itemstack.getItem())) {
                         _player.getCooldowns().addCooldown(itemstack.getItem(), 40);
@@ -132,20 +144,14 @@ public class SpecialSkillPressed {
                     _player.getCooldowns().addCooldown(itemstack.getItem(), 10);
                     sendOpen(_player, getOrCreateComponent(itemstack, "Scope", true));
                 }
-            }
-
-
-            ItemStack armor = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
-            int van = SimpleUse.VoidArmorNumber(livingEntity);
-            if (van == 4 && livingEntity.isShiftKeyDown()) {
-                boolean tag;
-                tag = TagChange.getOrCreateComponent(armor, "Void", false);
-                TagChange.saveComponent(armor, "Void", !tag);
+            } else if (itemstack.is(ModItems.INFERNO_EMERALD_SWORD)) {
                 if (entity instanceof Player player) {
-                    if (!tag)
-                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.true")),true);
-                    else
-                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.false")),true);
+                    Level level = player.level();
+                    if (Use.InfernoEmeraldSwordSpecialSkill(level,player)) {
+                        if (!SimpleUse.GameTypeGetter.isCreativeOrSpectator(player) && level instanceof ServerLevel serverLevel) {
+                            itemstack.hurtAndBreak(75, serverLevel,player,ignore->{});
+                        }
+                    }
                 }
             }
         }

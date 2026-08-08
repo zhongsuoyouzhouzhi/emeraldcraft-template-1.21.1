@@ -1,6 +1,7 @@
 package com.zhouzhi.emeraldcraft.procedures.net;
 
 import com.zhouzhi.emeraldcraft.init.ModEntities;
+import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.init.ModMobEffects;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.PushAway;
@@ -284,6 +285,13 @@ public class Use {
                     brain.eraseMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
                     brain.eraseMemory(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES);
                     brain.eraseMemory(MemoryModuleType.ANGRY_AT);
+
+                    // 整个特效哈哈哈哈哈
+                    serverLevel.sendParticles(ParticleTypes.ITEM_SLIME,
+                            entity.getX(),entity.getY()+0.5,entity.getZ(),
+                            16,
+                            0.5,1,0.5,
+                            0.5);
                 }
 
                 entity.setNoActionTime(time * 20);
@@ -331,12 +339,14 @@ public class Use {
         }
     }
 
-    public static void OblivionEmeraldSwordRight_click(Player player) {
+    public static int OblivionEmeraldSwordRight_click(Player player) {
+        int count = 0;
         for (LivingEntity entity:getEntitiesInCrosshair(player,32,Math.PI / 6)) {
             entity.setSilent(true);
             killEntity(entity, player);
+            count++;
             if (entity.getType().equals(EntityType.ENDER_DRAGON))
-                return;
+                continue;
             if (player.level() instanceof ServerLevel serverLevel && !serverLevel.isClientSide()) {
                 serverLevel.sendParticles(
                         ParticleTypes.END_ROD,
@@ -348,6 +358,7 @@ public class Use {
             }
             entity.moveTo(entity.getX(), -200, entity.getZ());
         }
+        return count;
     }
 
     private static List<LivingEntity> getEntitiesInCrosshair(Player player, double maxDistance, double angleThreshold) {
@@ -381,5 +392,66 @@ public class Use {
             }
         }
         return result;
+    }
+
+    public static boolean InfernoEmeraldSwordSpecialSkill(Level level, Player player) {
+        if (level.isClientSide()) { //一堆杂七杂八的判断
+            return false;
+        }
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return false;
+        }
+        if (player.getCooldowns().isOnCooldown(ModItems.INFERNO_EMERALD_SWORD.asItem())) {
+            return false;
+        }
+
+        Vec3 center = player.position().add(0, 1, 0); //中心获取
+        AABB aabb = AABB.ofSize(center, 8, 2, 8);
+
+        List<LivingEntity> targets = serverLevel.getEntitiesOfClass(LivingEntity.class, aabb, e -> e != player && !e.isInvulnerable()); //伤害部分
+        for (LivingEntity target : targets) {
+            target.igniteForSeconds(6);
+            target.hurt(target.damageSources().inFire(), 40);
+        }
+
+        for (double r = 0.5; r <= 4.5; r += 0.5) { //特效部分
+            int points = (int) (2 * Math.PI * r * 2);
+            if (points < 10) points = 10;
+
+            for (int i = 0; i < points; i++) {
+                double theta = 2 * Math.PI * i / points;
+                double x = center.x + r * Math.cos(theta);
+                double z = center.z + r * Math.sin(theta);
+                double y = center.y + (level.random.nextDouble() - 0.5) * 0.4;
+
+                double vx = Math.cos(theta) * 0.5;
+                double vz = Math.sin(theta) * 0.5;
+                double vy = (level.random.nextDouble() - 0.5) * 0.25;
+
+                serverLevel.sendParticles(
+                        ParticleTypes.FLAME,
+                        x, y, z,
+                        0,
+                        vx, vy, vz,
+                        0.2); //火焰
+                if (r % 1.0 == 0) {
+                    serverLevel.sendParticles(
+                            ParticleTypes.SMOKE,
+                            x, y - 0.2, z,
+                            0,
+                            vx * 0.4, vy * 0.4, vz * 0.4,
+                            0.3
+                    ); //烟雾(这不仔细看特马压根看不见啊)
+                }
+            }
+        }
+
+        boolean empty = targets.isEmpty();
+
+        if (empty) { //啊冷却这里是
+            player.getCooldowns().addCooldown(ModItems.INFERNO_EMERALD_SWORD.asItem(), 100);
+        }
+
+        return !empty;
     }
 }
