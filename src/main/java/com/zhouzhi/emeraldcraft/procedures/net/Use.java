@@ -107,10 +107,10 @@ public class Use {
     }
 
     public static void SkyFillingBladeSpecialSkill2(Entity sourceEntity, float damage, double radius) {
-        if (sourceEntity == null || sourceEntity.level().isClientSide()) {
+        if (sourceEntity == null || sourceEntity.getCommandSenderWorld().isClientSide()) {
             return;
         }
-        Level level = sourceEntity.level();
+        Level level = sourceEntity.getCommandSenderWorld();
         AABB area = new AABB(
                 sourceEntity.getX() - radius, sourceEntity.getY() - radius, sourceEntity.getZ() - radius,
                 sourceEntity.getX() + radius, sourceEntity.getY() + radius, sourceEntity.getZ() + radius
@@ -148,7 +148,7 @@ public class Use {
     }
 
     private static void spawnLightningAtEntity(LivingEntity entity) {
-        if (entity.level() instanceof ServerLevel serverLevel) {
+        if (entity.getCommandSenderWorld() instanceof ServerLevel serverLevel) {
             LightningBolt lightning = new LightningBolt(
                     net.minecraft.world.entity.EntityType.LIGHTNING_BOLT,
                     serverLevel
@@ -233,7 +233,7 @@ public class Use {
             livingEntity.setHealth(0);
             livingEntity.die(source.damageSources().mobAttack(source));
             if (livingEntity.getHealth() > 0f)
-                livingEntity.hurt(new DamageSource(entity.level().holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), damage);
+                livingEntity.hurt(new DamageSource(entity.getCommandSenderWorld().holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), damage);
         } else entity.kill();
     }
 
@@ -347,7 +347,7 @@ public class Use {
             count++;
             if (entity.getType().equals(EntityType.ENDER_DRAGON))
                 continue;
-            if (player.level() instanceof ServerLevel serverLevel && !serverLevel.isClientSide()) {
+            if (player.getCommandSenderWorld() instanceof ServerLevel serverLevel && !serverLevel.isClientSide()) {
                 serverLevel.sendParticles(
                         ParticleTypes.END_ROD,
                         entity.getX(), entity.getY(), entity.getZ(),
@@ -361,9 +361,9 @@ public class Use {
         return count;
     }
 
-    private static List<LivingEntity> getEntitiesInCrosshair(Player player, double maxDistance, double angleThreshold) {
+    private static List<LivingEntity> getEntitiesInCrosshair(Player player, double maxDistance, double angleThreshold) { //获取视野内生物
         List<LivingEntity> result = new ArrayList<>();
-        Level level = player.level();
+        Level level = player.getCommandSenderWorld();
         Vec3 eyePos = player.getEyePosition();
         Vec3 lookVec = player.getViewVector(1.0F);
         AABB area = new AABB(eyePos.x - maxDistance, eyePos.y - maxDistance, eyePos.z - maxDistance,

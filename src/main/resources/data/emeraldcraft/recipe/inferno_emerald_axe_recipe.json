@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "emeraldcraft:emerald_upgrade_core"
+  },
+  "base": {
+    "item": "emeraldcraft:lava_emerald_axe_t2"
+  },
+  "addition": {
+    "item": "emeraldcraft:inferno_emerald"
+  },
+  "result": {
+    "id": "emeraldcraft:inferno_emerald_axe"
+  }
+}

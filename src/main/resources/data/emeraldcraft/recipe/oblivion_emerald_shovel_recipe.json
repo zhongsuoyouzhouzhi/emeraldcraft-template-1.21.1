@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "emeraldcraft:emerald_upgrade_core"
+  },
+  "base": {
+    "item": "emeraldcraft:void_emerald_shovel"
+  },
+  "addition": {
+    "item": "emeraldcraft:oblivion_emerald"
+  },
+  "result": {
+    "id": "emeraldcraft:oblivion_emerald_shovel"
+  }
+}

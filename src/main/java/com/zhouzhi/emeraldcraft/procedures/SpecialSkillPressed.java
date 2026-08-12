@@ -29,8 +29,7 @@ public class SpecialSkillPressed {
             ItemStack armor = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
             int van = SimpleUse.VoidArmorNumber(livingEntity);
             if (van == 4 && livingEntity.isShiftKeyDown()) {
-                boolean tag;
-                tag = TagChange.getOrCreateComponent(armor, "Void", false);
+                boolean tag = TagChange.getOrCreateComponent(armor, "Void", false);
                 TagChange.saveComponent(armor, "Void", !tag);
                 if (entity instanceof Player player) {
                     if (!tag)
@@ -152,6 +151,20 @@ public class SpecialSkillPressed {
                             itemstack.hurtAndBreak(75, serverLevel,player,ignore->{});
                         }
                     }
+                }
+            } else if (itemstack.is(ModItems.INFERNO_EMERALD_AXE) || itemstack.is(ModItems.INFERNO_EMERALD_PICKAXE) || itemstack.is(ModItems.INFERNO_EMERALD_SHOVEL)) {
+                boolean tag = getOrCreateComponent(itemstack,"Inferno",false);
+                saveComponent(itemstack,"Inferno",!tag);
+                if (entity instanceof Player player) {
+                    player.getCooldowns().addCooldown(itemstack.getItem(), 10);
+                    sendOpen(player, getOrCreateComponent(itemstack, "Inferno", true));
+                }
+            } else if (itemstack.is(ModItems.OBLIVION_EMERALD_AXE) || itemstack.is(ModItems.OBLIVION_EMERALD_PICKAXE) || itemstack.is(ModItems.OBLIVION_EMERALD_SHOVEL) || itemstack.is(ModItems.VOID_EMERALD_HOE)) {
+                boolean tag = getOrCreateComponent(itemstack, "Scope", false);
+                saveComponent(itemstack, "Scope", !tag);
+                if (entity instanceof Player _player) {
+                    _player.getCooldowns().addCooldown(itemstack.getItem(), 10);
+                    sendOpen(_player, getOrCreateComponent(itemstack, "Scope", true));
                 }
             }
         }

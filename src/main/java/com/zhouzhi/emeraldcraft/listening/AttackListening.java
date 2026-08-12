@@ -79,7 +79,7 @@ public class AttackListening {
                             new MobEffectInstance(MobEffects.WEAKNESS, 80, 7, false, true),
                             new MobEffectInstance(MobEffects.BLINDNESS, 80, 4, false, true),
                     };
-                    MobEffectALL.execute(target.level(),effects,target);
+                    MobEffectALL.execute(target.getCommandSenderWorld(),effects,target);
                     if (level instanceof ServerLevel serverLevel && !serverLevel.isClientSide()) {
                         double x = target.getX();
                         double y = target.getY();
@@ -102,7 +102,7 @@ public class AttackListening {
                             new MobEffectInstance(MobEffects.WEAKNESS, 80, 7, false, true),
                             new MobEffectInstance(MobEffects.BLINDNESS, 80, 4, false, true),
                     };
-                    MobEffectALL.execute(attacker.level(),effects,attacker);
+                    MobEffectALL.execute(attacker.getCommandSenderWorld(),effects,attacker);
                     if (level instanceof ServerLevel serverLevel && !serverLevel.isClientSide()) {
                         double x = attacker.getX();
                         double y = attacker.getY();
@@ -241,6 +241,20 @@ public class AttackListening {
             ItemStack weapon = attacker.getMainHandItem();
             if (weapon.is(ModItems.OBLIVION_EMERALD_SWORD)) {
                 event.setNewDamage(event.getNewDamage() * 3.5f);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void OblivionEmeraldToolAttack(LivingDamageEvent.Pre event){
+        Level level = event.getEntity().getCommandSenderWorld();
+        if (level.isClientSide()) {
+            return;
+        }
+        if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+            ItemStack weapon = attacker.getMainHandItem();
+            if (weapon.is(ModItems.OBLIVION_EMERALD_AXE) || weapon.is(ModItems.OBLIVION_EMERALD_PICKAXE) || weapon.is(ModItems.OBLIVION_EMERALD_SHOVEL)) {
+                event.setNewDamage(event.getNewDamage() * 1.75f);
             }
         }
     }

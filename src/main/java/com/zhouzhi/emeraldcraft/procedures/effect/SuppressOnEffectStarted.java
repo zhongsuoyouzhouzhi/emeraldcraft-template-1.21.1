@@ -10,8 +10,8 @@ public class SuppressOnEffectStarted {
     public static void execute(Entity entity) {
         if (entity == null)
             return;
-        if (!entity.level().isClientSide()){
-            DamageSource magicDamage = entity.level().damageSources().magic();
+        if (!entity.getCommandSenderWorld().isClientSide()){
+            DamageSource magicDamage = entity.getCommandSenderWorld().damageSources().magic();
             int num = TagChange.getOrCreateComponent(entity, "suppress", 0);
             if (num >= 4) {
                 entity.hurt(magicDamage, 0.3f * ((SimpleUse.getEffectLevel(entity, ModMobEffects.SUPPRESS)+6)*10));

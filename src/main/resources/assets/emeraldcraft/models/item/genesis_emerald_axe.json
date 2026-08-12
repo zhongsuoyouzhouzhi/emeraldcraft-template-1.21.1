@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "emeraldcraft:item/genesis_emerald_axe"
+  }
+}

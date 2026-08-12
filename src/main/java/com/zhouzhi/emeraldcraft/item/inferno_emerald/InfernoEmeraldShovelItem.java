@@ -8,10 +8,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
@@ -22,22 +19,22 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class InfernoEmeraldSwordItem extends SwordItem {
-    private static final int BAR_COLOR = FastColor.ARGB32.color(0, 243, 150, 0);
+public class InfernoEmeraldShovelItem extends ShovelItem {
+    private static final int BAR_COLOR = FastColor.ARGB32.color(0, 240, 119, 53);
     private static final Tier TIER = new Tier() {
         @Override
         public int getUses() {
-            return 42898;
+            return 40313;
         }
 
         @Override
         public float getSpeed() {
-            return 60f;
+            return 80f;
         }
 
         @Override
         public float getAttackDamageBonus() {
-            return 0f;
+            return 0;
         }
 
         @Override
@@ -58,16 +55,13 @@ public class InfernoEmeraldSwordItem extends SwordItem {
         }
     };
 
-    public InfernoEmeraldSwordItem() {
-        super(TIER,
-                new Properties()
-                        .attributes(SwordItem.createAttributes(TIER, 24f, -1.8f))
-                        .component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
-                        .fireResistant()
-                        .rarity(Rarity.EPIC)
-        );
+    public InfernoEmeraldShovelItem() {
+        super(TIER, new Properties()
+                .attributes(DiggerItem.createAttributes(TIER, 9f, -3f))
+                .component(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+                .fireResistant()
+                .rarity(Rarity.EPIC));
     }
-
     @Override
     @MethodsReturnNonnullByDefault
     public InteractionResult useOn(@ParametersAreNonnullByDefault UseOnContext context) {

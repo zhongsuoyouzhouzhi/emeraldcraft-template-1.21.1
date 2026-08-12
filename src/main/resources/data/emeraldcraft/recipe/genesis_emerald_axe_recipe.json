@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "emeraldcraft:emerald_upgrade_core"
+  },
+  "base": {
+    "item": "emeraldcraft:emerald_axe_t_3"
+  },
+  "addition": {
+    "item": "emeraldcraft:genesis_emerald"
+  },
+  "result": {
+    "id": "emeraldcraft:genesis_emerald_axe"
+  }
+}

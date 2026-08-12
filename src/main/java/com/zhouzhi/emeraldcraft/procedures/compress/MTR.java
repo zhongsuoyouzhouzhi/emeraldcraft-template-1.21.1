@@ -1,13 +1,13 @@
 package com.zhouzhi.emeraldcraft.procedures.compress;
 
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.TickTask;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class MTR {
     
     public static void execute(Entity source, float radius, float damage, int delayTicks) {
-        if (!(source.level() instanceof ServerLevel serverLevel)) return;
+        if (!(source.getCommandSenderWorld() instanceof ServerLevel serverLevel)) return;
         
         double x = source.getX();
         double y = source.getY();

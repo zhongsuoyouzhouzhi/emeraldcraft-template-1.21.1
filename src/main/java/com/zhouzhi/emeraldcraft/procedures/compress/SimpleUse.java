@@ -6,10 +6,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -25,11 +27,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 
 
@@ -48,7 +52,7 @@ public class SimpleUse {
         public static @Nullable GameType getEntityGameType(Entity entity) {
             if (entity instanceof ServerPlayer serverPlayer) {
                 return serverPlayer.gameMode.getGameModeForPlayer();
-            } else if (entity instanceof Player player && player.level().isClientSide()) {
+            } else if (entity instanceof Player player && player.getCommandSenderWorld().isClientSide()) {
                 PlayerInfo playerInfo = Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(player.getGameProfile().getId());
                 if (playerInfo != null)
                     return playerInfo.getGameMode();
@@ -62,7 +66,7 @@ public class SimpleUse {
     }
 
 
-    public static int destroyLog(LevelAccessor world, int x, int y, int z, int radius, boolean drop, ServerPlayer mining){
+    public static int destroyLog(LevelAccessor world, int x, int y, int z, int radius, boolean drop, ServerPlayer mining) {
         int count = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -71,7 +75,7 @@ public class SimpleUse {
                     int blockY = y + dy;
                     int blockZ = z + dz;
                     Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
-                    if (isLog(block)){
+                    if (isLog(block)) {
                         BlockPos pos = BlockPos.containing(blockX, blockY, blockZ);
                         if (mining == null) {
                             Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
@@ -85,11 +89,11 @@ public class SimpleUse {
         return count;
     }
 
-    public static boolean isLog(Block block){
+    public static boolean isLog(Block block) {
         return block.builtInRegistryHolder().is(BlockTags.LOGS);
     }
 
-    public static int destroyStone(LevelAccessor world, int x, int y, int z, int radius, boolean drop, ServerPlayer mining){
+    public static int destroyStone(LevelAccessor world, int x, int y, int z, int radius, boolean drop, ServerPlayer mining) {
         int count = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -98,7 +102,7 @@ public class SimpleUse {
                     int blockY = y + dy;
                     int blockZ = z + dz;
                     Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
-                    if (isStone(block)){
+                    if (isStone(block)) {
                         BlockPos pos = BlockPos.containing(blockX, blockY, blockZ);
                         if (mining == null) {
                             Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
@@ -112,14 +116,14 @@ public class SimpleUse {
         return count;
     }
 
-    public static boolean isStone(Block block){
+    public static boolean isStone(Block block) {
         boolean overworld = block.builtInRegistryHolder().is(BlockTags.BASE_STONE_OVERWORLD);
         boolean nether = block.builtInRegistryHolder().is(BlockTags.BASE_STONE_NETHER);
         boolean end = block == Blocks.END_STONE;
         return overworld || nether || end || block == Blocks.COBBLESTONE || block == Blocks.COBBLED_DEEPSLATE;
     }
 
-    public static int destroyDirt(LevelAccessor world, int x, int y, int z, int radius, boolean drop, ServerPlayer mining){
+    public static int destroyDirt(LevelAccessor world, int x, int y, int z, int radius, boolean drop, ServerPlayer mining) {
         int count = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -128,7 +132,7 @@ public class SimpleUse {
                     int blockY = y + dy;
                     int blockZ = z + dz;
                     Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
-                    if (isDirt(block)){
+                    if (isDirt(block)) {
                         BlockPos pos = BlockPos.containing(blockX, blockY, blockZ);
                         if (mining == null) {
                             Block.dropResources(world.getBlockState(pos), world, BlockPos.containing(blockX, blockY, blockZ), null);
@@ -142,11 +146,11 @@ public class SimpleUse {
         return count;
     }
 
-    public static boolean isDirt(Block block){
+    public static boolean isDirt(Block block) {
         return block.builtInRegistryHolder().is(BlockTags.MINEABLE_WITH_SHOVEL);
     }
 
-    public static int OperateBlock(LevelAccessor world, int x, int y, int z, int radius , Predicate<Block> condition, Function.Function_BlockOperation lambdaOperate){
+    public static int OperateBlock(LevelAccessor world, int x, int y, int z, int radius, Predicate<Block> condition, Function.Function_BlockOperation lambdaOperate) {
         int count = 0;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dy = -radius; dy <= radius; dy++) {
@@ -155,8 +159,8 @@ public class SimpleUse {
                     int blockY = y + dy;
                     int blockZ = z + dz;
                     Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
-                    if (condition.test(block)){
-                        lambdaOperate.run(block,blockX,blockY,blockZ);
+                    if (condition.test(block)) {
+                        lambdaOperate.run(block, blockX, blockY, blockZ);
                         count++;
                     }
                 }
@@ -165,7 +169,7 @@ public class SimpleUse {
         return count;
     }
 
-    public static int OperateBlock(LevelAccessor world, int x, int y, int z, int xRadius, int yRadius, int zRadius, Predicate<Block> condition, Function.Function_BlockOperation lambdaOperate){
+    public static int OperateBlock(LevelAccessor world, int x, int y, int z, int xRadius, int yRadius, int zRadius, Predicate<Block> condition, Function.Function_BlockOperation lambdaOperate) {
         int count = 0;
         for (int dx = -xRadius; dx <= xRadius; dx++) {
             for (int dy = -yRadius; dy <= yRadius; dy++) {
@@ -174,8 +178,8 @@ public class SimpleUse {
                     int blockY = y + dy;
                     int blockZ = z + dz;
                     Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
-                    if (condition.test(block)){
-                        lambdaOperate.run(block,blockX,blockY,blockZ);
+                    if (condition.test(block)) {
+                        lambdaOperate.run(block, blockX, blockY, blockZ);
                         count++;
                     }
                 }
@@ -184,7 +188,7 @@ public class SimpleUse {
         return count;
     }
 
-    public static int OperateBlockPos(LevelAccessor world, int x, int y, int z, int xRadius, int yRadius, int zRadius, Predicate<BlockPos> condition, Function.Function_BlockOperation lambdaOperate){
+    public static int OperateBlockPos(LevelAccessor world, int x, int y, int z, int xRadius, int yRadius, int zRadius, Predicate<BlockPos> condition, Function.Function_BlockOperation lambdaOperate) {
         int count = 0;
         for (int dx = -xRadius; dx <= xRadius; dx++) {
             for (int dy = -yRadius; dy <= yRadius; dy++) {
@@ -193,8 +197,8 @@ public class SimpleUse {
                     int blockY = y + dy;
                     int blockZ = z + dz;
                     Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
-                    if (condition.test(BlockPos.containing(blockX, blockY, blockZ))){
-                        lambdaOperate.run(block,blockX,blockY,blockZ);
+                    if (condition.test(BlockPos.containing(blockX, blockY, blockZ))) {
+                        lambdaOperate.run(block, blockX, blockY, blockZ);
                         count++;
                     }
                 }
@@ -273,11 +277,12 @@ public class SimpleUse {
 
         return new Vec3(targetX, targetY, targetZ);
     }
-    public static void sendOpen(Player player,boolean isOpen) {
+
+    public static void sendOpen(Player player, boolean isOpen) {
         if (isOpen)
-            Message.send(player, Component.translatable("message.emeraldcraft.skill").append(Component.translatable("message.emeraldcraft.true")),true);
+            Message.send(player, Component.translatable("message.emeraldcraft.skill").append(Component.translatable("message.emeraldcraft.true")), true);
         else
-            Message.send(player, Component.translatable("message.emeraldcraft.skill").append(Component.translatable("message.emeraldcraft.false")),true);
+            Message.send(player, Component.translatable("message.emeraldcraft.skill").append(Component.translatable("message.emeraldcraft.false")), true);
     }
 
     public static class Message {
@@ -316,10 +321,10 @@ public class SimpleUse {
     public static int VoidArmorNumber(LivingEntity entity) {
         EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
         Item[] armorItems = {
-            ModItems.VOID_EMERALD_ARMOR_HELMET.asItem(),
-            ModItems.VOID_EMERALD_ARMOR_CHESTPLATE.asItem(),
-            ModItems.VOID_EMERALD_ARMOR_LEGGINGS.asItem(),
-            ModItems.VOID_EMERALD_ARMOR_BOOTS.asItem()
+                ModItems.VOID_EMERALD_ARMOR_HELMET.asItem(),
+                ModItems.VOID_EMERALD_ARMOR_CHESTPLATE.asItem(),
+                ModItems.VOID_EMERALD_ARMOR_LEGGINGS.asItem(),
+                ModItems.VOID_EMERALD_ARMOR_BOOTS.asItem()
         };
         int count = 0;
         for (int i = 0; i < slots.length; i++) {
@@ -349,4 +354,58 @@ public class SimpleUse {
         return count;
     }
     */
+    public static final class Random_static {
+        private Random_static() {} // 禁止实例化，预防发神经
+
+        public static int nextInt(int bound) {
+            return ThreadLocalRandom.current().nextInt(bound);
+        }
+
+        public static boolean nextBoolean() {
+            return ThreadLocalRandom.current().nextBoolean();
+        }
+
+        public static int nextInt(int min, int max) {
+            return ThreadLocalRandom.current().nextInt(min, max);
+        }
+
+        public static boolean nextPercent(double percent) {
+            return ThreadLocalRandom.current().nextDouble() < percent / 100;
+        }
+    }
+
+    public static final class Effect {
+        private Effect() {} // 同上，防蠢
+
+        public static void round_plane(ServerLevel level, ParticleOptions type, Vec3 center, double radius, int particleCount, Vec3 offset, double speed, boolean scatter) {
+            double center_x = center.x;
+            double center_z = center.z;
+            double needed_theta = 2 * Math.PI / particleCount;
+            for (int i = 0; i < particleCount; i++) {
+                double dx = radius * Math.cos(needed_theta * i);
+                double dz = radius * Math.sin(needed_theta * i);
+                double x = center_x + dx;
+                double z = center_z + dz;
+                double offset_x = offset.x;
+                double offset_z = offset.z;
+                if (scatter) {
+                    double norm = Math.sqrt(dx*dx + dz*dz);
+                    if (norm > 0) {
+                        double ux = dx / norm;
+                        double uz = dz / norm;
+                        offset_x = ux * speed;
+                        offset_z = uz * speed;
+                    }
+                }
+                level.sendParticles(type, x, center.y, z, 0, offset_x, offset.y, offset_z, speed);
+            }
+        }
+    }
+
+    public static boolean isCurrentTool(ItemStack itemstack, BlockState state) {
+        if (itemstack.is(ItemTags.AXES) && state.is(BlockTags.MINEABLE_WITH_AXE)) return true;
+        else if (itemstack.is(ItemTags.PICKAXES) && state.is(BlockTags.MINEABLE_WITH_PICKAXE)) return true;
+        else if (itemstack.is(ItemTags.SHOVELS) && state.is(BlockTags.MINEABLE_WITH_SHOVEL)) return true;
+        else return itemstack.is(ItemTags.HOES) && state.is(BlockTags.MINEABLE_WITH_HOE);
+    }
 }

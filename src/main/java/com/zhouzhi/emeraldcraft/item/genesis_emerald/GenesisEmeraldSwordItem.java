@@ -66,7 +66,7 @@ public class GenesisEmeraldSwordItem  extends SwordItem {
         if (!SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity) && world instanceof ServerLevel serverLevel) {
             itemstack.hurtAndBreak(50, serverLevel,entity,ignore->{});
         }
-        Use.EntityPause.pauseEntities(entity.level(),entity.position(),15,10);
+        Use.EntityPause.pauseEntities(entity.getCommandSenderWorld(),entity.position(),15,10);
         entity.getCooldowns().addCooldown(itemstack.getItem(), 300);
         return itemStackInteractionResultHolder;
     }
