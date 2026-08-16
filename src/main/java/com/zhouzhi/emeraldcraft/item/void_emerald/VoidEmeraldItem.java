@@ -63,7 +63,7 @@ public class VoidEmeraldItem extends Item {
                 serverLevel.sendParticles(
                         ParticleTypes.END_ROD,
                         bx, by, bz,
-                        64,
+                        ceilDivPositive(32,((radius-2) * (radius-2))),
                         0.5, 0.5, 0.5,
                         0
                 );
@@ -73,5 +73,9 @@ public class VoidEmeraldItem extends Item {
             }
             world.setBlockAndUpdate(blockPos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
         });
+    }
+
+    private static int ceilDivPositive(int a, int b) {
+        return a / b + (a % b == 0 ? 0 : 1);
     }
 }

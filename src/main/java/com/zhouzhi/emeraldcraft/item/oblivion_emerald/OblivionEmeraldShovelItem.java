@@ -8,12 +8,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Tool;
@@ -21,16 +19,16 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
+
+import static com.zhouzhi.emeraldcraft.procedures.net.Use.OblivionEmeraldToolDestroySingleBlock;
 
 public class OblivionEmeraldShovelItem extends ShovelItem {
-	private static final int BAR_COLOR = FastColor.ARGB32.color(0, 115, 0, 137);
+	private static final int BAR_COLOR_BASE = FastColor.ARGB32.color(0, 115, 0, 137);
+	private static final int BAR_COLOR_SCOPE = FastColor.ARGB32.color(0, 239, 40, 204);
 	private static final Tier TOOL_TIER = new Tier() {
 		@Override
 		public int getUses() {
@@ -101,28 +99,9 @@ public class OblivionEmeraldShovelItem extends ShovelItem {
 						SimpleUse::isDirt,
 						(block, x, y, z) -> {
 							BlockPos _pos = BlockPos.containing(x, y, z);
+							if (_pos.equals(pos)) return;
 							BlockState _state = level.getBlockState(_pos);
-
-							List<ItemStack> drops = Block.getDrops(_state , level, _pos, null, null, stack);
-
-							for (ItemStack drop : drops) {
-								Block.popResource(level, _pos, drop);
-							}
-
-							int exp = _state.getExpDrop(level, _pos, null, player, stack);
-							if (exp > 0) {
-								ExperienceOrb.award(level, Vec3.atCenterOf(_pos), exp);
-							}
-
-							level.removeBlock(_pos, false);
-
-							level.playSound(null, _pos, _state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
-							level.levelEvent(
-									null,
-									LevelEvent.PARTICLES_DESTROY_BLOCK,
-									_pos,
-									Block.getId(_state)
-							);
+							OblivionEmeraldToolDestroySingleBlock(level, _pos, _state, stack, player);
 						})
 				);
 			}
@@ -131,6 +110,6 @@ public class OblivionEmeraldShovelItem extends ShovelItem {
 
 	@Override
 	public int getBarColor(@NotNull ItemStack stack) {
-		return BAR_COLOR;
+		return stack.getDamageValue() <= 1000 ? BAR_COLOR_BASE:BAR_COLOR_SCOPE;
 	}
 }

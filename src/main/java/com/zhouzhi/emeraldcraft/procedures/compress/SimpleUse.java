@@ -393,6 +393,10 @@ public class SimpleUse {
                     if (norm > 0) {
                         double ux = dx / norm;
                         double uz = dz / norm;
+                        if (center.x < 0 || center.z < 0) {
+                            ux = -ux;
+                            uz = -uz;
+                        }
                         offset_x = ux * speed;
                         offset_z = uz * speed;
                     }

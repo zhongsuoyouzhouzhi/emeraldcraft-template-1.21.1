@@ -8,12 +8,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Tool;
@@ -21,16 +19,16 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
+
+import static com.zhouzhi.emeraldcraft.procedures.net.Use.OblivionEmeraldToolDestroySingleBlock;
 
 public class OblivionEmeraldAxeItem extends AxeItem {
-	private static final int BAR_COLOR = FastColor.ARGB32.color(0, 249, 93, 255);
+	private static final int BAR_COLOR_BASE = FastColor.ARGB32.color(0, 249, 93, 255);
+	private static final int BAR_COLOR_SCOPE = FastColor.ARGB32.color(0, 255, 155, 255);
 	private static final Tier TOOL_TIER = new Tier() {
 		@Override
 		public int getUses() {
@@ -93,7 +91,10 @@ public class OblivionEmeraldAxeItem extends AxeItem {
 		if (state.getDestroySpeed(level, pos) <= 0.0F) {
 			return;
 		}
-		destroySingleBlock(level, pos, state, stack, player);
+		if (tool.damagePerBlock() > 0) {
+			stack.hurtAndBreak(tool.damagePerBlock(), player, EquipmentSlot.MAINHAND);
+		}
+		OblivionEmeraldToolDestroySingleBlock(level, pos, state, stack, player);
 		if (SimpleUse.isLog(state.getBlock()) && TagChange.getOrCreateComponent(stack, "Scope", false)) {
 			level.getServer().execute(()-> SimpleUse.OperateBlock(
 					level,
@@ -106,37 +107,14 @@ public class OblivionEmeraldAxeItem extends AxeItem {
 						BlockPos _pos = BlockPos.containing(x, y, z);
 						if (_pos.equals(pos)) return;
 						BlockState _state = level.getBlockState(_pos);
-						if (SimpleUse.isLog(_state.getBlock())) {
-							destroySingleBlock(level, _pos, _state, stack, player);
-						}
+						OblivionEmeraldToolDestroySingleBlock(level, _pos, _state, stack, player);
 					}
 			));
 		}
-
-		if (tool.damagePerBlock() > 0) {
-			stack.hurtAndBreak(tool.damagePerBlock(), player, EquipmentSlot.MAINHAND);
-		}
-	}
-
-	private void destroySingleBlock(ServerLevel level, BlockPos pos, BlockState state, ItemStack stack, ServerPlayer player) {
-		List<ItemStack> drops = Block.getDrops(state, level, pos, null, null, stack);
-		for (ItemStack drop : drops) {
-			Block.popResource(level, pos, drop);
-		}
-
-		int exp = state.getExpDrop(level, pos,null, player, stack);
-		if (exp > 0) {
-			ExperienceOrb.award(level, Vec3.atCenterOf(pos), exp);
-		}
-
-		level.removeBlock(pos, false);
-
-		level.levelEvent(null, LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state));
-		level.playSound(null, pos, state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
 	}
 
 	@Override
 	public int getBarColor(@NotNull ItemStack stack) {
-		return BAR_COLOR;
+		return stack.getDamageValue() <= 1000 ? BAR_COLOR_BASE:BAR_COLOR_SCOPE;
 	}
 }

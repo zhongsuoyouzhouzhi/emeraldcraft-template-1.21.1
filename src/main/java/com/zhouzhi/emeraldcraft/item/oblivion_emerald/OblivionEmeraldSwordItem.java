@@ -79,6 +79,8 @@ public class OblivionEmeraldSwordItem extends SwordItem {
 		boolean r = super.hurtEnemy(itemstack, entity, sourceEntity);
         if (entity.getHealth() <= entity.getMaxHealth() * 0.2f) {
 			entity.setSilent(true);
+			entity.setInvisible(true);
+			entity.setInvulnerable(false);
 			killEntity(entity,sourceEntity);
 		}
 		return r;

@@ -3,16 +3,19 @@ package com.zhouzhi.emeraldcraft.procedures.net;
 import com.zhouzhi.emeraldcraft.init.ModEntities;
 import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.init.ModMobEffects;
+import com.zhouzhi.emeraldcraft.init.ModTags;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.PushAway;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -24,12 +27,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.Effect.round_plane;
 
 public class Use {
     public static void EmeraldSwordHitLivingThings(LivingEntity entity){
@@ -62,24 +69,12 @@ public class Use {
         }
     }
 
-    public static void IronToolBeingDamagedPerTick(LevelAccessor world, Entity entity, ItemStack itemstack){
+    public static void IronToolBeingDamagedPerTick(LevelAccessor world, Entity entity, ItemStack itemstack) {
         if (entity != null) {
             if (itemstack.getDamageValue() != 0 && !world.isClientSide()) {
                 if (entity instanceof Player _player && !(_player.getCooldowns().isOnCooldown(itemstack.getItem()))) {
-                    int timer = TagChange.getOrCreateComponent(itemstack,"Timer",600);
-                    timer--;
-
-                    if (timer <= 0) {
-                        if (itemstack.getDamageValue() <= 15) {
-                            itemstack.setDamageValue(0);
-                        } else {
-                            itemstack.setDamageValue(itemstack.getDamageValue() - 15);
-                        }
-                        _player.getCooldowns().addCooldown(itemstack.getItem(), 100);
-
-                        TagChange.saveComponent(itemstack,"Timer",600);
-                    }
-                    TagChange.saveComponent(itemstack,"Timer",timer);
+                    subDamageValue(itemstack, 15);
+                    _player.getCooldowns().addCooldown(itemstack.getItem(), 100);
                 }
             }
         }
@@ -89,18 +84,8 @@ public class Use {
         if (entity != null) {
             if (itemstack.getDamageValue() != 0 && !world.isClientSide()) {
                 if (entity instanceof Player _player && !(_player.getCooldowns().isOnCooldown(itemstack.getItem()))) {
-                    int timer = TagChange.getOrCreateComponent(itemstack,"Timer",100);
-                    timer--;
-                    if (timer <= 0) {
-                        if (itemstack.getDamageValue() <= 100) {
-                            itemstack.setDamageValue(0);
-                        } else {
-                            itemstack.setDamageValue(itemstack.getDamageValue() - 100);
-                        }
-                        _player.getCooldowns().addCooldown(itemstack.getItem(), 20);
-                        TagChange.saveComponent(itemstack,"Timer",100);
-                    }
-                    TagChange.saveComponent(itemstack,"Timer",timer);
+                    subDamageValue(itemstack, 100);
+                    _player.getCooldowns().addCooldown(itemstack.getItem(), 20);
                 }
             }
         }
@@ -157,8 +142,6 @@ public class Use {
             lightning.setVisualOnly(false);
             lightning.setCause(entity instanceof Player ? (ServerPlayer) entity : null);
             serverLevel.addFreshEntity(lightning);
-
-
         }
     }
 
@@ -196,8 +179,8 @@ public class Use {
                     String[] b = {};
                     for (String a : entity.getTags().toArray(b)) {
                         if (a.equals("void")) {
-                            entity.setInvisible(true);
-                            entity.setInvulnerable(false);
+                            entity.setInvisible(true);//隐身嗷
+                            entity.setInvulnerable(false);//别给我无敌嗷
                             entity.setSilent(true);
                             killEntity(entity,source);
                             entity.removeTag("void");
@@ -229,11 +212,15 @@ public class Use {
     public static void killEntity(Entity entity,LivingEntity source) {
         float damage = Float.MAX_VALUE;
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.hurt(source.damageSources().mobAttack(source), damage);
+            livingEntity.hurt(livingEntity.damageSources().mobAttack(source), damage);
             livingEntity.setHealth(0);
-            livingEntity.die(source.damageSources().mobAttack(source));
+            livingEntity.hurt(livingEntity.damageSources().mobAttack(source), damage);
+            livingEntity.die(livingEntity.damageSources().mobAttack(source));
             if (livingEntity.getHealth() > 0f)
                 livingEntity.hurt(new DamageSource(entity.getCommandSenderWorld().holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), damage);
+            if (!(TagChange.getOrCreateComponent(livingEntity,"ShouldBeKilled",false) && livingEntity instanceof Player)) {
+                TagChange.saveComponent(livingEntity,"ShouldBeKilled",true);
+            }
         } else entity.kill();
     }
 
@@ -259,9 +246,7 @@ public class Use {
                 EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
                 for (EquipmentSlot slot : slots) {
                     ItemStack itemstack = player.getItemBySlot(slot);
-                    if (itemstack.getDamageValue() > 0) {
-                        itemstack.setDamageValue(itemstack.getDamageValue() - 1);
-                    }
+                    subDamageValue(itemstack,1);
                 }
             }
         }
@@ -307,7 +292,6 @@ public class Use {
          * 自动解除暂停
          */
         public static void tickPausedEntities(ServerLevel level, int time) {
-            if (level.isClientSide()) return;
             long currentTick = level.getGameTime();
             for (Entity entity : level.getEntities().getAll()) {
                 if (entity instanceof LivingEntity livingEntity) {
@@ -342,7 +326,9 @@ public class Use {
     public static int OblivionEmeraldSwordRight_click(Player player) {
         int count = 0;
         for (LivingEntity entity:getEntitiesInCrosshair(player,32,Math.PI / 6)) {
-            entity.setSilent(true);
+            entity.setSilent(true);//你得禁音不然吵
+            entity.setInvisible(true);//得隐身啊
+            entity.setInvulnerable(false);//不能无敌啊，无敌那不白写下面一段了
             killEntity(entity, player);
             count++;
             if (entity.getType().equals(EntityType.ENDER_DRAGON))
@@ -453,5 +439,64 @@ public class Use {
         }
 
         return !empty;
+    }
+
+    public static void OblivionEmeraldToolDestroySingleBlock(ServerLevel level, BlockPos pos, BlockState state, ItemStack stack, ServerPlayer player) {
+        List<ItemStack> drops = Block.getDrops(state, level, pos, null, null, stack);
+        for (ItemStack drop : drops) {
+            Block.popResource(level, pos, drop);
+        }
+
+        int exp = state.getExpDrop(level, pos, null, player, stack);
+        if (exp > 0) {
+            ExperienceOrb.award(level, Vec3.atCenterOf(pos), exp);
+        }
+
+        level.removeBlock(pos, false);
+
+        Vec3 offset = new Vec3(-0.005,0,0);
+        round_plane(
+                level,
+                ParticleTypes.END_ROD,
+                pos.getCenter(),
+                0.25,
+                6,
+                offset,
+                0.2,
+                true
+        );
+        level.playSound(null, pos, state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+
+        if (stack.getDamageValue() > 1000) {
+            subDamageValue(stack,20);
+        } else if (stack.getDamageValue() > 0) {
+            ItemStack offhand_itemstack = player.getItemBySlot(EquipmentSlot.OFFHAND);
+            ItemStack[] aaaa = {
+                    player.getItemBySlot(EquipmentSlot.HEAD),
+                    player.getItemBySlot(EquipmentSlot.CHEST),
+                    player.getItemBySlot(EquipmentSlot.LEGS),
+                    player.getItemBySlot(EquipmentSlot.FEET)
+            };
+            if (SimpleUse.Random_static.nextBoolean()) {
+                subDamageValue(stack,2);
+            } else {
+                stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+            }
+            if (offhand_itemstack.is(ModTags.OBLIVION_EMERALD_TOOLS)) {
+                subDamageValue(offhand_itemstack,20);
+            } else if (offhand_itemstack.is(ModTags.VOID_EMERALD_TOOLS) || offhand_itemstack.is(ModTags.VOID_EMERALD_ARMOR)) {
+                subDamageValue(offhand_itemstack,100);
+            }
+            for (ItemStack a:aaaa) {
+                if (a.is(ModTags.VOID_EMERALD_ARMOR)) {
+                    subDamageValue(a,100);
+                }
+            }
+        }
+    }
+
+    public static void subDamageValue(ItemStack stack, int value) {
+        if (stack.getDamageValue() > value) stack.setDamageValue(stack.getDamageValue() - value);
+        else stack.setDamageValue(0);
     }
 }
