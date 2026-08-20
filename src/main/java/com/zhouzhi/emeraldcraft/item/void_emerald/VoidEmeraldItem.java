@@ -17,6 +17,7 @@ import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -58,7 +59,7 @@ public class VoidEmeraldItem extends Item {
             world.explode(livingEntity, x, y, z, 32, Level.ExplosionInteraction.BLOCK);
         }
         SimpleUse.OperateBlock(x, y, z, a, (blockPos, bx, by, bz) -> {
-            if (world.getBlockState(blockPos).getBlock() == net.minecraft.world.level.block.Blocks.AIR) return;
+            if (world.getBlockState(blockPos).isEmpty()) return;
             if (!world.isClientSide() && world instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(
                         ParticleTypes.END_ROD,
@@ -71,7 +72,7 @@ public class VoidEmeraldItem extends Item {
             if (Math.random() >= 0.75) {
                 Block.dropResources(world.getBlockState(blockPos), world, blockPos, null);
             }
-            world.setBlockAndUpdate(blockPos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+            world.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
         });
     }
 

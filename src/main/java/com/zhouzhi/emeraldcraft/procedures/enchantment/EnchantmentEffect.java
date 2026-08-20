@@ -206,7 +206,7 @@ public class EnchantmentEffect {
                         LightLayer.BLOCK,
                         player.getOnPos().above()
                 );
-                if (Brightness < 5f && level.getBlockState(player.getOnPos().above()).equals(Blocks.AIR.defaultBlockState()) && !level.getBlockState(player.getOnPos()).equals(Blocks.AIR.defaultBlockState())) {
+                if (Brightness < 5f && level.getBlockState(player.getOnPos().above()).isEmpty() && !level.getBlockState(player.getOnPos()).isEmpty()) {
                     double damage = enchantmentLevel == 1 ? 0.0075 : 0.0025;
                     damage *= weapon.getMaxDamage();
                     if (level instanceof ServerLevel _level)

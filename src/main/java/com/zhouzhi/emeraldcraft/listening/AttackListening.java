@@ -1,5 +1,6 @@
 package com.zhouzhi.emeraldcraft.listening;
 
+import com.zhouzhi.emeraldcraft.entity.ThrownInfernoEmeraldTrident;
 import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.init.ModTags;
 import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldArmorItem;
@@ -7,28 +8,34 @@ import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldItem;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 
-import java.util.Random;
+import static com.zhouzhi.emeraldcraft.listening.MiningListening.infernoChange;
+import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.Random_static.nextBoolean;
+import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.Random_static.nextPercent;
 
 public class AttackListening {
-    private static final Random random = new Random();
     @SubscribeEvent
     public void LavaEmeraldToolAndInfernoEmeraldToolAttack(LivingDamageEvent.Pre event){
         LivingEntity target = event.getEntity();
-        Level level = event.getEntity().getCommandSenderWorld();
+        Level level = target.getCommandSenderWorld();
         if (level.isClientSide()) {
             return;
         }
@@ -43,7 +50,7 @@ public class AttackListening {
     @SubscribeEvent
     public void LavaEmeraldT2ToolAttack(LivingDamageEvent.Pre event){
         LivingEntity target = event.getEntity();
-        Level level = event.getEntity().getCommandSenderWorld();
+        Level level = target.getCommandSenderWorld();
         if (level.isClientSide()) {
             return;
         }
@@ -60,7 +67,7 @@ public class AttackListening {
     @SubscribeEvent
     public void InfernoEmeraldSwordAttack(LivingDamageEvent.Post event){
         LivingEntity target = event.getEntity();
-        Level level = event.getEntity().getCommandSenderWorld();
+        Level level = target.getCommandSenderWorld();
         if (level.isClientSide()) {
             return;
         }
@@ -115,6 +122,105 @@ public class AttackListening {
     }
 
     @SubscribeEvent
+    public void ThrownInfernoEmeraldTridentAttack(LivingDamageEvent.Post event){
+        LivingEntity target = event.getEntity();
+        Level level = target.getCommandSenderWorld();
+        if (level.isClientSide()) {
+            return;
+        }
+        DamageSource source = event.getSource();
+        if (source.is(DamageTypes.TRIDENT)) {
+            if (source.getDirectEntity() instanceof ThrownInfernoEmeraldTrident trident) {
+                if (trident.special_skill) {
+                    Entity attacker = source.getEntity();
+                    if (level instanceof ServerLevel serverLevel) {
+                        AABB aabb = new AABB(target.getX() - 5,target.getY() - 1, target.getZ() - 5,target.getX() + 5,target.getY() + 1,target.getZ() + 5);
+                        serverLevel.getEntitiesOfClass(LivingEntity.class, aabb).forEach(entity -> {
+                            if (entity.is(target) || (attacker != null && entity.is(attacker))) {
+                                return;
+                            }
+                            entity.hurt(entity.damageSources().generic(),30F);
+                            entity.lavaHurt();
+                        });
+                        // region 特效
+                        Vec3 offset = new Vec3(1,0,0);
+                        SimpleUse.Effect.round_plane(
+                                serverLevel,
+                                ParticleTypes.FLAME,
+                                target.position(),
+                                1,
+                                60,
+                                offset,
+                                0.5,
+                                true);
+                        SimpleUse.Effect.round_plane(
+                                serverLevel,
+                                ParticleTypes.FLAME,
+                                target.position(),
+                                0.5,
+                                60,
+                                offset,
+                                0.5,
+                                true);
+                        SimpleUse.Effect.round_plane(
+                                serverLevel,
+                                ParticleTypes.FLAME,
+                                target.position(),
+                                0.25,
+                                60,
+                                offset,
+                                0.5,
+                                true);
+                        SimpleUse.Effect.round_plane(
+                                serverLevel,
+                                ParticleTypes.FLAME,
+                                target.position(),
+                                0.015625,
+                                60,
+                                offset,
+                                0.5,
+                                true);
+                        // endregion
+                        // region 焚化方块
+                        BlockPos pos = target.getOnPos().above();
+                        SimpleUse.OperateBlock(
+                                serverLevel,
+                                pos.getX(), pos.getY(), pos.getZ(),
+                                5,
+                                1,
+                                (block, X, Y, Z) -> {
+                                    if (nextBoolean()) {
+                                        if (block.isEmpty(block.defaultBlockState())) {
+                                            return;
+                                        }
+                                        infernoChange(X,Y,Z,pos,serverLevel);
+                                    }
+                                });
+                        // endregion
+                    }
+                } else {
+                    target.hurt(target.damageSources().generic(),75F);
+                    // region 特效
+                    if (level instanceof ServerLevel serverLevel) {
+                        Vec3 offset = new Vec3(0,-1,0);
+                        SimpleUse.Effect.round_plane(
+                                serverLevel,
+                                ParticleTypes.FLAME,
+                                target.position().add(0,2,0),
+                                0.75,
+                                60,
+                                offset,
+                                0.125,
+                                false
+                        );
+                    }
+                    // endregion
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
     public void VoidEmeraldArmorBeAttacked(LivingIncomingDamageEvent event) {
         LivingEntity target = event.getEntity();
         Level level = target.getCommandSenderWorld();
@@ -149,13 +255,13 @@ public class AttackListening {
                         }
                     }
                 } else {
-                    if (random.nextInt(100) < 80) {
+                    if (nextPercent(80)) {
                         event.setCanceled(true);
                         for (ItemStack itemStack : armor) {
                             itemStack.hurtAndBreak(1, serverLevel, null, item -> {
                             });
                         }
-                    } else if (random.nextInt(100) < 50){
+                    } else if (nextBoolean()) {
                         event.setAmount(event.getAmount() * 0.2f);
                         for (ItemStack itemStack : armor) {
                             itemStack.hurtAndBreak(4, serverLevel, null, item -> {
@@ -165,7 +271,7 @@ public class AttackListening {
                 }
             }
         } else if (van > 0) {
-            if (random.nextDouble(100) < van * 17.5) {
+            if (nextPercent(van * 17.5)) {
                 event.setCanceled(true);
                 if (level instanceof ServerLevel serverLevel) {
                     for (ItemStack itemStack : armor) {
@@ -183,7 +289,7 @@ public class AttackListening {
     public void ShieldBlock(LivingShieldBlockEvent event) {
         if (event.isCanceled()) return;
         LivingEntity livingEntity = event.getEntity();
-        Level level = event.getEntity().getCommandSenderWorld();
+        Level level = livingEntity.getCommandSenderWorld();
         if (level.isClientSide()) {
             return;
         } else if (!event.getBlocked()) {
@@ -215,7 +321,7 @@ public class AttackListening {
     @SubscribeEvent
     public void GenesisEmeraldSwordAttack(LivingDamageEvent.Pre event){
         LivingEntity target = event.getEntity();
-        Level level = event.getEntity().getCommandSenderWorld();
+        Level level = target.getCommandSenderWorld();
         if (level.isClientSide()) {
             return;
         }
