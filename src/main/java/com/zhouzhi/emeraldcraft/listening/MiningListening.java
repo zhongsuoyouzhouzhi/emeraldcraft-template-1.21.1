@@ -90,24 +90,7 @@ public class MiningListening {
                                 block -> SimpleUse.isCurrentTool(mainHandItem, block.defaultBlockState()),
                                 (block, X, Y, Z) -> {
                                     if (SimpleUse.Random_static.nextPercent(40)) {
-                                        if (X == pos.getX() && Y == pos.getY() && Z == pos.getZ()) { //这踏马有病吧换成block.defaultBlockState().equals(state)整个方法就断不了点了我恨你
-                                            return; //我就re个turn也犯毛病是不是 缺心眼儿啊?
-                                        }
-                                        if (block.defaultBlockState().is(Blocks.CRYING_OBSIDIAN) || block.defaultBlockState().is(Blocks.MAGMA_BLOCK) || block.defaultBlockState().is(Blocks.COAL_BLOCK) || block.defaultBlockState().is(Blocks.MUD)) {
-                                            return;
-                                        } else if (block.defaultBlockState().is(Tags.Blocks.ORES)) {
-                                            return;
-                                        }
-
-                                        if (block.defaultBlockState().is(Blocks.OBSIDIAN)) {
-                                            serverLevel.setBlockAndUpdate(BlockPos.containing(X, Y, Z), Blocks.CRYING_OBSIDIAN.defaultBlockState());
-                                        } else if (block.defaultBlockState().is(BlockTags.LOGS)) {
-                                            serverLevel.setBlockAndUpdate(BlockPos.containing(X, Y, Z), Blocks.COAL_BLOCK.defaultBlockState());
-                                        } else if (block.defaultBlockState().is(Blocks.DIRT)) {
-                                            serverLevel.setBlockAndUpdate(BlockPos.containing(X, Y, Z), Blocks.MUD.defaultBlockState());
-                                        } else {
-                                            serverLevel.setBlockAndUpdate(BlockPos.containing(X, Y, Z), Blocks.MAGMA_BLOCK.defaultBlockState());
-                                        }
+                                        infernoChange(X,Y,Z,pos,serverLevel);
                                         Vec3 center = new Vec3(X + 0.5, Y + 0.5, Z + 0.5);
                                         Vec3 aimCenter = new Vec3(0.1,0.5,0);
                                         SimpleUse.Effect.round_plane(serverLevel, ParticleTypes.SMALL_FLAME, center, 0.5, 30, aimCenter, 0.2, true);
@@ -116,6 +99,30 @@ public class MiningListening {
                     }
                 }
             }
+        }
+    }
+
+    public static void infernoChange(int X,int Y,int Z,BlockPos pos,ServerLevel serverLevel) {
+        if (X == pos.getX() && Y == pos.getY() && Z == pos.getZ()) { //这踏马有病吧换成block.defaultBlockState().equals(state)整个方法就断不了点了我恨你
+            return; //我就re个turn也犯毛病是不是 缺心眼儿啊?
+        }
+        BlockPos blockPos = new BlockPos(X, Y, Z);
+        BlockState blockState = serverLevel.getBlockState(blockPos);
+        if (blockState.is(Blocks.CRYING_OBSIDIAN) || blockState.is(Blocks.MAGMA_BLOCK) || blockState.is(Blocks.COAL_BLOCK) || blockState.is(Blocks.MUD) || blockState.is(Blocks.SOUL_SAND)) {
+            return;
+        } else if (blockState.is(Tags.Blocks.ORES)) {
+            return;
+        }
+        if (blockState.is(Blocks.OBSIDIAN)) {
+            serverLevel.setBlockAndUpdate(BlockPos.containing(X, Y, Z), Blocks.CRYING_OBSIDIAN.defaultBlockState());
+        } else if (blockState.is(BlockTags.LOGS)) {
+            serverLevel.setBlockAndUpdate(BlockPos.containing(X, Y, Z), Blocks.COAL_BLOCK.defaultBlockState());
+        } else if (blockState.is(Blocks.DIRT)) {
+            serverLevel.setBlockAndUpdate(BlockPos.containing(X, Y, Z), Blocks.MUD.defaultBlockState());
+        } else if (blockState.is(Blocks.SAND)) {
+            serverLevel.setBlockAndUpdate(BlockPos.containing(X, Y, Z), Blocks.SOUL_SAND.defaultBlockState());
+        } else {
+            serverLevel.setBlockAndUpdate(BlockPos.containing(X, Y, Z), Blocks.MAGMA_BLOCK.defaultBlockState());
         }
     }
 

@@ -325,7 +325,7 @@ public class Use {
 
     public static int OblivionEmeraldSwordRight_click(Player player) {
         int count = 0;
-        for (LivingEntity entity:getEntitiesInCrosshair(player,32,Math.PI / 6)) {
+        for (LivingEntity entity:getEntitiesInCrosshair(player,64,Math.PI / 6)) {
             entity.setSilent(true);//你得禁音不然吵
             entity.setInvisible(true);//得隐身啊
             entity.setInvulnerable(false);//不能无敌啊，无敌那不白写下面一段了

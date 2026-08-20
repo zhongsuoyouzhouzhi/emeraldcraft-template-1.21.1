@@ -105,6 +105,7 @@ public class ModItems {
 	public static final DeferredItem<Item> LAVA_EMERALD_PICKAXE_T2;
 	public static final DeferredItem<Item> LAVA_EMERALD_SHOVEL_T2;
 	public static final DeferredItem<Item> LAVA_EMERALD_HOE_T2;
+	public static final DeferredItem<Item> INFERNO_EMERALD_TRIDENT;
 	static {
 		REFINED_EMERALD = REGISTRY.register("refined_emerald", RefinedEmeraldItem::new);
 		REFINED_EMERALD_BLOCK = block(ModBlocks.REFINED_EMERALD_BLOCK, new Item.Properties().rarity(Rarity.RARE));
@@ -185,6 +186,11 @@ public class ModItems {
 		INFERNO_EMERALD_AXE = REGISTRY.register("inferno_emerald_axe", InfernoEmeraldAxeItem::new);
 		INFERNO_EMERALD_PICKAXE = REGISTRY.register("inferno_emerald_pickaxe", InfernoEmeraldPickaxeItem::new);
 		INFERNO_EMERALD_SHOVEL = REGISTRY.register("inferno_emerald_shovel", InfernoEmeraldShovelItem::new);
+		INFERNO_EMERALD_TRIDENT = REGISTRY.register("inferno_emerald_trident", () -> new InfernoEmeraldTridentItem(
+						new Item.Properties()
+								.durability(39815)
+								.rarity(Rarity.EPIC)
+								.stacksTo(1)));
         OBLIVION_EMERALD = REGISTRY.register("oblivion_emerald", OblivionEmeraldItem::new);
 		OBLIVION_EMERALD_SWORD = REGISTRY.register("oblivion_emerald_sword", OblivionEmeraldSwordItem::new);
 		OBLIVION_EMERALD_AXE = REGISTRY.register("oblivion_emerald_axe", OblivionEmeraldAxeItem::new);

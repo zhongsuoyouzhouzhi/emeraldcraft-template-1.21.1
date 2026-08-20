@@ -96,6 +96,7 @@ public class ModTabs {
                 tabData.accept(ModItems.INFERNO_EMERALD_AXE.get());
                 tabData.accept(ModItems.INFERNO_EMERALD_PICKAXE.get());
                 tabData.accept(ModItems.INFERNO_EMERALD_SHOVEL.get());
+                tabData.accept(ModItems.INFERNO_EMERALD_TRIDENT.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_SWORD.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_AXE.get());
@@ -186,6 +187,7 @@ public class ModTabs {
             tabData.accept(ModItems.GENESIS_EMERALD_AXE.get());
             tabData.accept(ModItems.INFERNO_EMERALD_SWORD.get());
             tabData.accept(ModItems.INFERNO_EMERALD_AXE.get());
+            tabData.accept(ModItems.INFERNO_EMERALD_TRIDENT.get());
             tabData.accept(ModItems.OBLIVION_EMERALD_SWORD.get());
             tabData.accept(ModItems.OBLIVION_EMERALD_AXE.get());
 		} else if (tabData.getTabKey() == CreativeModeTabs.INGREDIENTS) {

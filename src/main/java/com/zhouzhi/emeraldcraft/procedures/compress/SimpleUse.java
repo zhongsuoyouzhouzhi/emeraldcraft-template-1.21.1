@@ -169,6 +169,24 @@ public class SimpleUse {
         return count;
     }
 
+    public static int OperateBlock(LevelAccessor world, int x, int y, int z, int xz_radius, int y_radius, Function.Function_BlockOperation lambdaOperate) {
+        int count = 0;
+        for (int dx = -xz_radius; dx <= xz_radius; dx++) {
+            for (int dy = -y_radius; dy <= y_radius; dy++) {
+                for (int dz = -xz_radius; dz <= xz_radius; dz++) {
+                    int blockX = x + dx;
+                    int blockY = y + dy;
+                    int blockZ = z + dz;
+                    Block block = (world.getBlockState(BlockPos.containing(blockX, blockY, blockZ))).getBlock();
+                    lambdaOperate.run(block, blockX, blockY, blockZ);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+
     public static int OperateBlock(LevelAccessor world, int x, int y, int z, int xRadius, int yRadius, int zRadius, Predicate<Block> condition, Function.Function_BlockOperation lambdaOperate) {
         int count = 0;
         for (int dx = -xRadius; dx <= xRadius; dx++) {
@@ -365,12 +383,12 @@ public class SimpleUse {
             return ThreadLocalRandom.current().nextBoolean();
         }
 
-        public static int nextInt(int min, int max) {
-            return ThreadLocalRandom.current().nextInt(min, max);
-        }
-
         public static boolean nextPercent(double percent) {
             return ThreadLocalRandom.current().nextDouble() < percent / 100;
+        }
+
+        public static boolean nextPercent(int percent) {
+            return ThreadLocalRandom.current().nextInt(0,100) < percent;
         }
     }
 
@@ -393,7 +411,7 @@ public class SimpleUse {
                     if (norm > 0) {
                         double ux = dx / norm;
                         double uz = dz / norm;
-                        if (center.x < 0 || center.z < 0) {
+                        if (offset_x < 0 || offset_z < 0) {
                             ux = -ux;
                             uz = -uz;
                         }

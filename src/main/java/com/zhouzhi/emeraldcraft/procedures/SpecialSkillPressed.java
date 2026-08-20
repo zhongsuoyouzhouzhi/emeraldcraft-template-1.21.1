@@ -152,14 +152,14 @@ public class SpecialSkillPressed {
                         }
                     }
                 }
-            } else if (itemstack.is(ModItems.INFERNO_EMERALD_AXE) || itemstack.is(ModItems.INFERNO_EMERALD_PICKAXE) || itemstack.is(ModItems.INFERNO_EMERALD_SHOVEL)) {
+            } else if (itemstack.is(ModItems.INFERNO_EMERALD_AXE) || itemstack.is(ModItems.INFERNO_EMERALD_PICKAXE) || itemstack.is(ModItems.INFERNO_EMERALD_SHOVEL) || itemstack.is(ModItems.INFERNO_EMERALD_TRIDENT)) {
                 boolean tag = getOrCreateComponent(itemstack,"Inferno",false);
                 saveComponent(itemstack,"Inferno",!tag);
                 if (entity instanceof Player player) {
                     player.getCooldowns().addCooldown(itemstack.getItem(), 10);
                     sendOpen(player, getOrCreateComponent(itemstack, "Inferno", true));
                 }
-            } else if (itemstack.is(ModItems.OBLIVION_EMERALD_AXE) || itemstack.is(ModItems.OBLIVION_EMERALD_PICKAXE) || itemstack.is(ModItems.OBLIVION_EMERALD_SHOVEL) || itemstack.is(ModItems.VOID_EMERALD_HOE)) {
+            } else if (itemstack.is(ModItems.OBLIVION_EMERALD_AXE) || itemstack.is(ModItems.OBLIVION_EMERALD_PICKAXE) || itemstack.is(ModItems.OBLIVION_EMERALD_SHOVEL)) {
                 boolean tag = getOrCreateComponent(itemstack, "Scope", false);
                 saveComponent(itemstack, "Scope", !tag);
                 if (entity instanceof Player _player) {

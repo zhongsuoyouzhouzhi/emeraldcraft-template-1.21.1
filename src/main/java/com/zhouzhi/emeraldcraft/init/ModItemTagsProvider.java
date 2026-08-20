@@ -79,7 +79,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .add(ModItems.INFERNO_EMERALD_PICKAXE.get())
                 .add(ModItems.INFERNO_EMERALD_AXE.get())
                 .add(ModItems.INFERNO_EMERALD_SHOVEL.get())
-                /*.add(ModItems.INFERNO_EMERALD_HOE.get())*/;
+                /*.add(ModItems.INFERNO_EMERALD_HOE.get())*/
+                .add(ModItems.INFERNO_EMERALD_TRIDENT.get());
         this.tag(ModTags.OBLIVION_EMERALD_TOOLS)
                 .add(ModItems.OBLIVION_EMERALD_SWORD.get())
                 .add(ModItems.OBLIVION_EMERALD_PICKAXE.get())
