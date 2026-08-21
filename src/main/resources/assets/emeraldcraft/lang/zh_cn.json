@@ -125,5 +125,7 @@
   "message.emeraldcraft.warning_3": "也许，我们可以做点别的事？",
   "message.emeraldcraft.warning_4": "应该也许可能大概，你最好专注一些有意义的事情而不是像这样无聊的东西",
   "message.emeraldcraft.warning_5_1": "与",
-  "message.emeraldcraft.warning_5_2": "相互轰击，最终造成剧烈爆炸"
+  "message.emeraldcraft.warning_5_2": "相互轰击，最终造成剧烈爆炸",
+  "jei.category.emeraldcraft.block_interaction": "交互",
+  "emi.category.emeraldcraft.block_interaction": "交互"
 }

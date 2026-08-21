@@ -30,7 +30,6 @@ public class CustomTridentRenderer extends EntityRenderer<ThrownTrident> {
     @Override
     public void render(ThrownTrident entity, float entityYaw, float partialTicks,
                        PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight) {
-        System.out.println("CustomTridentRenderer.render() called for entity: " + entity);
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot()) + 90.0F));

@@ -190,7 +190,8 @@ public class ModItems {
 						new Item.Properties()
 								.durability(39815)
 								.rarity(Rarity.EPIC)
-								.stacksTo(1)));
+								.stacksTo(1)
+								.fireResistant()));
         OBLIVION_EMERALD = REGISTRY.register("oblivion_emerald", OblivionEmeraldItem::new);
 		OBLIVION_EMERALD_SWORD = REGISTRY.register("oblivion_emerald_sword", OblivionEmeraldSwordItem::new);
 		OBLIVION_EMERALD_AXE = REGISTRY.register("oblivion_emerald_axe", OblivionEmeraldAxeItem::new);

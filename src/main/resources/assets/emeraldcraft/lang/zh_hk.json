@@ -125,5 +125,7 @@
   "message.emeraldcraft.warning_3": "也許，我們可以做點別的事？",
   "message.emeraldcraft.warning_4": "也許，你最好專注一些有意義的事情而不是像這樣無聊的東西",
   "message.emeraldcraft.warning_5_1": "與",
-  "message.emeraldcraft.warning_5_2": "相互轟擊，最終造成劇烈爆炸"
+  "message.emeraldcraft.warning_5_2": "相互轟擊，最終造成劇烈爆炸",
+  "jei.category.emeraldcraft.block_interaction": "互動",
+  "emi.category.emeraldcraft.block_interaction": "互動"
 }
