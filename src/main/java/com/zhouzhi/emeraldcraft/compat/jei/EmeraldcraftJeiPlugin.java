@@ -12,7 +12,7 @@ import net.neoforged.fml.ModList;
 import java.util.List;
 
 @JeiPlugin
-public class JEIPlugin implements IModPlugin {
+public class EmeraldcraftJeiPlugin implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {

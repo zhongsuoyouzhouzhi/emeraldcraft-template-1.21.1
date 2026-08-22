@@ -23,7 +23,7 @@ public class BlockInteractionEmiRecipe implements EmiRecipe {
 
     @Override
     public EmiRecipeCategory getCategory() {
-        return EMIPlugin.BLOCK_INTERACTION_CATEGORY;
+        return EmeraldcraftEmiPlugin.BLOCK_INTERACTION_CATEGORY;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class BlockInteractionEmiRecipe implements EmiRecipe {
 
     @Override
     public int getDisplayHeight() {
-        return 40;
+        return 50;
     }
 
     @Override

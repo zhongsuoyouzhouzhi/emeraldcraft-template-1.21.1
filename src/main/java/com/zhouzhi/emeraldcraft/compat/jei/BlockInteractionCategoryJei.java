@@ -19,7 +19,7 @@ public class BlockInteractionCategoryJei implements IRecipeCategory<BlockInterac
     private final IDrawable icon;
 
     public BlockInteractionCategoryJei(IGuiHelper guiHelper) {
-        this.background = guiHelper.createBlankDrawable(100, 40);
+        this.background = guiHelper.createBlankDrawable(100, 50);
         this.icon = guiHelper.createDrawableItemStack(ModBlocks.REFINED_EMERALD_BLOCK.toStack());
     }
 

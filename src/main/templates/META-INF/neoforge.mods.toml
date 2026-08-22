@@ -109,3 +109,10 @@ type="optional"
 versionRange="[1.1.23,)"
 ordering="AFTER"
 side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="roughlyenoughitems"
+type="optional"
+versionRange="[16.0.788,)"
+ordering="AFTER"
+side="BOTH"
