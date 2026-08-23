@@ -127,5 +127,6 @@
   "message.emeraldcraft.warning_5_1": "與",
   "message.emeraldcraft.warning_5_2": "相互轟擊，最終造成劇烈爆炸",
   "jei.category.emeraldcraft.block_interaction": "互動",
-  "emi.category.emeraldcraft.block_interaction": "互動"
+  "emi.category.emeraldcraft.block_interaction": "互動",
+  "curios.identifier.extra": "補充"
 }

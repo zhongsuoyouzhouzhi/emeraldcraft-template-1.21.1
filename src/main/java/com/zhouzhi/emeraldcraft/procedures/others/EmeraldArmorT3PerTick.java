@@ -47,7 +47,7 @@ public class EmeraldArmorT3PerTick {
             if (entity instanceof Player _player)
                 _player.getCooldowns().addCooldown(itemstack.getItem(), 40);
         }
-        if (entity.isInWater()) {
+        if (entity.isUnderWater()) {
 			if (entity.getAirSupply() <= 10) {
 				entity.setAirSupply(300);
 				if (entity instanceof Player _player && world instanceof ServerLevel _level) {

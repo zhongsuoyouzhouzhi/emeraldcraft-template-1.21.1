@@ -3,6 +3,7 @@ package com.zhouzhi.emeraldcraft.listening;
 import com.zhouzhi.emeraldcraft.entity.ThrownInfernoEmeraldTrident;
 import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.init.ModTags;
+import com.zhouzhi.emeraldcraft.item.oblivion_emerald.OblivionEmeraldItem;
 import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldArmorItem;
 import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldItem;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
@@ -26,6 +27,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import static com.zhouzhi.emeraldcraft.listening.MiningListening.infernoChange;
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.Random_static.nextBoolean;
@@ -229,6 +231,21 @@ public class AttackListening {
             return;
         }
         float damage = event.getAmount();
+
+        CuriosApi.getCuriosInventory(target).ifPresent(inventory -> {
+            inventory.findCurios(stack ->
+                    stack.getItem() instanceof OblivionEmeraldItem
+            ).forEach(stack -> {
+                if (damage > 10F) {
+                    if (target.level() instanceof ServerLevel serverLevel) {
+                        event.setCanceled(true);
+                        stack.stack().hurtAndBreak(1, serverLevel, target, item -> {
+                        });
+                    }
+                }
+            });
+        });
+
         ItemStack[] armor = {
                 target.getItemBySlot(EquipmentSlot.HEAD),
                 target.getItemBySlot(EquipmentSlot.CHEST),

@@ -20,7 +20,7 @@ import static com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldItem.explode
 
 public class OblivionEmeraldItem extends Item {
     public OblivionEmeraldItem() {
-        super(new Properties().rarity(Rarity.EPIC).fireResistant());
+        super(new Properties().rarity(Rarity.EPIC).fireResistant().durability(500));
     }
     @Override
     @MethodsReturnNonnullByDefault

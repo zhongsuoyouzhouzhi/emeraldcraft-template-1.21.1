@@ -9,6 +9,7 @@ ext {
     mc_version = "1.21.1"
     jei_version = "19.20.0.240"
     rei_version = "lZgX5u2n"
+    curios_api_version = "yohfFbgD"
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -145,6 +146,7 @@ dependencies {
     compileOnly "maven.modrinth:nfn13YXA:${rei_version}"                        //REI
     compileOnly "maven.modrinth:lhGA9TYQ:ZxYGwlk0"                              //Architectury API
     compileOnly "me.shedaniel.cloth:basic-math:0.6.0"
+
     // endregion
 
 
@@ -164,7 +166,7 @@ dependencies {
     // endregion
 
 
-
+    implementation  "maven.modrinth:vvuO3ImH:${curios_api_version}"                //Curios API
 
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository

@@ -127,5 +127,6 @@
   "message.emeraldcraft.warning_5_1": " and ",
   "message.emeraldcraft.warning_5_2": " bombarded each other, causing a violent explosion.",
   "jei.category.emeraldcraft.block_interaction": "Interaction",
-  "emi.category.emeraldcraft.block_interaction": "Interaction"
+  "emi.category.emeraldcraft.block_interaction": "Interaction",
+  "curios.identifier.extra": "Extra"
 }

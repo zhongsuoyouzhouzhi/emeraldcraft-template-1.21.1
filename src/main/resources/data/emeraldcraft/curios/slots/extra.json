@@ -1,0 +1,7 @@
+{
+  "size": 2,
+  "operation": "ADD",
+  "order": 0,
+  "render_toggle": true,
+  "icon": "curios:slot/empty_curio_slot"
+}

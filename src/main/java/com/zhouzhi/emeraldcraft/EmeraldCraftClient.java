@@ -1,6 +1,5 @@
 package com.zhouzhi.emeraldcraft;
 
-import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -25,7 +24,8 @@ public class EmeraldCraftClient {
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
         // Some client setup code
-        EmeraldCraft.LOGGER.info("HELLO FROM CLIENT SETUP");
-        EmeraldCraft.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        //EmeraldCraft.LOGGER.info("HELLO FROM CLIENT SETUP");
+        //EmeraldCraft.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        EmeraldCraft.LOGGER.info("EmeraldCraft Loaded!");
     }
 }
