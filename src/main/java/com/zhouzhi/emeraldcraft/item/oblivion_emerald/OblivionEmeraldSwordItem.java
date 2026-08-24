@@ -11,7 +11,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -24,8 +23,6 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-
-import static com.zhouzhi.emeraldcraft.procedures.net.Use.killEntity;
 
 public class OblivionEmeraldSwordItem extends SwordItem {
 	private static final int BAR_COLOR = FastColor.ARGB32.color(0, 91, 1, 117);
@@ -75,24 +72,12 @@ public class OblivionEmeraldSwordItem extends SwordItem {
 	}
 
 	@Override
-	public boolean hurtEnemy(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault LivingEntity entity,@ParametersAreNonnullByDefault LivingEntity sourceEntity) {
-		boolean r = super.hurtEnemy(itemstack, entity, sourceEntity);
-        if (entity.getHealth() <= entity.getMaxHealth() * 0.2f) {
-			entity.setSilent(true);
-			entity.setInvisible(true);
-			entity.setInvulnerable(false);
-			killEntity(entity,sourceEntity);
-		}
-		return r;
-	}
-
-	@Override
 	@MethodsReturnNonnullByDefault
 	public InteractionResultHolder<ItemStack> use(@ParametersAreNonnullByDefault Level world,@ParametersAreNonnullByDefault Player entity,@ParametersAreNonnullByDefault InteractionHand hand) {
 		InteractionResultHolder<ItemStack> itemStackInteractionResultHolder = super.use(world, entity, hand);
-        entity.getCooldowns().addCooldown(this, 80);
 		ItemStack itemStack = entity.getItemInHand(hand);
 		if (Use.OblivionEmeraldSwordRight_click(entity) != 0) {
+			entity.getCooldowns().addCooldown(this, 80);
 			if (!SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity) && entity.level() instanceof ServerLevel serverLevel) {
 				itemStack.hurtAndBreak(250, serverLevel, entity, item -> {
 				});

@@ -43,6 +43,22 @@ public class VoidMobEffect extends MobEffect {
         }
     }
 
+    @Override
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+        return true;
+    }
+
+    @Override
+    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+        if (livingEntity instanceof Player _player) {
+            if (!_player.getAbilities().mayfly) {
+                _player.getAbilities().mayfly = true;
+                _player.onUpdateAbilities();
+            }
+        }
+        return true;
+    }
+
     @SubscribeEvent
     public static void registerMobEffectExtensions(RegisterClientExtensionsEvent event) {
         event.registerMobEffect(new IClientMobEffectExtensions() {

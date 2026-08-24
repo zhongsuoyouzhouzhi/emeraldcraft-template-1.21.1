@@ -29,9 +29,12 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static com.zhouzhi.emeraldcraft.listening.MiningListening.infernoChange;
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.Random_static.nextBoolean;
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.Random_static.nextPercent;
+import static com.zhouzhi.emeraldcraft.procedures.net.Use.killEntity;
 
 public class AttackListening {
     @SubscribeEvent
@@ -231,20 +234,25 @@ public class AttackListening {
             return;
         }
         float damage = event.getAmount();
+        AtomicBoolean _return = new AtomicBoolean(false);
 
         CuriosApi.getCuriosInventory(target).ifPresent(inventory -> {
             inventory.findCurios(stack ->
                     stack.getItem() instanceof OblivionEmeraldItem
             ).forEach(stack -> {
+                event.setCanceled(true);
                 if (damage > 10F) {
                     if (target.level() instanceof ServerLevel serverLevel) {
-                        event.setCanceled(true);
                         stack.stack().hurtAndBreak(1, serverLevel, target, item -> {
                         });
                     }
                 }
+                _return.set(true);
             });
         });
+        if (_return.get()) {
+            return;
+        }
 
         ItemStack[] armor = {
                 target.getItemBySlot(EquipmentSlot.HEAD),
@@ -356,14 +364,23 @@ public class AttackListening {
 
     @SubscribeEvent
     public void OblivionEmeraldSwordAttack(LivingDamageEvent.Pre event){
-        Level level = event.getEntity().getCommandSenderWorld();
+        LivingEntity target = event.getEntity();
+        Level level = target.getCommandSenderWorld();
         if (level.isClientSide()) {
             return;
         }
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             ItemStack weapon = attacker.getMainHandItem();
             if (weapon.is(ModItems.OBLIVION_EMERALD_SWORD)) {
-                event.setNewDamage(event.getNewDamage() * 3.5f);
+                if (target.getHealth() <= target.getMaxHealth() * 0.2f) {
+                    event.setNewDamage(Float.MAX_VALUE);
+                    target.setSilent(true);
+                    target.setInvisible(true);
+                    target.setInvulnerable(false);
+                    killEntity(target,attacker);
+                } else {
+                    event.setNewDamage(event.getNewDamage() * 3.5f);
+                }
             }
         }
     }

@@ -1,21 +1,20 @@
 package com.zhouzhi.emeraldcraft.block;
 
-import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.core.BlockPos;
-
 import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldBlock3IsDestroyedByBoom;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.PushReaction;
 import org.jetbrains.annotations.NotNull;
 
-public class RefinedemeraldBlock3Block extends Block {
-	public RefinedemeraldBlock3Block() {
+public class RefinedEmeraldBlock3Block extends Block {
+	public RefinedEmeraldBlock3Block() {
 		super(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(15f, 20f).lightLevel(s -> 12).requiresCorrectToolForDrops().pushReaction(PushReaction.BLOCK).hasPostProcess((bs, br, bp) -> true).emissiveRendering((bs, br, bp) -> true)
 				.instrument(NoteBlockInstrument.IRON_XYLOPHONE));
 	}

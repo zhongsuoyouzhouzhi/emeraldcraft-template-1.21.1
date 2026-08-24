@@ -2,8 +2,10 @@ package com.zhouzhi.emeraldcraft.potion;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
 import com.zhouzhi.emeraldcraft.init.ModMobEffects;
-import com.zhouzhi.emeraldcraft.procedures.effect.SuppressOnEffectStarted;
+import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
+import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -27,7 +29,17 @@ public class SuppressMobEffect extends MobEffect {
 
     @Override
     public void onEffectStarted(@NotNull LivingEntity entity, int amplifier) {
-        SuppressOnEffectStarted.execute(entity);
+        if (!entity.getCommandSenderWorld().isClientSide()){
+            DamageSource magicDamage = entity.getCommandSenderWorld().damageSources().magic();
+            int num = TagChange.getOrCreateComponent(entity, "suppress", 0);
+            if (num >= 4) {
+                entity.hurt(magicDamage, 0.3f * ((SimpleUse.getEffectLevel(entity, ModMobEffects.SUPPRESS)+6)*10));
+                TagChange.saveComponent(entity, "suppress", 0);
+            } else {
+                entity.hurt(magicDamage, 0.2f * ((SimpleUse.getEffectLevel(entity, ModMobEffects.SUPPRESS)+6)*4));
+                TagChange.saveComponent(entity, "suppress", ++num);
+            }
+        }
     }
 
     @SubscribeEvent

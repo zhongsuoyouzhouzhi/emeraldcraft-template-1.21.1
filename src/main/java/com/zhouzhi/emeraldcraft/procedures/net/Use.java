@@ -229,7 +229,7 @@ public class Use {
         if (van == 4) {
             if (TagChange.getOrCreateComponent(stack, "Void", false)) {
                 MobEffectInstance[] effectInstances = new MobEffectInstance[]{
-                        new MobEffectInstance(ModMobEffects.VOID, 2, 5, false, false),
+                        new MobEffectInstance(ModMobEffects.VOID, 5, 5, false, false),
                 };
                 MobEffectALL.execute(world, effectInstances, player);
 

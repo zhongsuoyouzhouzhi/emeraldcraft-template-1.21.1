@@ -2,7 +2,6 @@ package com.zhouzhi.emeraldcraft.potion;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
 import com.zhouzhi.emeraldcraft.init.ModMobEffects;
-import com.zhouzhi.emeraldcraft.procedures.effect.EmeraldAttachOnEffectStarted;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -10,6 +9,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtensions;
@@ -27,7 +27,28 @@ public class EmeraldAttachMobEffect extends MobEffect {
 
 	@Override
 	public void onEffectStarted(@NotNull LivingEntity entity, int amplifier) {
-		EmeraldAttachOnEffectStarted.execute(entity);
+		if (!(entity instanceof Player _plr && _plr.getAbilities().instabuild)) {
+			if (entity instanceof Player _player) {
+				_player.getAbilities().mayfly = true;
+				_player.onUpdateAbilities();
+			}
+		}
+	}
+
+	@Override
+	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+		return true;
+	}
+
+	@Override
+	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+		if (livingEntity instanceof Player _player) {
+			if (!_player.getAbilities().mayfly) {
+				_player.getAbilities().mayfly = true;
+				_player.onUpdateAbilities();
+			}
+		}
+		return true;
 	}
 
 	@SubscribeEvent

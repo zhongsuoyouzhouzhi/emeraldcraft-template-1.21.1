@@ -74,6 +74,7 @@ public class EmeraldcraftCuriosIntegration {
                                 living.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 39,false,false));
                                 living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_ATTACH,200,59,false,false));
                                 living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_BONUS,200,49,false,false));
+                                living.addEffect(new MobEffectInstance(MobEffects.HEAL,1,4,false,false));
                             }
                             living.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20, 0));
                         }
@@ -96,7 +97,7 @@ public class EmeraldcraftCuriosIntegration {
                     @Override
                     public void curioTick(SlotContext slotContext) {
                         if (slotContext.entity() instanceof LivingEntity living) {
-                            living.addEffect(new MobEffectInstance(ModMobEffects.VOID, 2, 8,false,false));
+                            living.addEffect(new MobEffectInstance(ModMobEffects.VOID, 10, 8,false,false));
                             if (living.isInWaterRainOrBubble()) {
                                 Use.subDamageValue(stack,1);
                             }
