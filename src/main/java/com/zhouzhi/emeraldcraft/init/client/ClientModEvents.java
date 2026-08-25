@@ -3,8 +3,8 @@ package com.zhouzhi.emeraldcraft.init.client;
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
 import com.zhouzhi.emeraldcraft.init.ModEntities;
 import com.zhouzhi.emeraldcraft.init.ModItems;
-import com.zhouzhi.emeraldcraft.init.client.renderer.CustomShieldRenderer;
 import com.zhouzhi.emeraldcraft.init.client.renderer.CustomTridentRenderer;
+import com.zhouzhi.emeraldcraft.init.client.renderer.CustomVoidEmeraldShieldRenderer;
 import net.minecraft.client.model.TridentModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -24,7 +24,7 @@ public class ClientModEvents {
         event.registerItem(new IClientItemExtensions() {
             @Override
             public @NotNull BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return new CustomShieldRenderer();
+                return new CustomVoidEmeraldShieldRenderer();
             }
         }, ModItems.VOID_EMERALD_SHIELD.get());
     }

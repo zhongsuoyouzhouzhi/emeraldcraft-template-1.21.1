@@ -2,6 +2,8 @@ package com.zhouzhi.emeraldcraft.init.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.zhouzhi.emeraldcraft.init.ModItems;
+import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ShieldModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -16,14 +18,15 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CustomShieldRenderer extends BlockEntityWithoutLevelRenderer {
+public class CustomVoidEmeraldShieldRenderer extends BlockEntityWithoutLevelRenderer {
+    private static final Minecraft mc = Minecraft.getInstance();
     private final ShieldModel shieldModel;
     private static final ResourceLocation SHIELD_TEXTURE =
             ResourceLocation.fromNamespaceAndPath("emeraldcraft", "textures/entity/void_emerald_shield.png");
 
-    public CustomShieldRenderer() {
-        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
-        this.shieldModel = new ShieldModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.SHIELD));
+    public CustomVoidEmeraldShieldRenderer() {
+        super(mc.getBlockEntityRenderDispatcher(), mc.getEntityModels());
+        this.shieldModel = new ShieldModel(mc.getEntityModels().bakeLayer(ModelLayers.SHIELD));
     }
 
     @Override
@@ -34,24 +37,13 @@ public class CustomShieldRenderer extends BlockEntityWithoutLevelRenderer {
         poseStack.scale(1.0F, -1.0F, -1.0F);
 
         boolean blocking = false;
-        var player = Minecraft.getInstance().player;
-        if (player != null && player.isBlocking()) {
-            ItemStack activeItem = player.getUseItem();
-            if (activeItem == stack) {
-                blocking = true;
-            }
+        var player = mc.player;
+        if (player != null) {
+            blocking = Use.Render.isBlocking(player, stack,ModItems.VOID_EMERALD_SHIELD);
         }
 
         if (blocking) {
-            if (context == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND ||
-                    context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND) {
-                poseStack.translate(0.0F, -0.2F, 0.3F);
-                poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-10.0F));
-            } else if (context == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND ||
-                    context == ItemDisplayContext.THIRD_PERSON_LEFT_HAND) {
-                poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-90.0F));
-                poseStack.translate(0.0F, -0.1F, 0.0F);
-            }
+            Use.Render.render(context, poseStack);
         }
 
         VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(

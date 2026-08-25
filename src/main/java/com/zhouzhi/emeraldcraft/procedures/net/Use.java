@@ -1,5 +1,7 @@
 package com.zhouzhi.emeraldcraft.procedures.net;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import com.zhouzhi.emeraldcraft.init.ModEntities;
 import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.init.ModMobEffects;
@@ -8,7 +10,10 @@ import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.PushAway;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -23,6 +28,8 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -32,6 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -498,5 +506,38 @@ public class Use {
     public static void subDamageValue(ItemStack stack, int value) {
         if (stack.getDamageValue() > value) stack.setDamageValue(stack.getDamageValue() - value);
         else stack.setDamageValue(0);
+    }
+
+    public static class Render {
+        public static boolean isBlocking(@NotNull Player player, ItemStack renderItem, Holder<Item> item) {
+            KeyMapping useKey = Minecraft.getInstance().options.keyUse;
+            if (useKey.isDown()) {
+                ItemStack main = player.getMainHandItem();
+                ItemStack off = player.getOffhandItem();
+                return (main == renderItem && main.is(item) && renderItem == player.getUseItem())
+                        || (off == renderItem && off.is(item) && renderItem == player.getUseItem());
+            }
+            return false;
+        }
+
+        public static void render(ItemDisplayContext context, PoseStack poseStack) {
+            if (context == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
+                poseStack.mulPose(Axis.ZP.rotationDegrees(10F));
+                poseStack.translate(0.1F, -0.25F, -0.05F);
+            } else if (context == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) {
+                poseStack.mulPose(Axis.ZN.rotationDegrees(30.0F));
+                poseStack.mulPose(Axis.YN.rotationDegrees(60.0F));
+                poseStack.translate(0.2F, 0.2F, -0.1F);
+                poseStack.scale(1.05F, 1.05F, 1.05F);
+            } else if (context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND) {
+                poseStack.mulPose(Axis.ZN.rotationDegrees(10F));
+                poseStack.translate(-0.1F, -0.25F, -0.05F);
+            } else if (context == ItemDisplayContext.THIRD_PERSON_LEFT_HAND) {
+                poseStack.mulPose(Axis.ZP.rotationDegrees(30.0F));
+                poseStack.mulPose(Axis.YP.rotationDegrees(60.0F));
+                poseStack.translate(-0.2F, 0.2F, -0.1F);
+                poseStack.scale(1.05F, 1.05F, 1.05F);
+            }
+        }
     }
 }
