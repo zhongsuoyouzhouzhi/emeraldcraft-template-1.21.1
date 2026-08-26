@@ -133,6 +133,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .addTag(ModTags.VOID_EMERALD_ARMOR);
 
         this.tag(Tags.Items.TOOLS_SHIELD)
-                .add(ModItems.VOID_EMERALD_SHIELD.get());
+                .add(ModItems.VOID_EMERALD_SHIELD.get())
+                .add(ModItems.OBLIVION_EMERALD_SHIELD.get());
     }
 }

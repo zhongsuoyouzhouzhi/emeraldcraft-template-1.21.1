@@ -262,6 +262,10 @@ public class Use {
     public static class EntityPause {
         /**
          * 暂停生物
+         * @param level 中心所在level
+         * @param center 中心位置
+         * @param radius 正方形半径
+         * @param time 需要暂停的时间
          */
         public static void pauseEntities(Level level, Vec3 center, double radius, int time) {
             if (level.isClientSide()) return;
@@ -298,6 +302,8 @@ public class Use {
         }
         /**
          * 自动解除暂停
+         * @param level 该生物所在level
+         * @param time 需要暂停的时间
          */
         public static void tickPausedEntities(ServerLevel level, int time) {
             long currentTick = level.getGameTime();
@@ -324,7 +330,8 @@ public class Use {
             }
         }
         /**
-         * 检查是否暂停
+         * 检查生物是否被暂停
+         * @param entity 需要检测的生物
          */
         public static boolean isPaused(LivingEntity entity) {
             return TagChange.getOrCreateComponent(entity, "PausedByGenesisEmeraldSword", false);
@@ -524,11 +531,6 @@ public class Use {
             if (context == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
                 poseStack.mulPose(Axis.ZP.rotationDegrees(10F));
                 poseStack.translate(0.1F, -0.25F, -0.05F);
-            } else if (context == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) {
-                poseStack.mulPose(Axis.ZN.rotationDegrees(30.0F));
-                poseStack.mulPose(Axis.YN.rotationDegrees(60.0F));
-                poseStack.translate(0.2F, 0.2F, -0.1F);
-                poseStack.scale(1.05F, 1.05F, 1.05F);
             } else if (context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND) {
                 poseStack.mulPose(Axis.ZN.rotationDegrees(10F));
                 poseStack.translate(-0.1F, -0.25F, -0.05F);
@@ -537,7 +539,55 @@ public class Use {
                 poseStack.mulPose(Axis.YP.rotationDegrees(60.0F));
                 poseStack.translate(-0.2F, 0.2F, -0.1F);
                 poseStack.scale(1.05F, 1.05F, 1.05F);
+            } else if (context == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) {
+                poseStack.mulPose(Axis.ZN.rotationDegrees(30.0F));
+                poseStack.mulPose(Axis.YN.rotationDegrees(60.0F));
+                poseStack.translate(0.2F, 0.2F, -0.1F);
+                poseStack.scale(1.05F, 1.05F, 1.05F);
             }
+        }
+    }
+
+    public static class ChooseEntity {
+        /**
+         * 获取眼前固定矩形范围内的所有生物
+         * @param source   源实体
+         * @param width    宽度（左右）
+         * @param height   高度（上下）
+         * @param depth    矩度（前后）
+         * @return 范围内的生物列表
+         */
+        public static List<LivingEntity> getEntitiesInRectangle(Entity source, double width, double height, double depth) {
+            Level level = source.level();
+            Vec3 forward = source.getLookAngle();
+            Vec3 worldUp = new Vec3(0, 1, 0);
+            Vec3 right = forward.cross(worldUp);
+            if (right.lengthSqr() < 1e-8) {
+                right = new Vec3(1, 0, 0);
+            } else {
+                right = right.normalize();
+            }
+            Vec3 up = right.cross(forward).normalize();
+            AABB searchBox = source.getBoundingBox().inflate(depth);
+            List<LivingEntity> candidates = level.getEntitiesOfClass(LivingEntity.class, searchBox,
+                    e -> e != source && e.isAlive());
+            List<LivingEntity> result = new ArrayList<>();
+            Vec3 eyePos = source.getEyePosition();
+            for (LivingEntity target : candidates) {
+                Vec3 targetPos = target.position().add(0, target.getBbHeight() * 0.5, 0);
+                Vec3 delta = targetPos.subtract(eyePos);
+                double localZ = delta.dot(forward);
+                double localX = delta.dot(right);
+                double localY = delta.dot(up);
+                if (localZ > 0 && localZ <= depth) {
+                    if (Math.abs(localX) <= width / 2.0) {
+                        if (Math.abs(localY) <= height / 2.0) {
+                            result.add(target);
+                        }
+                    }
+                }
+            }
+            return result;
         }
     }
 }

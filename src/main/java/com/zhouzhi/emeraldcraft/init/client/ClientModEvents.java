@@ -3,6 +3,7 @@ package com.zhouzhi.emeraldcraft.init.client;
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
 import com.zhouzhi.emeraldcraft.init.ModEntities;
 import com.zhouzhi.emeraldcraft.init.ModItems;
+import com.zhouzhi.emeraldcraft.init.client.renderer.CustomOblivionEmeraldShieldRenderer;
 import com.zhouzhi.emeraldcraft.init.client.renderer.CustomTridentRenderer;
 import com.zhouzhi.emeraldcraft.init.client.renderer.CustomVoidEmeraldShieldRenderer;
 import net.minecraft.client.model.TridentModel;
@@ -27,6 +28,13 @@ public class ClientModEvents {
                 return new CustomVoidEmeraldShieldRenderer();
             }
         }, ModItems.VOID_EMERALD_SHIELD.get());
+
+        event.registerItem(new IClientItemExtensions() {
+            @Override
+            public @NotNull BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return new CustomOblivionEmeraldShieldRenderer();
+            }
+        }, ModItems.OBLIVION_EMERALD_SHIELD.get());
     }
 
     @SubscribeEvent

@@ -33,19 +33,13 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-@Mod("emeraldcraft")
+@Mod(EmeraldCraft.MOD_ID)
 public class EmeraldCraft {
     public static final Logger LOGGER = LogManager.getLogger(EmeraldCraft.class);
     public static final String MOD_ID = "emeraldcraft";
 
     public EmeraldCraft(IEventBus modEventBus) {
         NeoForge.EVENT_BUS.register(this);
-        NeoForge.EVENT_BUS.register(new EnchantmentEffect());
-        NeoForge.EVENT_BUS.register(new AttackListening());
-        NeoForge.EVENT_BUS.register(new MiningListening());
-        NeoForge.EVENT_BUS.register(new TickListening());
-        modEventBus.addListener(this::registerNetworking);
-        modEventBus.addListener(this::onGatherData);
         ModBlocks.REGISTRY.register(modEventBus);
         ModItems.REGISTRY.register(modEventBus);
         ModEntities.REGISTRY.register(modEventBus);
@@ -53,7 +47,12 @@ public class EmeraldCraft {
         ModPotions.REGISTRY.register(modEventBus);
         ModMobEffects.REGISTRY.register(modEventBus);
         ModAttributes.REGISTRY.register(modEventBus);
-
+        NeoForge.EVENT_BUS.register(new EnchantmentEffect());
+        NeoForge.EVENT_BUS.register(new AttackListening());
+        NeoForge.EVENT_BUS.register(new MiningListening());
+        NeoForge.EVENT_BUS.register(new TickListening());
+        modEventBus.addListener(this::registerNetworking);
+        modEventBus.addListener(this::onGatherData);
     }
 
     private static boolean networkingRegistered = false;

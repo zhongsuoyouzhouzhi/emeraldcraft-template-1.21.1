@@ -394,7 +394,17 @@ public class SimpleUse {
 
     public static final class Effect {
         private Effect() {} // 同上，防蠢
-
+        /**
+         * @param level 该粒子所在level
+         * @param type 粒子类型
+         * @param center 中心位置
+         * @param radius 半径
+         * @param particleCount 粒子数量
+         * @param offset 偏移位置
+         * @param speed 速度
+         * @param scatter 是否为相对偏移位置
+         * @since 1.1.9-beta-9
+         */
         public static void round_plane(ServerLevel level, ParticleOptions type, Vec3 center, double radius, int particleCount, Vec3 offset, double speed, boolean scatter) {
             double center_x = center.x;
             double center_z = center.z;
@@ -420,6 +430,63 @@ public class SimpleUse {
                     }
                 }
                 level.sendParticles(type, x, center.y, z, 0, offset_x, offset.y, offset_z, speed);
+            }
+        }
+
+        /**
+         * 在生物眼前生成矩形线框粒子特效
+         * @param entity 施法者实体（用于获取位置和朝向）
+         * @param type 粒子类型
+         * @param width  宽度
+         * @param height 高度
+         * @param depth  深度
+         * @since 1.1.10-beta-0.3
+         */
+        public static void spawnRectangleBorder(Entity entity, ParticleOptions type, double width, double height, double depth) {
+            Level level = entity.getCommandSenderWorld();
+            if (level instanceof ServerLevel serverLevel) {
+                Vec3 forward = entity.getLookAngle();
+                Vec3 worldUp = new Vec3(0, 1, 0);
+                Vec3 right = forward.cross(worldUp);
+                if (right.lengthSqr() < 1e-8) {
+                    right = new Vec3(1, 0, 0);
+                } else {
+                    right = right.normalize();
+                }
+                Vec3 up = right.cross(forward).normalize();
+                Vec3 eyePos = entity.getEyePosition();
+                double hw = width / 2.0;
+                double hh = height / 2.0;
+                Vec3[] cornersLocal = {
+                        new Vec3(hw, hh, 0), new Vec3(-hw, hh, 0), new Vec3(-hw, -hh, 0), new Vec3(hw, -hh, 0),
+                        new Vec3(hw, hh, depth), new Vec3(-hw, hh, depth), new Vec3(-hw, -hh, depth), new Vec3(hw, -hh, depth)
+                };
+                Vec3[] cornersWorld = new Vec3[8];
+                for (int i = 0; i < 8; i++) {
+                    Vec3 local = cornersLocal[i];
+                    cornersWorld[i] = eyePos
+                            .add(right.scale(local.x))
+                            .add(up.scale(local.y))
+                            .add(forward.scale(local.z));
+                }
+                int[][] edges = {
+                        {0, 1}, {1, 2}, {2, 3}, {3, 0},
+                        {4, 5}, {5, 6}, {6, 7}, {7, 4},
+                        {0, 4}, {1, 5}, {2, 6}, {3, 7}
+                };
+
+                double stepSize = 0.4;
+                for (int[] edge : edges) {
+                    Vec3 start = cornersWorld[edge[0]];
+                    Vec3 end = cornersWorld[edge[1]];
+                    Vec3 dir = end.subtract(start);
+                    double length = dir.length();
+                    if (length < 0.01) continue;
+                    for (double t = 0; t <= length; t += stepSize) {
+                        Vec3 pos = start.add(dir.scale(t / length));
+                        serverLevel.sendParticles(type, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
+                    }
+                }
             }
         }
     }

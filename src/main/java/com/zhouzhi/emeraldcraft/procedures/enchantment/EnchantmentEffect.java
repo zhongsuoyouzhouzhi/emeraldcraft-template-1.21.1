@@ -235,6 +235,7 @@ public class EnchantmentEffect {
         RegistryAccess registryAccess = level.registryAccess();
 
         boolean isVoidEmeraldShield = weapon.is(ModItems.VOID_EMERALD_SHIELD);
+        boolean isOblivionEmeraldShield = weapon.is(ModItems.OBLIVION_EMERALD_SHIELD);
         //Rebound
         {
             Holder<Enchantment> EnchantmentHolder = registryAccess
@@ -245,6 +246,8 @@ public class EnchantmentEffect {
 
             if (isVoidEmeraldShield) {
                 enchantmentLevel += 4;
+            } else if (isOblivionEmeraldShield) {
+                enchantmentLevel += 6;
             }
 
             if (enchantmentLevel > 0 && event.getDamageSource().getEntity() instanceof LivingEntity entity) {

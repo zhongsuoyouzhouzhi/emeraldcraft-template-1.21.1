@@ -24,7 +24,19 @@ public class PushAway {
         push(world,sourceEntity,x,y,z,R,entity -> {},function_condition);
     }
 
-    private static void push(Level world, Entity sourceEntity, double x, double y, double z, double R, Function.Function_EntityOperation function_entityOperation) {
+    public static void executeOnly(Level world, Entity targetEntity, double x, double y, double z, double R) {
+        pushOnly(world,targetEntity,x,y,z,R,entity -> {});
+    }
+    /**
+     * @param world 中心所在level
+     * @param sourceEntity 源实体位置
+     * @param x 中心x坐标
+     * @param y 中心y坐标
+     * @param z 中心z坐标
+     * @param R 半径
+     * @param function_entityOperation 推开后需要进行的操作
+     */
+    protected static void push(Level world, Entity sourceEntity, double x, double y, double z, double R, Function.Function_EntityOperation function_entityOperation) {
         if (world instanceof ServerLevel serverLevel) {
             if (world.isClientSide) return;
             Vec3 center = new Vec3(x, y, z);
@@ -52,7 +64,17 @@ public class PushAway {
             }
         }
     }
-    private static void push(Level world, Entity sourceEntity, double x, double y, double z, double R, Function.Function_EntityOperation function_entityOperation,com.google.common.base.Function<Entity,Boolean> function_condition) {
+    /**
+     * @param world 中心所在level
+     * @param sourceEntity 源实体位置
+     * @param x 中心x坐标
+     * @param y 中心y坐标
+     * @param z 中心z坐标
+     * @param R 半径
+     * @param function_entityOperation 推开后需要进行的操作
+     * @param function_condition 生物需要满足的条件
+     */
+    protected static void push(Level world, Entity sourceEntity, double x, double y, double z, double R, Function.Function_EntityOperation function_entityOperation,com.google.common.base.Function<Entity,Boolean> function_condition) {
         if (world instanceof ServerLevel serverLevel) {
             if (world.isClientSide) return;
             Vec3 center = new Vec3(x, y, z);
@@ -80,5 +102,37 @@ public class PushAway {
                 function_entityOperation.run(entity);
             }
         }
+    }
+    /**
+     * @param world 中心所在level
+     * @param targetEntity 目标实体位置
+     * @param x 中心x坐标
+     * @param y 中心y坐标
+     * @param z 中心z坐标
+     * @param R 半径
+     * @param function_entityOperation 推开后需要进行的操作
+     */
+    protected static void pushOnly(Level world, Entity targetEntity, double x, double y, double z, double R, Function.Function_EntityOperation function_entityOperation) {
+        if (world.isClientSide) return;
+        Vec3 center = new Vec3(x, y, z);
+        Vec3 pos = targetEntity.position();
+        double dist = center.distanceTo(pos);
+        if (dist > R) return;
+        Vec3 normal = pos.subtract(center).normalize();
+        Vec3 velocity = targetEntity.getDeltaMovement();
+        double speed = velocity.length();
+        if (speed < 0.1) {
+            Vec3 outward = normal.scale(0.8);
+            targetEntity.setDeltaMovement(outward);
+            targetEntity.hasImpulse = true;
+            return;
+        }
+        Vec3 velDir = velocity.normalize();
+        double dot = velDir.dot(normal);
+        if (dot < 0) {
+            targetEntity.setDeltaMovement(velocity.scale(-1));
+            targetEntity.hasImpulse = true;
+        }
+        function_entityOperation.run(targetEntity);
     }
 }

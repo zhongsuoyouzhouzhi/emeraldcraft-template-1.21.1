@@ -2,9 +2,11 @@ package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.zhouzhi.emeraldcraft.init.ModBlocks;
 import com.zhouzhi.emeraldcraft.init.ModItems;
+import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
-import com.zhouzhi.emeraldcraft.procedures.others.EmeraldPickaxeT3Right_clickOnAir;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -19,6 +21,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.GameTypeGetter.isCreativeOrSpectator;
 
 public class EmeraldPickaxeT3Item extends PickaxeItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -62,9 +66,15 @@ public class EmeraldPickaxeT3Item extends PickaxeItem {
 	@Override
 	@MethodsReturnNonnullByDefault
 	public InteractionResultHolder<ItemStack> use(@ParametersAreNonnullByDefault Level world,@ParametersAreNonnullByDefault Player entity,@ParametersAreNonnullByDefault InteractionHand hand) {
-		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-		EmeraldPickaxeT3Right_clickOnAir.execute(world, entity, ar.getObject());
-		return ar;
+		InteractionResultHolder<ItemStack> itemStackInteractionResultHolder = super.use(world, entity, hand);
+		int item_need_to_destroy;
+		item_need_to_destroy = SimpleUse.destroyStone(world,entity.getBlockX(),entity.getBlockY(),entity.getBlockZ(),3,false,entity instanceof ServerPlayer serverPlayer?serverPlayer:null);
+		if (isCreativeOrSpectator(entity)) return itemStackInteractionResultHolder;
+		if (entity instanceof Player _player && world instanceof ServerLevel _level) {
+			itemStackInteractionResultHolder.getObject().hurtAndBreak(item_need_to_destroy, _level, _player, a -> {
+			});
+		}
+		return itemStackInteractionResultHolder;
 	}
 
     @Override

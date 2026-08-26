@@ -102,6 +102,7 @@ public class ModTabs {
                 tabData.accept(ModItems.OBLIVION_EMERALD_AXE.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_PICKAXE.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_SHOVEL.get());
+                tabData.accept(ModItems.OBLIVION_EMERALD_SHIELD.get());
 			}).withSearchBar().build());
 
 	@SubscribeEvent
@@ -174,6 +175,7 @@ public class ModTabs {
             tabData.accept(ModItems.OBLIVION_EMERALD_AXE.get());
             tabData.accept(ModItems.INFERNO_EMERALD_TRIDENT.get());
             tabData.accept(ModItems.VOID_EMERALD_SHIELD.get());
+            tabData.accept(ModItems.OBLIVION_EMERALD_SHIELD.get());
             tabData.accept(ModItems.EMERALD_ARMOR_HELMET.get());
             tabData.accept(ModItems.EMERALD_ARMOR_CHESTPLATE.get());
             tabData.accept(ModItems.EMERALD_ARMOR_LEGGINGS.get());

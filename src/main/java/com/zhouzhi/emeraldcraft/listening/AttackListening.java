@@ -9,8 +9,10 @@ import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldItem;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
+import com.zhouzhi.emeraldcraft.procedures.net.Use;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -19,6 +21,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -236,20 +239,18 @@ public class AttackListening {
         float damage = event.getAmount();
         AtomicBoolean _return = new AtomicBoolean(false);
 
-        CuriosApi.getCuriosInventory(target).ifPresent(inventory -> {
-            inventory.findCurios(stack ->
-                    stack.getItem() instanceof OblivionEmeraldItem
-            ).forEach(stack -> {
-                event.setCanceled(true);
-                if (damage > 10F) {
-                    if (target.level() instanceof ServerLevel serverLevel) {
-                        stack.stack().hurtAndBreak(1, serverLevel, target, item -> {
-                        });
-                    }
+        CuriosApi.getCuriosInventory(target).ifPresent(inventory -> inventory.findCurios(stack ->
+                stack.getItem() instanceof OblivionEmeraldItem
+        ).forEach(stack -> {
+            event.setCanceled(true);
+            if (damage > 10F) {
+                if (target.level() instanceof ServerLevel serverLevel) {
+                    stack.stack().hurtAndBreak(1, serverLevel, target, item -> {
+                    });
                 }
-                _return.set(true);
-            });
-        });
+            }
+            _return.set(true);
+        }));
         if (_return.get()) {
             return;
         }
@@ -340,6 +341,33 @@ public class AttackListening {
                     entity.addTag("void");
                 });
             }
+        } else if (itemstack.is(ModItems.OBLIVION_EMERALD_SHIELD)) {
+            float absorbed_damage = Float.parseFloat(TagChange.getOrCreateComponent(itemstack,"AbsorbedDamage","0.0"));
+            float block_damage = event.getBlockedDamage() * 0.75f;
+            absorbed_damage += block_damage;
+            String damage = String.format("%.1f", absorbed_damage);
+            float reflect_damage = Float.parseFloat(damage);
+            if (reflect_damage >= 50f || event.getBlockedDamage() >= 15f) {
+                TagChange.saveComponent(itemstack,"AbsorbedDamage", "0.0");
+                if (livingEntity instanceof Player player) {
+                    SimpleUse.Message.send(player, Component.translatable("tooltip.emeraldcraft.oblivion_shield.desc")
+                            .append("0"), true);
+                }
+                if (level instanceof ServerLevel serverLevel) {
+                    itemstack.hurtAndBreak(10,serverLevel,livingEntity,item -> {});
+                }
+                Use.ChooseEntity.getEntitiesInRectangle(livingEntity,3,3,12).forEach(entity ->
+                        entity.hurt(entity.damageSources().indirectMagic(livingEntity,livingEntity),reflect_damage));
+                for (double a = 3;a >= 0;a -= 1) {
+                    SimpleUse.Effect.spawnRectangleBorder(livingEntity, ParticleTypes.OMINOUS_SPAWNING, a, a, a + 9);
+                }
+            } else {
+                TagChange.saveComponent(itemstack, "AbsorbedDamage", damage);
+                if (livingEntity instanceof Player player) {
+                    SimpleUse.Message.send(player, Component.translatable("tooltip.emeraldcraft.oblivion_shield.desc")
+                            .append(damage), true);
+                }
+            }
         }
     }
 
@@ -357,7 +385,7 @@ public class AttackListening {
                 if (damage < 150)
                     damage = 150;
                 event.setNewDamage(0);
-                target.setHealth(target.getHealth()-damage);
+                target.setHealth(target.getHealth() - damage);
             }
         }
     }

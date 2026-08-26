@@ -99,13 +99,16 @@ public class ModItems {
 	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_CHESTPLATE;
 	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_LEGGINGS;
 	public static final DeferredItem<Item> VOID_EMERALD_ARMOR_BOOTS;
-	public static final DeferredItem<Item> VOID_EMERALD_SHIELD;
 	public static final DeferredItem<Item> LAVA_EMERALD_SWORD_T2;
 	public static final DeferredItem<Item> LAVA_EMERALD_AXE_T2;
 	public static final DeferredItem<Item> LAVA_EMERALD_PICKAXE_T2;
 	public static final DeferredItem<Item> LAVA_EMERALD_SHOVEL_T2;
 	public static final DeferredItem<Item> LAVA_EMERALD_HOE_T2;
+	// region 特殊物品
+	public static final DeferredItem<Item> VOID_EMERALD_SHIELD;
 	public static final DeferredItem<Item> INFERNO_EMERALD_TRIDENT;
+	public static final DeferredItem<Item> OBLIVION_EMERALD_SHIELD;
+	// endregion
 	static {
 		REFINED_EMERALD = REGISTRY.register("refined_emerald", RefinedEmeraldItem::new);
 		REFINED_EMERALD_BLOCK = block(ModBlocks.REFINED_EMERALD_BLOCK, new Item.Properties().rarity(Rarity.RARE));
@@ -197,6 +200,7 @@ public class ModItems {
 		OBLIVION_EMERALD_AXE = REGISTRY.register("oblivion_emerald_axe", OblivionEmeraldAxeItem::new);
 		OBLIVION_EMERALD_PICKAXE = REGISTRY.register("oblivion_emerald_pickaxe", OblivionEmeraldPickaxeItem::new);
 		OBLIVION_EMERALD_SHOVEL = REGISTRY.register("oblivion_emerald_shovel", OblivionEmeraldShovelItem::new);
+		OBLIVION_EMERALD_SHIELD = REGISTRY.register("oblivion_emerald_shield", OblivionEmeraldShieldItem::new);
 	}
 	private static DeferredItem<Item> block(DeferredHolder<Block, Block> block) {
 		return block(block, new Item.Properties());

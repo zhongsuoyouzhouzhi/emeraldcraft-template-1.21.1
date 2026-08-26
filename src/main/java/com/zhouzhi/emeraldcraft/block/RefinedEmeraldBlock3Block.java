@@ -1,6 +1,5 @@
 package com.zhouzhi.emeraldcraft.block;
 
-import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldBlock3IsDestroyedByBoom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
@@ -27,6 +26,23 @@ public class RefinedEmeraldBlock3Block extends Block {
 	@Override
 	public void wasExploded(@NotNull Level world, @NotNull BlockPos pos, @NotNull Explosion e) {
 		super.wasExploded(world, pos, e);
-		RefinedEmeraldBlock3IsDestroyedByBoom.execute(world, pos.getX(), pos.getY(), pos.getZ());
+		double x = pos.getX();
+		double y = pos.getY();
+		double z = pos.getZ();
+		if (!world.isClientSide()) {
+			boom(world, x, y, z);
+			_boom(world, x , y, z, 1);
+			_boom(world, x, y, z, -1);
+		}
+	}
+
+	private static void boom(Level level, double x, double y, double z) {
+		level.explode(null, x, y, z, 128, Level.ExplosionInteraction.BLOCK);
+	}
+	private static void _boom(Level level, double x, double y, double z,int i) {
+		final int a = 16;
+		boom(level,x + i * a, y, z);
+		boom(level, x, y + i * a, z);
+		boom(level, x, y, z + i * a);
 	}
 }

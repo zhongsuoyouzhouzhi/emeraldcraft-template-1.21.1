@@ -2,8 +2,10 @@ package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.zhouzhi.emeraldcraft.init.ModBlocks;
 import com.zhouzhi.emeraldcraft.init.ModItems;
+import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
-import com.zhouzhi.emeraldcraft.procedures.others.EmeraldShovelT3Right_clickOnAir;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -17,6 +19,8 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+
+import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.GameTypeGetter.isCreativeOrSpectator;
 
 public class EmeraldShovelT3Item extends ShovelItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -57,9 +61,17 @@ public class EmeraldShovelT3Item extends ShovelItem {
 
 	@Override
 	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player entity, @NotNull InteractionHand hand) {
-		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-		EmeraldShovelT3Right_clickOnAir.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, ar.getObject());
-		return ar;
+		InteractionResultHolder<ItemStack> itemStackInteractionResultHolder = super.use(world, entity, hand);
+		int radius = 4;
+		int dirt_num;
+		dirt_num = SimpleUse.destroyDirt(world,entity.getBlockX(),entity.getBlockY(),entity.getBlockZ(),radius,false,entity instanceof ServerPlayer serverPlayer?serverPlayer:null);
+		if (!(isCreativeOrSpectator(entity))) {
+			if (world instanceof ServerLevel _level && entity instanceof Player _player) {
+				itemStackInteractionResultHolder.getObject().hurtAndBreak(dirt_num, _level, _player, a -> {
+				});
+			}
+		}
+		return itemStackInteractionResultHolder;
 	}
 
     @Override

@@ -2,9 +2,13 @@ package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
-import com.zhouzhi.emeraldcraft.procedures.others.EmeraldSwordT2ItemHasBeenSynthesis_or_Smelted;
 import com.zhouzhi.emeraldcraft.procedures.others.RefinedEmeraldT2ToolIsBeingDamagedPerTick;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +22,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Objects;
 
 public class EmeraldSwordT2Item extends SwordItem {
 	private static final Tier TOOL_TIER = new Tier() {
@@ -68,7 +73,19 @@ public class EmeraldSwordT2Item extends SwordItem {
 	@Override
 	public void onCraftedBy(@ParametersAreNonnullByDefault ItemStack itemstack, @ParametersAreNonnullByDefault Level world, @ParametersAreNonnullByDefault Player entity) {
 		super.onCraftedBy(itemstack, world, entity);
-		EmeraldSwordT2ItemHasBeenSynthesis_or_Smelted.execute(entity);
+		if (!(entity instanceof ServerPlayer _plr0 && _plr0.level() instanceof ServerLevel
+				&& _plr0.getAdvancements().getOrStartProgress(Objects.requireNonNull(_plr0.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:craft_refined_emerald_sword_t_2")))).isDone())) {
+			if (entity instanceof ServerPlayer _player) {
+				AdvancementHolder _adv = _player.server.getAdvancements().get(ResourceLocation.parse("emeraldcraft:craft_refined_emerald_sword_t_2"));
+				if (_adv != null) {
+					AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+					if (!_ap.isDone()) {
+						for (String criteria : _ap.getRemainingCriteria())
+							_player.getAdvancements().award(_adv, criteria);
+					}
+				}
+			}
+		}
 	}
 
 	@Override

@@ -2,8 +2,8 @@ package com.zhouzhi.emeraldcraft.item.remined_emerald;
 
 import com.zhouzhi.emeraldcraft.init.ModBlocks;
 import com.zhouzhi.emeraldcraft.init.ModItems;
+import com.zhouzhi.emeraldcraft.procedures.compress.WXTY;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
-import com.zhouzhi.emeraldcraft.procedures.others.EmeraldAxeT3Right_clickOnAir;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -58,7 +58,7 @@ public class EmeraldAxeT3Item extends AxeItem {
 	@Override
 	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player entity, @NotNull InteractionHand hand) {
 		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-		EmeraldAxeT3Right_clickOnAir.execute(entity);
+		WXTY.execute(world, entity, 50.0);
 		return ar;
 	}
 
