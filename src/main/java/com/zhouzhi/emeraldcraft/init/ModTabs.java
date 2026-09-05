@@ -103,6 +103,8 @@ public class ModTabs {
                 tabData.accept(ModItems.OBLIVION_EMERALD_PICKAXE.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_SHOVEL.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_SHIELD.get());
+                tabData.accept(ModItems.CONFLICT_FRAGMENT.get());
+                tabData.accept(ModItems.CONFLICT_EMERALD.get());
 			}).withSearchBar().build());
 
 	@SubscribeEvent
@@ -203,6 +205,9 @@ public class ModTabs {
             tabData.accept(ModItems.GENESIS_EMERALD.get());
             tabData.accept(ModItems.INFERNO_EMERALD.get());
             tabData.accept(ModItems.OBLIVION_EMERALD.get());
-		}
-	}
+            tabData.accept(ModItems.CONFLICT_EMERALD.get());
+		} else if (tabData.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            tabData.accept(ModItems.EMERALD_GUARDIAN_SPAWN_EGG.get());
+        }
+    }
 }

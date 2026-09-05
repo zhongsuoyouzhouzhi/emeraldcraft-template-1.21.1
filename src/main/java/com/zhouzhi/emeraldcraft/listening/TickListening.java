@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 public class TickListening {
     @SubscribeEvent
-    public void serverTick(ServerTickEvent.Post event){
+    public void serverTick(ServerTickEvent.Post event) {
         if (!event.hasTime()){
             return;
         }

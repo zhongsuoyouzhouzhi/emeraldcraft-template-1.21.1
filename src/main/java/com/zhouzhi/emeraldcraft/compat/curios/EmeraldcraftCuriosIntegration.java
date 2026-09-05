@@ -2,7 +2,9 @@ package com.zhouzhi.emeraldcraft.compat.curios;
 
 import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.init.ModMobEffects;
+import com.zhouzhi.emeraldcraft.init.ModTags;
 import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -75,6 +77,11 @@ public class EmeraldcraftCuriosIntegration {
                                 living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_ATTACH,200,59,false,false));
                                 living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_BONUS,200,49,false,false));
                                 living.addEffect(new MobEffectInstance(MobEffects.HEAL,1,4,false,false));
+                            } else if (living.getItemInHand(InteractionHand.MAIN_HAND).is(ModTags.INFERNO_EMERALD_TOOLS) || living.getItemInHand(InteractionHand.OFF_HAND).is(ModTags.INFERNO_EMERALD_TOOLS)) {
+                                living.extinguishFire();
+                                living.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 3, 39,false,false));
+                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_ATTACH,3,59,false,false));
+                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_BONUS,3,49,false,false));
                             }
                             living.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20, 0));
                         }

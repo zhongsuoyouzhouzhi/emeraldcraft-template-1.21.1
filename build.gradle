@@ -10,6 +10,7 @@ ext {
     jei_version = "19.20.0.240"
     rei_version = "lZgX5u2n"
     curios_api_version = "yohfFbgD"
+    geckolib_version = "5874016" //4.7
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -166,7 +167,8 @@ dependencies {
     // endregion
 
 
-    implementation  "maven.modrinth:vvuO3ImH:${curios_api_version}"                //Curios API
+    implementation  "maven.modrinth:vvuO3ImH:${curios_api_version}"             //Curios API
+    implementation "curse.maven:geckolib-388172:${geckolib_version}"                //Geckolib
 
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository

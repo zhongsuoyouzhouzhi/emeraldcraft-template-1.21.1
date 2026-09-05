@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "emeraldcraft",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "aba",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "emeraldcraft:conflict_fragment"
+    },
+    "b": {
+      "item": "emeraldcraft:refined_emerald"
+    }
+  },
+  "result": {
+    "id": "emeraldcraft:conflict_emerald",
+    "count": 1
+  }
+}

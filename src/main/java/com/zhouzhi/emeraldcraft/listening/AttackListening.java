@@ -5,15 +5,17 @@ import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.init.ModTags;
 import com.zhouzhi.emeraldcraft.item.oblivion_emerald.OblivionEmeraldItem;
 import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldArmorItem;
-import com.zhouzhi.emeraldcraft.item.void_emerald.VoidEmeraldItem;
 import com.zhouzhi.emeraldcraft.procedures.compress.MobEffectALL;
 import com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse;
 import com.zhouzhi.emeraldcraft.procedures.compress.TagChange;
-import com.zhouzhi.emeraldcraft.procedures.net.Use;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -29,15 +31,14 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.zhouzhi.emeraldcraft.listening.MiningListening.infernoChange;
+import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.CuriosAPI.hasCurios;
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.Random_static.nextBoolean;
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.Random_static.nextPercent;
-import static com.zhouzhi.emeraldcraft.procedures.net.Use.killEntity;
 
 public class AttackListening {
     @SubscribeEvent
@@ -51,6 +52,9 @@ public class AttackListening {
             ItemStack weapon = attacker.getMainHandItem();
             if (weapon.is(ModItems.LAVA_EMERALD) || weapon.is(ModTags.LAVA_EMERALD_TOOLS) || weapon.is(ModItems.INFERNO_EMERALD) || weapon.is(ModTags.INFERNO_EMERALD_TOOLS)) {
                 target.lavaHurt();
+                if (weapon.is(ModTags.INFERNO_EMERALD_TOOLS) && hasCurios(attacker, ModItems.INFERNO_EMERALD.get())) {
+                    event.setNewDamage(event.getNewDamage() * 1.5f);
+                }
             }
         }
     }
@@ -89,6 +93,9 @@ public class AttackListening {
                     float k = event.getNewDamage() / event.getOriginalDamage();
                     if (k < 1F)
                         k = 1F;
+                    if (hasCurios(attacker, ModItems.INFERNO_EMERALD.get())) {
+                        k += 0.5F;
+                    }
                     target.setHealth(target.getHealth() - 0.5F * k * (target.getMaxHealth()-target.getHealth()));
                     MobEffectInstance[] effects = new MobEffectInstance[]{
                             new MobEffectInstance(MobEffects.WEAKNESS, 80, 7, false, true),
@@ -111,6 +118,9 @@ public class AttackListening {
                     float k = event.getNewDamage() / event.getOriginalDamage();
                     if (k < 1F)
                         k = 1F;
+                    if (hasCurios(target, ModItems.INFERNO_EMERALD.get())) {
+                        k += 0.5F;
+                    }
                     attacker.setHealth(attacker.getHealth() - 0.5F * k * (attacker.getMaxHealth()-attacker.getHealth()));
                     attacker.hurt(attacker.damageSources().mobAttack(target),0);
                     MobEffectInstance[] effects = new MobEffectInstance[]{
@@ -139,15 +149,19 @@ public class AttackListening {
         DamageSource source = event.getSource();
         if (source.is(DamageTypes.TRIDENT)) {
             if (source.getDirectEntity() instanceof ThrownInfernoEmeraldTrident trident) {
+                Entity attacker = source.getEntity();
                 if (trident.special_skill) {
-                    Entity attacker = source.getEntity();
                     if (level instanceof ServerLevel serverLevel) {
                         AABB aabb = new AABB(target.getX() - 5,target.getY() - 1, target.getZ() - 5,target.getX() + 5,target.getY() + 1,target.getZ() + 5);
                         serverLevel.getEntitiesOfClass(LivingEntity.class, aabb).forEach(entity -> {
                             if (entity.is(target) || (attacker != null && entity.is(attacker))) {
                                 return;
                             }
-                            entity.hurt(entity.damageSources().generic(),30F);
+                            if (attacker instanceof LivingEntity living && hasCurios(living, ModItems.INFERNO_EMERALD.get())) {
+                                entity.hurt(entity.damageSources().generic(), 45F);
+                            } else {
+                                entity.hurt(entity.damageSources().generic(), 30F);
+                            }
                             entity.lavaHurt();
                         });
                         // region 特效
@@ -207,7 +221,11 @@ public class AttackListening {
                         // endregion
                     }
                 } else {
-                    target.hurt(target.damageSources().generic(),75F);
+                    if (attacker instanceof LivingEntity living && hasCurios(living, ModItems.INFERNO_EMERALD.get())) {
+                        target.hurt(target.damageSources().generic(), 112.5F);
+                    } else {
+                        target.hurt(target.damageSources().generic(), 75F);
+                    }
                     // region 特效
                     if (level instanceof ServerLevel serverLevel) {
                         Vec3 offset = new Vec3(0,-1,0);
@@ -239,9 +257,9 @@ public class AttackListening {
         float damage = event.getAmount();
         AtomicBoolean _return = new AtomicBoolean(false);
 
-        CuriosApi.getCuriosInventory(target).ifPresent(inventory -> inventory.findCurios(stack ->
+        CuriosApi.getCuriosInventory(target).flatMap(inventory -> inventory.findFirstCurio(stack ->
                 stack.getItem() instanceof OblivionEmeraldItem
-        ).forEach(stack -> {
+        )).ifPresent(stack -> {
             event.setCanceled(true);
             if (damage > 10F) {
                 if (target.level() instanceof ServerLevel serverLevel) {
@@ -250,7 +268,7 @@ public class AttackListening {
                 }
             }
             _return.set(true);
-        }));
+        });
         if (_return.get()) {
             return;
         }
@@ -312,66 +330,6 @@ public class AttackListening {
     }
 
     @SubscribeEvent
-    public void ShieldBlock(LivingShieldBlockEvent event) {
-        if (event.isCanceled()) return;
-        LivingEntity livingEntity = event.getEntity();
-        Level level = livingEntity.getCommandSenderWorld();
-        if (level.isClientSide()) {
-            return;
-        } else if (!event.getBlocked()) {
-            return;
-        }
-        ItemStack itemstack = livingEntity.getUseItem();
-
-        if (itemstack.is(ModItems.VOID_EMERALD_SHIELD)) {
-            if (itemstack.getDamageValue() > itemstack.getMaxDamage()-200) {
-                if (level instanceof ServerLevel serverLevel) {
-                    itemstack.hurtAndBreak(200,serverLevel,livingEntity,item -> {});
-                }
-                livingEntity.hurt(livingEntity.damageSources().indirectMagic(livingEntity,livingEntity),5);
-                VoidEmeraldItem.explode(level,livingEntity.getOnPos().above(),livingEntity,8);
-                SimpleUse.OperateEntity(level,livingEntity,8,8,8,entity->{
-                    if (entity == livingEntity) return;
-                    String[] b = {};
-                    for (String a : entity.getTags().toArray(b)) {
-                        if (a.equals("void")) {
-                            return;
-                        }
-                    }
-                    entity.addTag("void");
-                });
-            }
-        } else if (itemstack.is(ModItems.OBLIVION_EMERALD_SHIELD)) {
-            float absorbed_damage = Float.parseFloat(TagChange.getOrCreateComponent(itemstack,"AbsorbedDamage","0.0"));
-            float block_damage = event.getBlockedDamage() * 0.75f;
-            absorbed_damage += block_damage;
-            String damage = String.format("%.1f", absorbed_damage);
-            float reflect_damage = Float.parseFloat(damage);
-            if (reflect_damage >= 50f || event.getBlockedDamage() >= 15f) {
-                TagChange.saveComponent(itemstack,"AbsorbedDamage", "0.0");
-                if (livingEntity instanceof Player player) {
-                    SimpleUse.Message.send(player, Component.translatable("tooltip.emeraldcraft.oblivion_shield.desc")
-                            .append("0"), true);
-                }
-                if (level instanceof ServerLevel serverLevel) {
-                    itemstack.hurtAndBreak(10,serverLevel,livingEntity,item -> {});
-                }
-                Use.ChooseEntity.getEntitiesInRectangle(livingEntity,3,3,12).forEach(entity ->
-                        entity.hurt(entity.damageSources().indirectMagic(livingEntity,livingEntity),reflect_damage));
-                for (double a = 3;a >= 0;a -= 1) {
-                    SimpleUse.Effect.spawnRectangleBorder(livingEntity, ParticleTypes.OMINOUS_SPAWNING, a, a, a + 9);
-                }
-            } else {
-                TagChange.saveComponent(itemstack, "AbsorbedDamage", damage);
-                if (livingEntity instanceof Player player) {
-                    SimpleUse.Message.send(player, Component.translatable("tooltip.emeraldcraft.oblivion_shield.desc")
-                            .append(damage), true);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
     public void GenesisEmeraldSwordAttack(LivingDamageEvent.Pre event){
         LivingEntity target = event.getEntity();
         Level level = target.getCommandSenderWorld();
@@ -405,9 +363,20 @@ public class AttackListening {
                     target.setSilent(true);
                     target.setInvisible(true);
                     target.setInvulnerable(false);
-                    killEntity(target,attacker);
+                    target.hurt(target.damageSources().generic(), Float.MAX_VALUE);
+                    target.setHealth(0);
+                    target.hurt(target.damageSources().generic(), Float.MAX_VALUE);
+                    target.die(target.damageSources().genericKill());
+                    if (target.getHealth() > 0f)
+                        target.hurt(new DamageSource(target.getCommandSenderWorld().holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), Float.MAX_VALUE);
+                    if (!(TagChange.getOrCreateComponent(target,"ShouldBeKilled",false) && target instanceof Player)) {
+                        TagChange.saveComponent(target,"ShouldBeKilled",true);
+                    }
                 } else {
                     event.setNewDamage(event.getNewDamage() * 3.5f);
+                    if (hasCurios(attacker,ModItems.OBLIVION_EMERALD.get())) {
+                        event.setNewDamage(event.getNewDamage() * 1.5f);
+                    }
                 }
             }
         }
@@ -423,6 +392,49 @@ public class AttackListening {
             ItemStack weapon = attacker.getMainHandItem();
             if (weapon.is(ModItems.OBLIVION_EMERALD_AXE) || weapon.is(ModItems.OBLIVION_EMERALD_PICKAXE) || weapon.is(ModItems.OBLIVION_EMERALD_SHOVEL)) {
                 event.setNewDamage(event.getNewDamage() * 1.75f);
+                if (hasCurios(attacker,ModItems.OBLIVION_EMERALD.get())) {
+                    event.setNewDamage(event.getNewDamage() * 1.5f);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void ConflictEmeraldAttack(LivingDamageEvent.Post event) {
+        LivingEntity target = event.getEntity();
+        Level level = target.getCommandSenderWorld();
+        if (level.isClientSide()) {
+            return;
+        }
+        if (target.getMainHandItem().is(ModItems.CONFLICT_EMERALD)
+                || target.getOffhandItem().is(ModItems.CONFLICT_EMERALD)
+                || !SimpleUse.CuriosAPI.getCuriosForOne(target, ModItems.CONFLICT_EMERALD.get()).is(ItemStack.EMPTY.getItem())) {
+            if (target.getHealth() <= 0) {
+                target.setHealth(1);
+                var stack = target.getMainHandItem();
+                if (!stack.is(ModItems.CONFLICT_EMERALD)) stack = target.getOffhandItem();
+                if (!stack.is(ModItems.CONFLICT_EMERALD)) stack = SimpleUse.CuriosAPI.getCuriosForOne(target, ModItems.CONFLICT_EMERALD.get());
+                stack.shrink(1);
+                target.removeEffectsCuredBy(net.neoforged.neoforge.common.EffectCures.PROTECTED_BY_TOTEM);
+                target.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 1400, 3));
+                target.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 2));
+                target.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 800, 6));
+                target.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
+                Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
+                level.playSound(null, target.getOnPos().above(),SoundEvents.TOTEM_USE, target.getSoundSource(), 1.0F, 1.0F);
+                var random = target.getRandom();
+                for (int i = 0; i < 30; ++i) {
+                    double d0 = random.nextGaussian() * 0.02D;
+                    double d1 = random.nextGaussian() * 0.02D;
+                    double d2 = random.nextGaussian() * 0.02D;
+                    level.addParticle(
+                            ParticleTypes.TOTEM_OF_UNDYING,
+                            target.getX() + random.nextDouble() * 2.0D - 1.0D,
+                            target.getY() + random.nextDouble() * 2.0D,
+                            target.getZ() + random.nextDouble() * 2.0D - 1.0D,
+                            d0, d1, d2
+                    );
+                }
             }
         }
     }

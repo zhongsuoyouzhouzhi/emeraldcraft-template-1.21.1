@@ -21,6 +21,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
+import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.CuriosAPI.hasCurios;
 import static com.zhouzhi.emeraldcraft.procedures.compress.TagChange.getOrCreateComponent;
 
 public class MiningListening {
@@ -47,9 +48,9 @@ public class MiningListening {
             level.destroyBlock(event.getPos(), false, entity);
             mainHandItem.hurtAndBreak(1, serverLevel, entity, a -> {
             });
-            double x = pos.getX() + 0.5;
-            double y = pos.getY() + 0.5;
-            double z = pos.getZ() + 0.5;
+            var x = pos.getX() + 0.5;
+            var y = pos.getY() + 0.5;
+            var z = pos.getZ() + 0.5;
             ItemEntity itemEntity = new ItemEntity(serverLevel, x, y, z, item);
             itemEntity.setDefaultPickUpDelay();
             serverLevel.addFreshEntity(itemEntity);
@@ -127,7 +128,7 @@ public class MiningListening {
     }
 
     @SubscribeEvent
-    public void EmeraldToolBreakSpeed(PlayerEvent.BreakSpeed event){
+    public void EmeraldToolBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player entity = event.getEntity();
         if (SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity)) {
             return;
@@ -146,10 +147,15 @@ public class MiningListening {
                 event.setNewSpeed(event.getNewSpeed() * 2);
             }
         }
+        if (weapon.is(ModTags.INFERNO_EMERALD_TOOLS)) {
+            if (hasCurios(entity, ModItems.INFERNO_EMERALD.get())) {
+                event.setNewSpeed(event.getNewSpeed() * 1.5f);
+            }
+        }
     }
 
     @SubscribeEvent
-    public void VoidEmeraldArmorBreakSpeed(PlayerEvent.BreakSpeed event){
+    public void VoidEmeraldArmorBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player entity = event.getEntity();
         if (SimpleUse.GameTypeGetter.isCreativeOrSpectator(entity)) {
             return;

@@ -17,6 +17,9 @@
   "block.emeraldcraft.refined_emerald_block_2": "精炼绿宝石块Ⅱ型",
   "block.emeraldcraft.refined_emerald_block_3": "精炼绿宝石块Ⅲ型",
   "curios.identifier.extra": "附加",
+  "entity.emeraldcraft.emerald_projectile": "精炼绿宝石Ⅲ型",
+  "entity.emeraldcraft.inferno_emerald_trident": "狱炎三叉戟",
+  "entity.emeraldcraft.emerald_guardian": "绿宝石守护者",
   "death.attack.emerald_radiation": "%1$s 由于辐射死亡了",
   "death.attack.emerald_radiation.item": "%1$s 被 %2$s 使用 %3$s 辐射致死",
   "death.attack.emerald_radiation.player": "%1$s 在尝试挣脱 %2$s 时辐射致死",
@@ -130,5 +133,9 @@
   "message.emeraldcraft.warning_4": "应该也许可能大概，你最好专注一些有意义的事情而不是像这样无聊的东西",
   "message.emeraldcraft.warning_5_1": "与",
   "message.emeraldcraft.warning_5_2": "相互轰击，最终造成剧烈爆炸",
-  "tooltip.emeraldcraft.oblivion_shield.desc": "已吸收伤害："
+  "tooltip.emeraldcraft.oblivion_shield.desc": "已吸收伤害：",
+  "tip.emeraldcraft.item.conflict_fragment": "诞生自无尽的纷争，志在于永恒的胜利。",
+  "item.emeraldcraft.conflict_fragment": "纷争碎片",
+  "item.emeraldcraft.emerald_guardian_spawn_egg": "绿宝石守卫刷怪蛋",
+  "item.emeraldcraft.conflict_emerald": "纷争绿宝石"
 }

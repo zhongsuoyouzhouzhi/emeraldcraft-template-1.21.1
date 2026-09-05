@@ -17,4 +17,8 @@ public class Function {
     public interface Function_EntityOperation {
         void run(Entity entity);
     }
+    @FunctionalInterface
+    public interface Function_Operation<T,Y> {
+        void run(T vars,Y vars2);
+    }
 }

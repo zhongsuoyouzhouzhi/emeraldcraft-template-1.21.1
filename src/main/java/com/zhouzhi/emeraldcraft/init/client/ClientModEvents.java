@@ -1,10 +1,8 @@
 package com.zhouzhi.emeraldcraft.init.client;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
-import com.zhouzhi.emeraldcraft.init.ModEntities;
 import com.zhouzhi.emeraldcraft.init.ModItems;
 import com.zhouzhi.emeraldcraft.init.client.renderer.CustomOblivionEmeraldShieldRenderer;
-import com.zhouzhi.emeraldcraft.init.client.renderer.CustomTridentRenderer;
 import com.zhouzhi.emeraldcraft.init.client.renderer.CustomVoidEmeraldShieldRenderer;
 import net.minecraft.client.model.TridentModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -45,21 +43,6 @@ public class ClientModEvents {
                         "main"
                 ),
                 TridentModel::createLayer
-        );
-    }
-
-    @SubscribeEvent
-    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(
-                ModEntities.INFERNO_EMERALD_TRIDENT.get(),
-                context -> new CustomTridentRenderer(
-                        context,
-                        new ModelLayerLocation(
-                                ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "inferno_emerald_trident"),
-                                "main"
-                        ),
-                        ResourceLocation.fromNamespaceAndPath(EmeraldCraft.MOD_ID, "textures/entity/inferno_emerald_trident.png")
-                )
         );
     }
 }

@@ -17,6 +17,9 @@
   "block.emeraldcraft.refined_emerald_block_2": "精煉綠寶石塊Ⅱ型",
   "block.emeraldcraft.refined_emerald_block_3": "精煉綠寶石塊Ⅲ型",
   "curios.identifier.extra": "補充",
+  "entity.emeraldcraft.emerald_projectile": "精煉綠寶石Ⅲ型",
+  "entity.emeraldcraft.inferno_emerald_trident": "獄炎三叉戟",
+  "entity.emeraldcraft.emerald_guardian": "綠寶石守衛",
   "death.attack.emerald_radiation": "%1$s 由於輻射死亡了",
   "death.attack.emerald_radiation.item": "%1$s 被 %2$s 使用 %3$s 輻射致死",
   "death.attack.emerald_radiation.player": "%1$s 在嘗試掙脫 %2$s 時輻射致死",
@@ -130,5 +133,9 @@
   "message.emeraldcraft.warning_4": "也許，你最好專注一些有意義的事情而不是像這樣無聊的東西",
   "message.emeraldcraft.warning_5_1": "與",
   "message.emeraldcraft.warning_5_2": "相互轟擊，最終造成劇烈爆炸",
-  "tooltip.emeraldcraft.oblivion_shield.desc": "已吸收傷害："
+  "tooltip.emeraldcraft.oblivion_shield.desc": "已吸收傷害：",
+  "tip.emeraldcraft.item.conflict_fragment": "誕生自無盡的紛爭，志在於永恆的勝利。",
+  "item.emeraldcraft.conflict_fragment": "紛爭碎片",
+  "item.emeraldcraft.emerald_guardian_spawn_egg": "綠寶石守衛生怪蛋",
+  "item.emeraldcraft.conflict_emerald": "紛爭綠寶石"
 }

@@ -1,6 +1,7 @@
 package com.zhouzhi.emeraldcraft.init;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
+import com.zhouzhi.emeraldcraft.entity.EmeraldGuardianEntity;
 import com.zhouzhi.emeraldcraft.entity.EmeraldProjectileEntity;
 import com.zhouzhi.emeraldcraft.entity.ThrownInfernoEmeraldTrident;
 import net.minecraft.core.registries.Registries;
@@ -23,7 +24,16 @@ public class ModEntities {
 							.updateInterval(20)
 							.build("inferno_emerald_trident")
 			);
-
+	public static final DeferredHolder<EntityType<?>, EntityType<EmeraldGuardianEntity>> EMERALD_GUARDIAN =
+			REGISTRY.register("emerald_guardian",
+					() -> EntityType.Builder.of(EmeraldGuardianEntity::new, MobCategory.MONSTER)
+							.sized(0.75f, 1.6f)
+							.setShouldReceiveVelocityUpdates(true)
+							.clientTrackingRange(64)
+							.updateInterval(1)
+							.fireImmune()
+							.build("emerald_guardian")
+			);
 	// Start of user code block custom entities
 	// End of user code block custom entities
 	private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {

@@ -17,6 +17,9 @@
   "block.emeraldcraft.refined_emerald_block_2": "Refined Emerald Block Ⅱ",
   "block.emeraldcraft.refined_emerald_block_3": "Refined Emerald Block Ⅲ",
   "curios.identifier.extra": "Extra",
+  "entity.emeraldcraft.emerald_projectile": "Refined Emerald Ⅲ",
+  "entity.emeraldcraft.inferno_emerald_trident": "Inferno Emerald Trident",
+  "entity.emeraldcraft.emerald_guardian": "Emerald Guardian",
   "death.attack.emerald_radiation": "%1$s Died due to radiation.",
   "death.attack.emerald_radiation.item": "%1$s was killed by %2$s using %3$s",
   "death.attack.emerald_radiation.player": "%1$s died whilst trying to escape %2$s",
@@ -130,5 +133,9 @@
   "message.emeraldcraft.warning_4": "Perhaps you'd better focus on meaningful tasks instead of trivial things like this.",
   "message.emeraldcraft.warning_5_1": " and ",
   "message.emeraldcraft.warning_5_2": " bombarded each other, causing a violent explosion.",
-  "tooltip.emeraldcraft.oblivion_shield.desc": "Absorbed Damage:"
+  "tooltip.emeraldcraft.oblivion_shield.desc": "Absorbed Damage:",
+  "tip.emeraldcraft.item.conflict_fragment": "Born from endless conflicts, obsessed with eternal victory.",
+  "item.emeraldcraft.conflict_fragment": "Fragment of Conflict",
+  "item.emeraldcraft.emerald_guardian_spawn_egg":"Emerald Guardian Spawn Egg",
+  "item.emeraldcraft.conflict_emerald":"Conflict Emerald"
 }

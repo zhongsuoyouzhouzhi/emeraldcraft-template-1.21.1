@@ -1,16 +1,19 @@
 package com.zhouzhi.emeraldcraft.init;
 
 import com.zhouzhi.emeraldcraft.EmeraldCraft;
-import com.zhouzhi.emeraldcraft.item.EmeraldUpgradeCore;
+import com.zhouzhi.emeraldcraft.item.conflict_emerald.ConflictEmeraldItem;
 import com.zhouzhi.emeraldcraft.item.genesis_emerald.*;
 import com.zhouzhi.emeraldcraft.item.inferno_emerald.*;
 import com.zhouzhi.emeraldcraft.item.lava_emerald.*;
 import com.zhouzhi.emeraldcraft.item.oblivion_emerald.*;
+import com.zhouzhi.emeraldcraft.item.other.ConflictFragmentItem;
+import com.zhouzhi.emeraldcraft.item.other.EmeraldUpgradeCore;
 import com.zhouzhi.emeraldcraft.item.remined_emerald.*;
 import com.zhouzhi.emeraldcraft.item.void_emerald.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -18,6 +21,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems {
 	public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(EmeraldCraft.MOD_ID);
+	public static final DeferredItem<Item> CONFLICT_EMERALD;
 	public static final DeferredItem<Item> REFINED_EMERALD;
     public static final DeferredItem<Item> REFINED_EMERALD_T_2;
     public static final DeferredItem<Item> REFINED_EMERALD_T_3;
@@ -104,10 +108,14 @@ public class ModItems {
 	public static final DeferredItem<Item> LAVA_EMERALD_PICKAXE_T2;
 	public static final DeferredItem<Item> LAVA_EMERALD_SHOVEL_T2;
 	public static final DeferredItem<Item> LAVA_EMERALD_HOE_T2;
-	// region 特殊物品
+	// region 特殊工具
 	public static final DeferredItem<Item> VOID_EMERALD_SHIELD;
 	public static final DeferredItem<Item> INFERNO_EMERALD_TRIDENT;
 	public static final DeferredItem<Item> OBLIVION_EMERALD_SHIELD;
+	// endregion
+	// region 特殊物品
+	public static final DeferredHolder<Item, SpawnEggItem> EMERALD_GUARDIAN_SPAWN_EGG;
+	public static final DeferredItem<Item> CONFLICT_FRAGMENT;
 	// endregion
 	static {
 		REFINED_EMERALD = REGISTRY.register("refined_emerald", RefinedEmeraldItem::new);
@@ -201,6 +209,15 @@ public class ModItems {
 		OBLIVION_EMERALD_PICKAXE = REGISTRY.register("oblivion_emerald_pickaxe", OblivionEmeraldPickaxeItem::new);
 		OBLIVION_EMERALD_SHOVEL = REGISTRY.register("oblivion_emerald_shovel", OblivionEmeraldShovelItem::new);
 		OBLIVION_EMERALD_SHIELD = REGISTRY.register("oblivion_emerald_shield", OblivionEmeraldShieldItem::new);
+		EMERALD_GUARDIAN_SPAWN_EGG = REGISTRY.register("emerald_guardian_spawn_egg", () ->
+						new SpawnEggItem(ModEntities.EMERALD_GUARDIAN.get(),
+								0x22814C,
+								0x04FF4F,
+								new Item.Properties()
+						)
+				);
+		CONFLICT_FRAGMENT = REGISTRY.register("conflict_fragment", ConflictFragmentItem::new);
+		CONFLICT_EMERALD = REGISTRY.register("conflict_emerald", ConflictEmeraldItem::new);
 	}
 	private static DeferredItem<Item> block(DeferredHolder<Block, Block> block) {
 		return block(block, new Item.Properties());

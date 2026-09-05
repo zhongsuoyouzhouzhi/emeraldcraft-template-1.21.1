@@ -30,6 +30,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -496,5 +498,34 @@ public class SimpleUse {
         else if (itemstack.is(ItemTags.PICKAXES) && state.is(BlockTags.MINEABLE_WITH_PICKAXE)) return true;
         else if (itemstack.is(ItemTags.SHOVELS) && state.is(BlockTags.MINEABLE_WITH_SHOVEL)) return true;
         else return itemstack.is(ItemTags.HOES) && state.is(BlockTags.MINEABLE_WITH_HOE);
+    }
+
+    public static class CuriosAPI {
+        public static void getCurios(LivingEntity livingEntity, Item CuriosItem, Function.Function_Operation<ItemStack,LivingEntity> itemStackLivingEntityFunctionOpreation) {
+            CuriosApi.getCuriosInventory(livingEntity).ifPresent(inventory -> inventory.findCurios(stack ->
+                    stack.is(CuriosItem)
+            ).forEach(stack -> itemStackLivingEntityFunctionOpreation.run(stack.stack(), livingEntity)));
+        }
+
+        public static ItemStack getCuriosForOne(LivingEntity livingEntity, Item CuriosItem) {
+            CuriosApi.getCuriosInventory(livingEntity).ifPresent(inventory -> inventory.findFirstCurio(CuriosItem)
+            );
+
+            var handler = CuriosApi.getCuriosInventory(livingEntity);
+            if (handler.isPresent()) {
+                var slotResult = handler.get().findFirstCurio(CuriosItem);
+                if (slotResult.isPresent()) return slotResult.get().stack();
+            }
+            return ItemStack.EMPTY;
+        }
+
+        public static boolean hasCurios(LivingEntity livingEntity, Item CuriosItem) {
+            Optional<ICuriosItemHandler> curiosItemHandler = CuriosApi.getCuriosInventory(livingEntity);
+            if (curiosItemHandler.isPresent()) {
+                ICuriosItemHandler handler = curiosItemHandler.get();
+                return !handler.findCurios(CuriosItem).isEmpty();
+            }
+            return false;
+        }
     }
 }

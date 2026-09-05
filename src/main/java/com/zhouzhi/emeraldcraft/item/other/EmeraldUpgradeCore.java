@@ -1,4 +1,4 @@
-package com.zhouzhi.emeraldcraft.item;
+package com.zhouzhi.emeraldcraft.item.other;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
