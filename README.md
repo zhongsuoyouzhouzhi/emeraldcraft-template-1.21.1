@@ -1,1 +1,1 @@
-mod license:All Rights Reserved
+mod license:Apache License
