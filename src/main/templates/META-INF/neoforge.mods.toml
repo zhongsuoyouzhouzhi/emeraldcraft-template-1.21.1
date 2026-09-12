@@ -130,3 +130,10 @@ type="required"
 versionRange="[4.7,)"
 ordering="AFTER"
 side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="cpapireforged"
+type="required"
+versionRange="[1.2.2,)"
+ordering="AFTER"
+side="BOTH"

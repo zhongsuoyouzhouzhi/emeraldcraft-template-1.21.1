@@ -422,19 +422,7 @@ public class AttackListening {
                 target.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
                 Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
                 level.playSound(null, target.getOnPos().above(),SoundEvents.TOTEM_USE, target.getSoundSource(), 1.0F, 1.0F);
-                var random = target.getRandom();
-                for (int i = 0; i < 30; ++i) {
-                    double d0 = random.nextGaussian() * 0.02D;
-                    double d1 = random.nextGaussian() * 0.02D;
-                    double d2 = random.nextGaussian() * 0.02D;
-                    level.addParticle(
-                            ParticleTypes.TOTEM_OF_UNDYING,
-                            target.getX() + random.nextDouble() * 2.0D - 1.0D,
-                            target.getY() + random.nextDouble() * 2.0D,
-                            target.getZ() + random.nextDouble() * 2.0D - 1.0D,
-                            d0, d1, d2
-                    );
-                }
+                Minecraft.getInstance().particleEngine.createTrackingEmitter(target, ParticleTypes.TOTEM_OF_UNDYING, 30);
             }
         }
     }

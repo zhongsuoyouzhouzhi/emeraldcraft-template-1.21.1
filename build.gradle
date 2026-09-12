@@ -11,6 +11,7 @@ ext {
     rei_version = "lZgX5u2n"
     curios_api_version = "yohfFbgD"
     geckolib_version = "5874016" //4.7
+    custom_portal_version = "cpapireforged-neo-1.21.1:1.2.2"
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -45,6 +46,10 @@ repositories {
     maven {
         name = "Shedaniel"
         url = "https://maven.shedaniel.me/"
+    }
+    maven {
+        name = "AzureDoom Mods"
+        url = "https://maven.azuredoom.com/mods"
     }
 }
 
@@ -166,9 +171,11 @@ dependencies {
 
     // endregion
 
-
-    implementation  "maven.modrinth:vvuO3ImH:${curios_api_version}"             //Curios API
-    implementation "curse.maven:geckolib-388172:${geckolib_version}"                //Geckolib
+    // region 前置
+    implementation "maven.modrinth:vvuO3ImH:${curios_api_version}"              //Curios API
+    implementation "curse.maven:geckolib-388172:${geckolib_version}"            //Geckolib
+    implementation "net.kyrptonaught.customportalapi:${custom_portal_version}"  //Custom Portal API
+    // endregion
 
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository

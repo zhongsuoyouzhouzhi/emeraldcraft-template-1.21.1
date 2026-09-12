@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "emeraldcraft:emerald_biome",
+  "features": [
+    "emeraldcraft:emerald_ore_pf",
+    "emeraldcraft:emerald_block_pf",
+    "emeraldcraft:refined_emerald_block_pf"
+  ],
+  "step": "underground_ores"
+}

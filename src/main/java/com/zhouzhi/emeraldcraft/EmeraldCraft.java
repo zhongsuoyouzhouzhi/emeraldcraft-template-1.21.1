@@ -6,6 +6,7 @@ import com.zhouzhi.emeraldcraft.listening.MiningListening;
 import com.zhouzhi.emeraldcraft.listening.ShieldBlockListening;
 import com.zhouzhi.emeraldcraft.listening.TickListening;
 import com.zhouzhi.emeraldcraft.procedures.enchantment.EnchantmentEffect;
+import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -18,6 +19,7 @@ import net.minecraft.util.Tuple;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.util.thread.SidedThreadGroups;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -53,6 +55,7 @@ public class EmeraldCraft {
         NeoForge.EVENT_BUS.register(new AttackListening());
         NeoForge.EVENT_BUS.register(new MiningListening());
         NeoForge.EVENT_BUS.register(new TickListening());
+        modEventBus.addListener(this::registerPortal);
         modEventBus.addListener(this::registerNetworking);
         modEventBus.addListener(this::onGatherData);
     }
@@ -101,7 +104,12 @@ public class EmeraldCraft {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         RegistrySetBuilder registryBuilder = new RegistrySetBuilder()
-                .add(Registries.ENCHANTMENT, ModEnchantments::bootstrap);
+                .add(Registries.ENCHANTMENT, ModEnchantments::bootstrap)
+                .add(Registries.DIMENSION_TYPE, ModDimensions::bootstrap)
+                .add(Registries.LEVEL_STEM, ModDimensions::bootstrapLevelStem)
+                .add(Registries.BIOME, ModBiomes::bootstrap)
+                .add(Registries.CONFIGURED_FEATURE, ModFeatures::bootstrapConfigured)
+                .add(Registries.PLACED_FEATURE, ModFeatures::bootstrapPlaced);
 
         generator.addProvider(
                 event.includeServer(),
@@ -115,5 +123,15 @@ public class EmeraldCraft {
 
         BlockTagsProvider blockTagsProvider = event.createProvider(ModBlockTagsProvider::new);
         generator.addProvider(event.includeServer(), new ModItemTagsProvider(output, lookupProvider, CompletableFuture.completedFuture(blockTagsProvider)));
+    }
+
+    private void registerPortal(FMLCommonSetupEvent event) {
+        CustomPortalBuilder builder = CustomPortalBuilder.beginPortal()
+                .frameBlock(ModBlocks.REFINED_EMERALD_BLOCK.get())
+                .destDimID(ModDimensions.EMERALD_WORLD.location())
+                .onlyLightInOverworld()
+                .lightWithItem(ModItems.CONFLICT_EMERALD.get())
+                .tintColor(0x04FF4F);
+        builder.registerPortal();
     }
 }

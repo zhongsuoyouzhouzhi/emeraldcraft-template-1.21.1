@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "emeraldcraft:emerald_biome",
+  "spawners": [
+    {
+      "type": "emeraldcraft:emerald_guardian",
+      "weight": 50,
+      "minCount": 1,
+      "maxCount": 10
+    }
+  ]
+}
