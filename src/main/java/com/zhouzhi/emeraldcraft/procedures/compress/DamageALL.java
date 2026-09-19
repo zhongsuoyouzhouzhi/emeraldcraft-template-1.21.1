@@ -7,7 +7,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 public class DamageALL {
-
     public static void execute(Level world, double x, double y, double z, float damageAmount, int XRadius, int YRadius, int ZRadius) {
         if (world instanceof ServerLevel serverLevel) {
             int minX = (int) (x - XRadius);
@@ -32,7 +31,7 @@ public class DamageALL {
 
     public static void execute(Level world, Entity source, float damageAmount, int XRadius, int YRadius, int ZRadius, boolean damageSource) {
         if (world instanceof ServerLevel) {
-            SimpleUse.OperateEntity(world, source, XRadius, YRadius, ZRadius, (entity)->{
+            SimpleUse.OperateEntity(world, source, XRadius, YRadius, ZRadius, (entity) -> {
                 if (!damageSource && entity == source) {
                     return;
                 }
@@ -49,7 +48,7 @@ public class DamageALL {
         double entityZ = entity.getZ();
 
         return entityX >= minPos.getX() && entityX <= maxPos.getX() &&
-               entityY >= minPos.getY() && entityY <= maxPos.getY() &&
-               entityZ >= minPos.getZ() && entityZ <= maxPos.getZ();
+                entityY >= minPos.getY() && entityY <= maxPos.getY() &&
+                entityZ >= minPos.getZ() && entityZ <= maxPos.getZ();
     }
 }

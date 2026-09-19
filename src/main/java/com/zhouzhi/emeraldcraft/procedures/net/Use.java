@@ -47,31 +47,31 @@ import java.util.List;
 import static com.zhouzhi.emeraldcraft.procedures.compress.SimpleUse.Effect.round_plane;
 
 public class Use {
-    public static void EmeraldSwordHitLivingThings(LivingEntity entity){
+    public static void EmeraldSwordHitLivingThings(LivingEntity entity) {
         entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 40, 1, false, true));
     }
 
-    public static void EmeraldSwordT2HitLivingThings(LivingEntity entity){
+    public static void EmeraldSwordT2HitLivingThings(LivingEntity entity) {
         entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 50, 2, false, true));
     }
 
-    public static void EmeraldSwordT3HitLivingThings(LivingEntity entity){
+    public static void EmeraldSwordT3HitLivingThings(LivingEntity entity) {
         entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 60, 3, false, true));
     }
 
-    public static void IronSwordHitLivingThings(LivingEntity entity, LivingEntity source){
+    public static void IronSwordHitLivingThings(LivingEntity entity, LivingEntity source) {
         entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 20, 0, false, true));
-        if (source.getHealth() < source.getMaxHealth()){
-            source.setHealth(source.getHealth()+1f);
+        if (source.getHealth() < source.getMaxHealth()) {
+            source.setHealth(source.getHealth() + 1f);
         } else {
             source.setHealth(source.getMaxHealth());
         }
     }
 
-    public static void IronSwordT2HitLivingThings(LivingEntity entity, LivingEntity source){
+    public static void IronSwordT2HitLivingThings(LivingEntity entity, LivingEntity source) {
         entity.addEffect(new MobEffectInstance(ModMobEffects.SUPPRESS, 40, 1, false, true));
-        if (source.getHealth() < source.getMaxHealth()){
-            source.setHealth(source.getHealth()+2f);
+        if (source.getHealth() < source.getMaxHealth()) {
+            source.setHealth(source.getHealth() + 2f);
         } else {
             source.setHealth(source.getMaxHealth());
         }
@@ -88,7 +88,7 @@ public class Use {
         }
     }
 
-    public static void RefinedEmeraldT3ToolIsBeingDamagedPerTick(LevelAccessor world, Entity entity, ItemStack itemstack){
+    public static void RefinedEmeraldT3ToolIsBeingDamagedPerTick(LevelAccessor world, Entity entity, ItemStack itemstack) {
         if (entity != null) {
             if (itemstack.getDamageValue() != 0 && !world.isClientSide()) {
                 if (entity instanceof Player _player && !(_player.getCooldowns().isOnCooldown(itemstack.getItem()))) {
@@ -167,8 +167,8 @@ public class Use {
         }
     }
 
-    public static void VoidEmeraldSwordHitLivingThings(ItemStack itemstack, LivingEntity entity, LivingEntity source){
-        if (source instanceof Player _player && !(_player.getCooldowns().isOnCooldown(itemstack.getItem()))){
+    public static void VoidEmeraldSwordHitLivingThings(ItemStack itemstack, LivingEntity entity, LivingEntity source) {
+        if (source instanceof Player _player && !(_player.getCooldowns().isOnCooldown(itemstack.getItem()))) {
             String[] b = {};
             for (String a : entity.getTags().toArray(b)) {
                 if (a.equals("void")) {
@@ -179,8 +179,8 @@ public class Use {
         }
     }
 
-    public static void VoidEmeraldSwordRight_clickOnAir(ItemStack stack,Player source,Level world) {
-        if (TagChange.getOrCreateComponent(stack,"Void_Open",true)) {
+    public static void VoidEmeraldSwordRight_clickOnAir(ItemStack stack, Player source, Level world) {
+        if (TagChange.getOrCreateComponent(stack, "Void_Open", true)) {
             if (world instanceof ServerLevel serverLevel) {
                 every_entity:
                 for (Entity entity : serverLevel.getAllEntities()) {
@@ -190,7 +190,7 @@ public class Use {
                             entity.setInvisible(true);//隐身嗷
                             entity.setInvulnerable(false);//别给我无敌嗷
                             entity.setSilent(true);
-                            killEntity(entity,source);
+                            killEntity(entity, source);
                             entity.removeTag("void");
                             if (entity.getType().equals(EntityType.ENDER_DRAGON))
                                 continue every_entity;
@@ -217,7 +217,7 @@ public class Use {
         }
     }
 
-    public static void killEntity(Entity entity,LivingEntity source) {
+    public static void killEntity(Entity entity, LivingEntity source) {
         float damage = Float.MAX_VALUE;
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.hurt(livingEntity.damageSources().mobAttack(source), damage);
@@ -226,8 +226,8 @@ public class Use {
             livingEntity.die(livingEntity.damageSources().mobAttack(source));
             if (livingEntity.getHealth() > 0f)
                 livingEntity.hurt(new DamageSource(entity.getCommandSenderWorld().holderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.parse("emeraldcraft:emerald_radiation")))), damage);
-            if (!(TagChange.getOrCreateComponent(livingEntity,"ShouldBeKilled",false) && livingEntity instanceof Player)) {
-                TagChange.saveComponent(livingEntity,"ShouldBeKilled",true);
+            if (!(TagChange.getOrCreateComponent(livingEntity, "ShouldBeKilled", false) && livingEntity instanceof Player)) {
+                TagChange.saveComponent(livingEntity, "ShouldBeKilled", true);
             }
         } else entity.kill();
     }
@@ -241,31 +241,33 @@ public class Use {
                 };
                 MobEffectALL.execute(world, effectInstances, player);
 
-                PushAway.executeWhen(world, player, player.getX(), player.getY(), player.getZ(), 3.5, entity->
-                    entity.getType().equals(EntityType.ARROW) ||
-                            entity.getType().equals(EntityType.ENDER_PEARL) ||
-                            entity.getType().equals(EntityType.SHULKER_BULLET) ||
-                            entity.getType().equals(EntityType.POTION) ||
-                            entity.getType().is(EntityTypeTags.IMPACT_PROJECTILES) ||
-                            entity.getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE) ||
-                            entity.getType().equals(ModEntities.EMERALD_PROJECTILE.get())
+                PushAway.executeWhen(world, player, player.getX(), player.getY(), player.getZ(), 3.5, entity ->
+                        entity.getType().equals(EntityType.ARROW) ||
+                                entity.getType().equals(EntityType.ENDER_PEARL) ||
+                                entity.getType().equals(EntityType.SHULKER_BULLET) ||
+                                entity.getType().equals(EntityType.POTION) ||
+                                entity.getType().is(EntityTypeTags.IMPACT_PROJECTILES) ||
+                                entity.getType().is(EntityTypeTags.REDIRECTABLE_PROJECTILE) ||
+                                entity.getType().equals(ModEntities.EMERALD_PROJECTILE.get())
                 );
             } else if (player.isInWaterRainOrBubble()) {
                 EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
                 for (EquipmentSlot slot : slots) {
                     ItemStack itemstack = player.getItemBySlot(slot);
-                    subDamageValue(itemstack,1);
+                    subDamageValue(itemstack, 1);
                 }
             }
         }
     }
+
     public static class EntityPause {
         /**
          * 暂停生物
-         * @param level 中心所在level
+         *
+         * @param level  中心所在level
          * @param center 中心位置
          * @param radius 正方形半径
-         * @param time 需要暂停的时间
+         * @param time   需要暂停的时间
          */
         public static void pauseEntities(Level level, Vec3 center, double radius, int time) {
             if (level.isClientSide()) return;
@@ -285,9 +287,9 @@ public class Use {
 
                     // 整个特效哈哈哈哈哈
                     serverLevel.sendParticles(ParticleTypes.ITEM_SLIME,
-                            entity.getX(),entity.getY()+0.5,entity.getZ(),
+                            entity.getX(), entity.getY() + 0.5, entity.getZ(),
                             16,
-                            0.5,1,0.5,
+                            0.5, 1, 0.5,
                             0.5);
                 }
 
@@ -300,10 +302,12 @@ public class Use {
                 TagChange.saveComponent(entity, "PausedStartTickByGenesisEmeraldSword", currentTick);
             }
         }
+
         /**
          * 自动解除暂停
+         *
          * @param level 该生物所在level
-         * @param time 需要暂停的时间
+         * @param time  需要暂停的时间
          */
         public static void tickPausedEntities(ServerLevel level, int time) {
             long currentTick = level.getGameTime();
@@ -329,8 +333,10 @@ public class Use {
                 }
             }
         }
+
         /**
          * 检查生物是否被暂停
+         *
          * @param entity 需要检测的生物
          */
         public static boolean isPaused(LivingEntity entity) {
@@ -340,7 +346,7 @@ public class Use {
 
     public static int OblivionEmeraldSwordRight_click(Player player) {
         int count = 0;
-        for (LivingEntity entity:getEntitiesInCrosshair(player,64,Math.PI / 6)) {
+        for (LivingEntity entity : getEntitiesInCrosshair(player, 64, Math.PI / 6)) {
             entity.setSilent(true);//你得禁音不然吵
             entity.setInvisible(true);//得隐身啊
             entity.setInvulnerable(false);//不能无敌啊，无敌那不白写下面一段了
@@ -469,7 +475,7 @@ public class Use {
 
         level.removeBlock(pos, false);
 
-        Vec3 offset = new Vec3(-0.005,0,0);
+        Vec3 offset = new Vec3(-0.005, 0, 0);
         round_plane(
                 level,
                 ParticleTypes.END_ROD,
@@ -483,7 +489,7 @@ public class Use {
         level.playSound(null, pos, state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
 
         if (stack.getDamageValue() > 1000) {
-            subDamageValue(stack,20);
+            subDamageValue(stack, 20);
         } else if (stack.getDamageValue() > 0) {
             ItemStack offhand_itemstack = player.getItemBySlot(EquipmentSlot.OFFHAND);
             ItemStack[] aaaa = {
@@ -493,23 +499,29 @@ public class Use {
                     player.getItemBySlot(EquipmentSlot.FEET)
             };
             if (SimpleUse.Random_static.nextBoolean()) {
-                subDamageValue(stack,2);
+                subDamageValue(stack, 2);
             } else {
                 stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
             }
             if (offhand_itemstack.is(ModTags.OBLIVION_EMERALD_TOOLS)) {
-                subDamageValue(offhand_itemstack,20);
+                subDamageValue(offhand_itemstack, 20);
             } else if (offhand_itemstack.is(ModTags.VOID_EMERALD_TOOLS) || offhand_itemstack.is(ModTags.VOID_EMERALD_ARMOR)) {
-                subDamageValue(offhand_itemstack,100);
+                subDamageValue(offhand_itemstack, 100);
             }
-            for (ItemStack a:aaaa) {
+            for (ItemStack a : aaaa) {
                 if (a.is(ModTags.VOID_EMERALD_ARMOR)) {
-                    subDamageValue(a,100);
+                    subDamageValue(a, 100);
                 }
             }
         }
     }
 
+    /**
+     * 该方法用于减少物品损耗值。
+     *
+     * @param stack 目标物品
+     * @param value 减少值
+     */
     public static void subDamageValue(ItemStack stack, int value) {
         if (stack.getDamageValue() > value) stack.setDamageValue(stack.getDamageValue() - value);
         else stack.setDamageValue(0);
@@ -551,10 +563,11 @@ public class Use {
     public static class ChooseEntity {
         /**
          * 获取眼前固定矩形范围内的所有生物
-         * @param source   源实体
-         * @param width    宽度（左右）
-         * @param height   高度（上下）
-         * @param depth    矩度（前后）
+         *
+         * @param source 源实体
+         * @param width  宽度（左右）
+         * @param height 高度（上下）
+         * @param depth  矩度（前后）
          * @return 范围内的生物列表
          */
         public static List<LivingEntity> getEntitiesInRectangle(Entity source, double width, double height, double depth) {

@@ -204,7 +204,7 @@ public class AttackListening {
                                 true);
                         // endregion
                         // region 焚化方块
-                        BlockPos pos = target.getOnPos().above();
+                        BlockPos pos = target.blockPosition();
                         SimpleUse.OperateBlock(
                                 serverLevel,
                                 pos.getX(), pos.getY(), pos.getZ(),
@@ -421,7 +421,7 @@ public class AttackListening {
                 target.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 800, 6));
                 target.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
                 Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
-                level.playSound(null, target.getOnPos().above(),SoundEvents.TOTEM_USE, target.getSoundSource(), 1.0F, 1.0F);
+                level.playSound(null, target.blockPosition(),SoundEvents.TOTEM_USE, target.getSoundSource(), 1.0F, 1.0F);
                 Minecraft.getInstance().particleEngine.createTrackingEmitter(target, ParticleTypes.TOTEM_OF_UNDYING, 30);
             }
         }

@@ -59,12 +59,12 @@ public class LavaEmeraldHoeItem extends HoeItem {
 	@Override
 	@MethodsReturnNonnullByDefault
 	public InteractionResult useOn(@ParametersAreNonnullByDefault UseOnContext context) {
-		super.useOn(context);
-		if (!context.getLevel().isClientSide) {
+		var result = super.useOn(context);
+		if (result == InteractionResult.PASS) {
 			if (context.getLevel().getBlockState(context.getClickedPos()) == Blocks.CAULDRON.defaultBlockState()) {
 				context.getLevel().setBlockAndUpdate(context.getClickedPos(), Blocks.LAVA_CAULDRON.defaultBlockState());
 			}
 		}
-		return InteractionResult.SUCCESS;
+		return result;
 	}
 }

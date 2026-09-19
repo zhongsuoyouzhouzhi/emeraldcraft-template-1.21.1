@@ -111,6 +111,6 @@ public class OblivionEmeraldPickaxeItem extends PickaxeItem {
 
 	@Override
 	public int getBarColor(@NotNull ItemStack stack) {
-		return stack.getDamageValue() <= 1000 ? BAR_COLOR_BASE:BAR_COLOR_SCOPE;
+		return TagChange.getOrCreateComponent(stack,"Scope", false) ? BAR_COLOR_SCOPE:BAR_COLOR_BASE;
 	}
 }

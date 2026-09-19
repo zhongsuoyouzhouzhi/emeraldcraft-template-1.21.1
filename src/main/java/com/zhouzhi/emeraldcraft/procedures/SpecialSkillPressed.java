@@ -23,9 +23,9 @@ import static com.zhouzhi.emeraldcraft.procedures.compress.TagChange.saveCompone
 
 
 public class SpecialSkillPressed {
-	public static void execute(Entity entity) {
-		if (entity instanceof LivingEntity livingEntity) {
-			ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.MAINHAND);
+    public static void execute(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity) {
+            ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.MAINHAND);
             ItemStack armor = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
             int van = SimpleUse.VoidArmorNumber(livingEntity);
             if (van == 4 && livingEntity.isShiftKeyDown()) {
@@ -33,11 +33,11 @@ public class SpecialSkillPressed {
                 TagChange.saveComponent(armor, "Void", !tag);
                 if (entity instanceof Player player) {
                     if (!tag)
-                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.true")),true);
+                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.true")), true);
                     else
-                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.false")),true);
+                        SimpleUse.Message.send(player, Component.translatable("message.emeraldcraft.skill_void_armor").append(Component.translatable("message.emeraldcraft.false")), true);
                 }
-            } else if (itemstack.is(ModItems.EMERALD_SWORD_T_3.get())){
+            } else if (itemstack.is(ModItems.EMERALD_SWORD_T_3.get())) {
                 if (entity instanceof Player _player) {
                     if (!_player.getCooldowns().isOnCooldown(itemstack.getItem())) {
                         _player.getCooldowns().addCooldown(itemstack.getItem(), 40);
@@ -50,16 +50,16 @@ public class SpecialSkillPressed {
                         PushAway.execute(world, entity, x, y, z, radius, damage);
                     }
                 }
-			} else if (itemstack.is(ModItems.REFINED_EMERALD_PLUS)) {
-                if (entity instanceof Player _player && !(SimpleUse.GameTypeGetter.isCreativeOrSpectator(_player))){
+            } else if (itemstack.is(ModItems.REFINED_EMERALD_PLUS)) {
+                if (entity instanceof Player _player && !(SimpleUse.GameTypeGetter.isCreativeOrSpectator(_player))) {
                     itemstack.setCount(itemstack.getCount() - 1);
                     _player.getCooldowns().addCooldown(itemstack.getItem(), 20);
                 }
                 Level level = entity.level();
-                livingEntity.moveTo(entity.getX(),entity.getY()+4,entity.getZ());
+                livingEntity.moveTo(entity.getX(), entity.getY() + 4, entity.getZ());
                 if (entity instanceof Player _player) {
                     EmeraldCraft.queueServerWork(20, () ->
-                        PushAway.execute(level, _player, _player.getX(), _player.getY(), _player.getZ(), 64, 64));
+                            PushAway.execute(level, _player, _player.getX(), _player.getY(), _player.getZ(), 64, 64));
                     level.playSound(_player, _player.getX(), _player.getY(), _player.getZ(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 2.0f, 1.0f);
                 }
             } else if (itemstack.is(ModItems.EMERALD_PICKAXE_T_3)) {
@@ -76,7 +76,7 @@ public class SpecialSkillPressed {
                 double x = entity.getX();
                 double y = entity.getY();
                 double z = entity.getZ();
-                MobEffectALL.execute(world, x, y, z, effects, 12 ,5 ,12);
+                MobEffectALL.execute(world, x, y, z, effects, 12, 5, 12);
             } else if (itemstack.is(ModItems.SKYFILLING_BLADE)) {
                 Level world = livingEntity.level();
                 if (world instanceof ServerLevel _level) {
@@ -86,9 +86,9 @@ public class SpecialSkillPressed {
                 if (entity instanceof Player _player) {
                     if (_player.getCooldowns().isOnCooldown(itemstack.getItem()))
                         return;
-                    int tag = getOrCreateComponent(itemstack,"special_skill_type",0);
+                    int tag = getOrCreateComponent(itemstack, "special_skill_type", 0);
                     tag++;
-                    switch (tag){
+                    switch (tag) {
                         case 1:
                             if (world instanceof ServerLevel _level) {
                                 itemstack.hurtAndBreak(9, _level, null, a -> {
@@ -96,12 +96,12 @@ public class SpecialSkillPressed {
                             }
                             MTR.execute(entity, 64.0f, 200.0f, 320);
                             _player.getCooldowns().addCooldown(itemstack.getItem(), 150);
-                            SimpleUse.Message.send(_player, Component.translatable("message.emeraldcraft.skill").append("2"),true);
+                            SimpleUse.Message.send(_player, Component.translatable("message.emeraldcraft.skill").append("2"), true);
                             break;
                         case 2:
-                            Use.SkyFillingBladeSpecialSkill2(_player,120.0f,32);
+                            Use.SkyFillingBladeSpecialSkill2(_player, 120.0f, 32);
                             _player.getCooldowns().addCooldown(itemstack.getItem(), 120);
-                            SimpleUse.Message.send(_player, Component.translatable("message.emeraldcraft.skill").append("3"),true);
+                            SimpleUse.Message.send(_player, Component.translatable("message.emeraldcraft.skill").append("3"), true);
                             break;
                         default:
                             MobEffectInstance[] effects = new MobEffectInstance[]{
@@ -114,9 +114,9 @@ public class SpecialSkillPressed {
                             MobEffectALL.execute(_player.level(), effects, _player);
                             _player.getCooldowns().addCooldown(itemstack.getItem(), 60);
                             tag = 0;
-                            SimpleUse.Message.send(_player, Component.translatable("message.emeraldcraft.skill").append("1"),true);
+                            SimpleUse.Message.send(_player, Component.translatable("message.emeraldcraft.skill").append("1"), true);
                     }
-                    saveComponent(itemstack,"special_skill_type",tag);
+                    saveComponent(itemstack, "special_skill_type", tag);
                 }
             } else if (itemstack.is(ModItems.VOID_EMERALD_SWORD)) {
                 if (livingEntity.level() instanceof ServerLevel serverLevel) {
@@ -137,8 +137,8 @@ public class SpecialSkillPressed {
                     }
                 }
             } else if (itemstack.is(ModItems.VOID_EMERALD_AXE) || itemstack.is(ModItems.VOID_EMERALD_PICKAXE) || itemstack.is(ModItems.VOID_EMERALD_SHOVEL) || itemstack.is(ModItems.VOID_EMERALD_HOE)) {
-                boolean tag = getOrCreateComponent(itemstack,"Scope",false);
-                saveComponent(itemstack,"Scope",!tag);
+                boolean tag = getOrCreateComponent(itemstack, "Scope", false);
+                saveComponent(itemstack, "Scope", !tag);
                 if (entity instanceof Player _player) {
                     _player.getCooldowns().addCooldown(itemstack.getItem(), 10);
                     sendOpen(_player, getOrCreateComponent(itemstack, "Scope", true));
@@ -146,26 +146,30 @@ public class SpecialSkillPressed {
             } else if (itemstack.is(ModItems.INFERNO_EMERALD_SWORD)) {
                 if (entity instanceof Player player) {
                     Level level = player.level();
-                    if (Use.InfernoEmeraldSwordSpecialSkill(level,player)) {
+                    if (Use.InfernoEmeraldSwordSpecialSkill(level, player)) {
                         if (!SimpleUse.GameTypeGetter.isCreativeOrSpectator(player) && level instanceof ServerLevel serverLevel) {
-                            itemstack.hurtAndBreak(75, serverLevel,player,ignore->{});
+                            itemstack.hurtAndBreak(75, serverLevel, player, ignore -> {
+                            });
                         }
                     }
                 }
             } else if (itemstack.is(ModItems.INFERNO_EMERALD_AXE) || itemstack.is(ModItems.INFERNO_EMERALD_PICKAXE) || itemstack.is(ModItems.INFERNO_EMERALD_SHOVEL) || itemstack.is(ModItems.INFERNO_EMERALD_TRIDENT)) {
-                boolean tag = getOrCreateComponent(itemstack,"Inferno",false);
-                saveComponent(itemstack,"Inferno",!tag);
+                boolean tag = getOrCreateComponent(itemstack, "Inferno", false);
+                saveComponent(itemstack, "Inferno", !tag);
                 if (entity instanceof Player player) {
                     player.getCooldowns().addCooldown(itemstack.getItem(), 10);
                     sendOpen(player, getOrCreateComponent(itemstack, "Inferno", true));
                 }
-            } else if (itemstack.is(ModItems.OBLIVION_EMERALD_AXE) || itemstack.is(ModItems.OBLIVION_EMERALD_PICKAXE) || itemstack.is(ModItems.OBLIVION_EMERALD_SHOVEL)) {
+            } else if (itemstack.is(ModItems.OBLIVION_EMERALD_AXE) || itemstack.is(ModItems.OBLIVION_EMERALD_PICKAXE) || itemstack.is(ModItems.OBLIVION_EMERALD_SHOVEL) || itemstack.is(ModItems.OBLIVION_EMERALD_HOE)) {
                 boolean tag = getOrCreateComponent(itemstack, "Scope", false);
                 saveComponent(itemstack, "Scope", !tag);
                 if (entity instanceof Player _player) {
                     _player.getCooldowns().addCooldown(itemstack.getItem(), 10);
                     sendOpen(_player, getOrCreateComponent(itemstack, "Scope", true));
                 }
+            } else if (itemstack.is(ModItems.GENESIS_EMERALD_HOE)) {
+                var level = entity.level();
+                WXTY.execute(level, entity, 75.0);
             }
         }
     }

@@ -34,15 +34,25 @@ public class EmeraldcraftCuriosIntegration {
                     @Override
                     public void curioTick(SlotContext slotContext) {
                         if (slotContext.entity() instanceof LivingEntity living) {
-                            living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_ATTACH,40,39,false,false));
-                            living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_BONUS,20,19,false,false));
-                            living.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE,40,0,false,false));
+                            living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_ATTACH, 40, 39, false, false));
+                            living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_BONUS, 20, 19, false, false));
+                            living.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE, 40, 0, false, false));
                             if (living instanceof Player player) {
                                 if (player.getFoodData().getFoodLevel() < 20) {
                                     player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() + 1);
                                 }
                                 if (player.getFoodData().getSaturationLevel() < 20) {
                                     player.getFoodData().setSaturation(player.getFoodData().getSaturationLevel() + 1);
+                                }
+                            }
+                            if (living.tickCount % 20 == 0) {
+                                var item_main = living.getMainHandItem();
+                                var item_off = living.getOffhandItem();
+                                if (item_main.is(ModTags.GENESIS_EMERALD_TOOLS) && item_main.isDamaged()) {
+                                    Use.subDamageValue(item_main, 100);
+                                }
+                                if (item_off.is(ModTags.GENESIS_EMERALD_TOOLS) && item_off.isDamaged()) {
+                                    Use.subDamageValue(item_off, 100);
                                 }
                             }
                             if (living.isUnderWater()) {
@@ -68,24 +78,36 @@ public class EmeraldcraftCuriosIntegration {
                     public ItemStack getStack() {
                         return stack;
                     }
+
                     @Override
                     public void curioTick(SlotContext slotContext) {
                         if (slotContext.entity() instanceof LivingEntity living) {
                             if (living.isOnFire() || living.isInLava() || living.level().getBlockState(living.getOnPos()).is(Blocks.MAGMA_BLOCK)) {
                                 living.extinguishFire();
-                                living.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 39,false,false));
-                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_ATTACH,200,59,false,false));
-                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_BONUS,200,49,false,false));
-                                living.addEffect(new MobEffectInstance(MobEffects.HEAL,1,4,false,false));
+                                living.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 39, false, false));
+                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_ATTACH, 200, 59, false, false));
+                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_BONUS, 200, 49, false, false));
+                                living.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 4, false, false));
                             } else if (living.getItemInHand(InteractionHand.MAIN_HAND).is(ModTags.INFERNO_EMERALD_TOOLS) || living.getItemInHand(InteractionHand.OFF_HAND).is(ModTags.INFERNO_EMERALD_TOOLS)) {
                                 living.extinguishFire();
-                                living.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 3, 39,false,false));
-                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_ATTACH,3,59,false,false));
-                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_BONUS,3,49,false,false));
+                                living.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 3, 39, false, false));
+                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_ATTACH, 3, 59, false, false));
+                                living.addEffect(new MobEffectInstance(ModMobEffects.EMERALD_BONUS, 3, 49, false, false));
                             }
                             living.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20, 0));
+                            if (living.tickCount % 40 == 0) {
+                                var item_main = living.getMainHandItem();
+                                var item_off = living.getOffhandItem();
+                                if (item_main.is(ModTags.INFERNO_EMERALD_TOOLS) && item_main.isDamaged()) {
+                                    Use.subDamageValue(item_main, 50);
+                                }
+                                if (item_off.is(ModTags.INFERNO_EMERALD_TOOLS) && item_off.isDamaged()) {
+                                    Use.subDamageValue(item_off, 50);
+                                }
+                            }
                         }
                     }
+
                     @Override
                     public boolean canEquip(SlotContext slotContext) {
                         return true;
@@ -101,15 +123,25 @@ public class EmeraldcraftCuriosIntegration {
                     public ItemStack getStack() {
                         return stack;
                     }
+
                     @Override
                     public void curioTick(SlotContext slotContext) {
                         if (slotContext.entity() instanceof LivingEntity living) {
-                            living.addEffect(new MobEffectInstance(ModMobEffects.VOID, 10, 8,false,false));
+                            living.addEffect(new MobEffectInstance(ModMobEffects.VOID, 10, 8, false, false));
                             if (living.isInWaterRainOrBubble()) {
-                                Use.subDamageValue(stack,1);
+                                Use.subDamageValue(stack, 1);
+                                var item = living.getMainHandItem();
+                                if (item.is(ModTags.OBLIVION_EMERALD_TOOLS) && item.isDamaged()) {
+                                    Use.subDamageValue(item, 5);
+                                }
+                                item = living.getOffhandItem();
+                                if (item.is(ModTags.OBLIVION_EMERALD_TOOLS) && item.isDamaged()) {
+                                    Use.subDamageValue(item, 5);
+                                }
                             }
                         }
                     }
+
                     @Override
                     public boolean canEquip(SlotContext slotContext) {
                         return true;

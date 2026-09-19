@@ -91,17 +91,20 @@ public class ModTabs {
                 tabData.accept(ModItems.GENESIS_EMERALD_AXE.get());
                 tabData.accept(ModItems.GENESIS_EMERALD_PICKAXE.get());
                 tabData.accept(ModItems.GENESIS_EMERALD_SHOVEL.get());
+                tabData.accept(ModItems.GENESIS_EMERALD_HOE.get());
                 tabData.accept(ModItems.INFERNO_EMERALD.get());
                 tabData.accept(ModItems.INFERNO_EMERALD_SWORD.get());
                 tabData.accept(ModItems.INFERNO_EMERALD_AXE.get());
                 tabData.accept(ModItems.INFERNO_EMERALD_PICKAXE.get());
                 tabData.accept(ModItems.INFERNO_EMERALD_SHOVEL.get());
+                tabData.accept(ModItems.INFERNO_EMERALD_HOE.get());
                 tabData.accept(ModItems.INFERNO_EMERALD_TRIDENT.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_SWORD.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_AXE.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_PICKAXE.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_SHOVEL.get());
+                tabData.accept(ModItems.OBLIVION_EMERALD_HOE.get());
                 tabData.accept(ModItems.OBLIVION_EMERALD_SHIELD.get());
                 tabData.accept(ModItems.CONFLICT_FRAGMENT.get());
                 tabData.accept(ModItems.CONFLICT_EMERALD.get());
@@ -151,6 +154,7 @@ public class ModTabs {
             tabData.accept(ModItems.OBLIVION_EMERALD_AXE.get());
             tabData.accept(ModItems.OBLIVION_EMERALD_PICKAXE.get());
             tabData.accept(ModItems.OBLIVION_EMERALD_SHOVEL.get());
+            tabData.accept(ModItems.OBLIVION_EMERALD_HOE.get());
 		} else if (tabData.getTabKey() == CreativeModeTabs.COMBAT) {
             tabData.accept(ModItems.IRON_SWORD_INLAID_WITH_REFINED_EMERALD.get());
 			tabData.accept(ModItems.EMERALD_SWORD.get());

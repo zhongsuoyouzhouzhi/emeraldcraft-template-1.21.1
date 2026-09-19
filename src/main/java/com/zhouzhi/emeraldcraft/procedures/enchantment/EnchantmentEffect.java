@@ -204,15 +204,15 @@ public class EnchantmentEffect {
             if (enchantmentLevel > 0) {
                 float Brightness = level.getBrightness(
                         LightLayer.BLOCK,
-                        player.getOnPos().above()
+                        player.blockPosition()
                 );
-                if (Brightness < 5f && level.getBlockState(player.getOnPos().above()).isEmpty() && !level.getBlockState(player.getOnPos()).isEmpty()) {
+                if (Brightness < 5f && level.getBlockState(player.blockPosition()).isEmpty() && !level.getBlockState(player.getOnPos()).isEmpty()) {
                     double damage = enchantmentLevel == 1 ? 0.0075 : 0.0025;
                     damage *= weapon.getMaxDamage();
                     if (level instanceof ServerLevel _level)
                         weapon.hurtAndBreak(damage < 1 ? 1 : (int) damage , _level, player,a -> {
                         });
-                    level.setBlockAndUpdate(player.getOnPos().above(), Blocks.TORCH.defaultBlockState());
+                    level.setBlockAndUpdate(player.blockPosition(), Blocks.TORCH.defaultBlockState());
                 }
             }
         }

@@ -84,9 +84,9 @@ public class ModItems {
     public static final DeferredItem<Item> IRON_HOE_INLAID_WITH_REFINED_EMERALD_T2;
 	public static final DeferredItem<Item> VOID_EMERALD_HOE;
 	public static final DeferredItem<Item> LAVA_EMERALD_HOE;
-	//public static final DeferredItem<Item> GENESIS_EMERALD_HOE;
-	//public static final DeferredItem<Item> INFERNO_EMERALD_HOE;
-	//public static final DeferredItem<Item> OBLIVION_EMERALD_HOE;
+	public static final DeferredItem<Item> GENESIS_EMERALD_HOE;
+	public static final DeferredItem<Item> INFERNO_EMERALD_HOE;
+	public static final DeferredItem<Item> OBLIVION_EMERALD_HOE;
 	public static final DeferredItem<Item> EMERALD_ARMOR_HELMET;
 	public static final DeferredItem<Item> EMERALD_ARMOR_CHESTPLATE;
 	public static final DeferredItem<Item> EMERALD_ARMOR_LEGGINGS;
@@ -192,11 +192,13 @@ public class ModItems {
 		GENESIS_EMERALD_AXE = REGISTRY.register("genesis_emerald_axe", GenesisEmeraldAxeItem::new);
 		GENESIS_EMERALD_PICKAXE = REGISTRY.register("genesis_emerald_pickaxe", GenesisEmeraldPickaxeItem::new);
 		GENESIS_EMERALD_SHOVEL = REGISTRY.register("genesis_emerald_shovel", GenesisEmeraldShovelItem::new);
+		GENESIS_EMERALD_HOE = REGISTRY.register("genesis_emerald_hoe", GenesisEmeraldHoeItem::new);
         INFERNO_EMERALD = REGISTRY.register("inferno_emerald", InfernoEmeraldItem::new);
 		INFERNO_EMERALD_SWORD = REGISTRY.register("inferno_emerald_sword", InfernoEmeraldSwordItem::new);
 		INFERNO_EMERALD_AXE = REGISTRY.register("inferno_emerald_axe", InfernoEmeraldAxeItem::new);
 		INFERNO_EMERALD_PICKAXE = REGISTRY.register("inferno_emerald_pickaxe", InfernoEmeraldPickaxeItem::new);
 		INFERNO_EMERALD_SHOVEL = REGISTRY.register("inferno_emerald_shovel", InfernoEmeraldShovelItem::new);
+		INFERNO_EMERALD_HOE = REGISTRY.register("inferno_emerald_hoe", InfernoEmeraldHoeItem::new);
 		INFERNO_EMERALD_TRIDENT = REGISTRY.register("inferno_emerald_trident", () -> new InfernoEmeraldTridentItem(
 						new Item.Properties()
 								.durability(39815)
@@ -208,6 +210,7 @@ public class ModItems {
 		OBLIVION_EMERALD_AXE = REGISTRY.register("oblivion_emerald_axe", OblivionEmeraldAxeItem::new);
 		OBLIVION_EMERALD_PICKAXE = REGISTRY.register("oblivion_emerald_pickaxe", OblivionEmeraldPickaxeItem::new);
 		OBLIVION_EMERALD_SHOVEL = REGISTRY.register("oblivion_emerald_shovel", OblivionEmeraldShovelItem::new);
+		OBLIVION_EMERALD_HOE = REGISTRY.register("oblivion_emerald_hoe", OblivionEmeraldHoeItem::new);
 		OBLIVION_EMERALD_SHIELD = REGISTRY.register("oblivion_emerald_shield", OblivionEmeraldShieldItem::new);
 		EMERALD_GUARDIAN_SPAWN_EGG = REGISTRY.register("emerald_guardian_spawn_egg", () ->
 						new SpawnEggItem(ModEntities.EMERALD_GUARDIAN.get(),

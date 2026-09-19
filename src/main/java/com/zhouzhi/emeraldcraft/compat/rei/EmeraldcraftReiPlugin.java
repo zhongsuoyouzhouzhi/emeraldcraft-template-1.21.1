@@ -5,10 +5,9 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
-import me.shedaniel.rei.forge.REIPlugin;
+import me.shedaniel.rei.forge.REIPluginClient;
 
-@SuppressWarnings("deprecation")
-@REIPlugin
+@REIPluginClient
 public class EmeraldcraftReiPlugin implements REIClientPlugin {
 
     public static final CategoryIdentifier<BlockInteractionDisplayRei> BLOCK_INTERACTION =

@@ -36,7 +36,7 @@ public class ShieldBlockListening {
                     itemstack.hurtAndBreak(200,serverLevel,livingEntity,item -> {});
                 }
                 livingEntity.hurt(livingEntity.damageSources().indirectMagic(livingEntity,livingEntity),5);
-                VoidEmeraldItem.explode(level,livingEntity.getOnPos().above(),livingEntity,8);
+                VoidEmeraldItem.explode(level,livingEntity.blockPosition(),livingEntity,8);
                 SimpleUse.OperateEntity(level,livingEntity,8,8,8, entity->{
                     if (entity == livingEntity) return;
                     String[] b = {};

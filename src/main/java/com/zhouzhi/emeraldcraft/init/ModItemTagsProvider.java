@@ -73,20 +73,21 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .add(ModItems.GENESIS_EMERALD_PICKAXE.get())
                 .add(ModItems.GENESIS_EMERALD_AXE.get())
                 .add(ModItems.GENESIS_EMERALD_SHOVEL.get())
-                /*.add(ModItems.GENESIS_EMERALD_HOE.get())*/;
+                .add(ModItems.GENESIS_EMERALD_HOE.get());
         this.tag(ModTags.INFERNO_EMERALD_TOOLS)
                 .add(ModItems.INFERNO_EMERALD_SWORD.get())
                 .add(ModItems.INFERNO_EMERALD_PICKAXE.get())
                 .add(ModItems.INFERNO_EMERALD_AXE.get())
                 .add(ModItems.INFERNO_EMERALD_SHOVEL.get())
-                /*.add(ModItems.INFERNO_EMERALD_HOE.get())*/
+                .add(ModItems.INFERNO_EMERALD_HOE.get())
                 .add(ModItems.INFERNO_EMERALD_TRIDENT.get());
         this.tag(ModTags.OBLIVION_EMERALD_TOOLS)
                 .add(ModItems.OBLIVION_EMERALD_SWORD.get())
                 .add(ModItems.OBLIVION_EMERALD_PICKAXE.get())
                 .add(ModItems.OBLIVION_EMERALD_AXE.get())
                 .add(ModItems.OBLIVION_EMERALD_SHOVEL.get())
-                /*.add(ModItems.OBLIVION_EMERALD_HOE.get())*/;
+                .add(ModItems.OBLIVION_EMERALD_HOE.get())
+                .add(ModItems.OBLIVION_EMERALD_SHIELD.get());
 
         this.tag(ModTags.EMERALD_TOOLS)
                 .addTag(ModTags.REFINED_EMERALD_TOOLS)
